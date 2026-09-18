@@ -126,7 +126,6 @@
 
         /* ---------- Hero card ---------- */
         .hero-card {
-            position: relative;
             background: var(--card-bg);
             padding: 34px 28px 28px;
             border-radius: 26px;
@@ -136,16 +135,6 @@
                 0 20px 50px rgba(28, 37, 52, 0.10),
                 inset 0 1px 1px rgba(255, 255, 255, 0.6);
             margin-bottom: 26px;
-            overflow: hidden;
-        }
-
-        .hero-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            inset-inline: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--sky));
         }
 
         .avatar-wrapper {
