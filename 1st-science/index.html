@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أولى ثانوي - علوم | الأستاذ بلوطي عمر</title>
+    <!-- Google Fonts: Noto Kufi Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e9edf4;
+            --card-bg: #ffffff;
+            --lesson-bg: #f5f7fb;
+            --primary-blue: #2563eb;
+            --primary-blue-soft: #4f8ef7;
+            --sky: #38bdf8;
+            --text-main: #1c2534;
+            --text-muted: #6b7686;
+            --border-soft: #e3e8f0;
+            --whatsapp: #25d366;
+            --facebook: #1877f2;
+
+            /* Domain accent colors */
+            --domain-1a: #2563eb;
+            --domain-1b: #38bdf8;
+            --domain-2a: #d97706;
+            --domain-2b: #fbbf24;
+            --domain-3a: #059669;
+            --domain-3b: #34d399;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-weight: 600;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 90% 75%, rgba(56, 189, 248, 0.09) 0%, transparent 40%),
+                linear-gradient(rgba(28, 37, 52, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(28, 37, 52, 0.035) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            padding: 22px 16px calc(100px + env(safe-area-inset-bottom));
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, rgba(255,255,255,0) 70%);
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* ---------- Breadcrumb / back link ---------- */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover { color: var(--primary-blue); }
+        .back-link svg { width: 16px; height: 16px; }
+
+        /* ---------- Welcome hero ---------- */
+        .hero-card {
+            background: var(--card-bg);
+            padding: 32px 26px;
+            border-radius: 26px;
+            text-align: center;
+            border: 1px solid var(--border-soft);
+            box-shadow:
+                0 20px 50px rgba(28, 37, 52, 0.10),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            margin-bottom: 26px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--primary-blue);
+            font-size: 12.5px;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .hero-sub {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            line-height: 1.8;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        /* ---------- Section title ---------- */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 4px 14px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(37,99,235,0.25), transparent);
+        }
+
+        /* ---------- Domain cards (stacked) ---------- */
+        .domains-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .domain-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px;
+            border-radius: 22px;
+            text-decoration: none;
+            color: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 12px 26px rgba(28, 37, 52, 0.14);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .domain-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(28, 37, 52, 0.20);
+        }
+
+        .domain-card::after {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            top: -50px;
+            inset-inline-end: -50px;
+        }
+
+        .domain-card .icon-wrap {
+            flex-shrink: 0;
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .domain-card .domain-body {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .domain-card .domain-tag {
+            font-size: 11.5px;
+            font-weight: 700;
+            opacity: 0.85;
+            letter-spacing: 0.3px;
+            margin-bottom: 3px;
+        }
+
+        .domain-card .domain-title {
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+
+        .domain-card .domain-sub {
+            font-size: 12.5px;
+            font-weight: 600;
+            opacity: 0.9;
+            margin-top: 5px;
+            line-height: 1.6;
+        }
+
+        .domain-card .arrow {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .domain-card .arrow svg { width: 15px; height: 15px; }
+
+        .domain-1 { background: linear-gradient(135deg, var(--domain-1a), var(--domain-1b)); }
+        .domain-2 { background: linear-gradient(135deg, var(--domain-2a), var(--domain-2b)); }
+        .domain-3 { background: linear-gradient(135deg, var(--domain-3a), var(--domain-3b)); }
+
+        /* ---------- Footer ---------- */
+        .footer {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .footer-code {
+            font-family: monospace;
+            color: var(--primary-blue);
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* ---------- Bottom nav ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            inset-inline: 0;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-soft);
+            padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+            box-shadow: 0 -8px 24px rgba(28, 37, 52, 0.08);
+        }
+
+        .bottom-nav .nav-inner {
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item svg { width: 21px; height: 21px; }
+
+        .nav-item.active { color: var(--primary-blue); }
+
+        @media (max-width: 460px) {
+            .hero-card { padding: 26px 18px; }
+            .domain-card { padding: 15px; gap: 12px; }
+            .domain-card .icon-wrap { width: 46px; height: 46px; font-size: 22px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .glow-orb { animation: none; }
+            .domain-card { transition: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow-orb"></div>
+
+    <div class="page-wrap">
+
+        <a href="../index.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+            الرجوع إلى الرئيسية
+        </a>
+
+        <!-- بطاقة الترحيب -->
+        <div class="hero-card">
+            <span class="badge">أولى ثانوي - علوم</span>
+            <h1>مرحبًا بك في قسم السنة الأولى ثانوي علوم</h1>
+            <p class="hero-sub">اختر أحد المجالات أدناه للانطلاق في دروس ومحتوى مادة الإعلام الآلي.</p>
+        </div>
+
+        <!-- المجالات -->
+        <div class="section-title">مجالات التعلّم</div>
+
+        <div class="domains-list">
+
+            <a href="domain-1/index.html" class="domain-card domain-1">
+                <span class="icon-wrap">🖥️</span>
+                <div class="domain-body">
+                    <div class="domain-tag">المجال الأول</div>
+                    <div class="domain-title">بيئة التعامل مع الحاسوب</div>
+                    <div class="domain-sub">التعرّف على مكوّنات الحاسوب ونظام التشغيل وأساسيات الاستخدام</div>
+                </div>
+                <span class="arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+                </span>
+            </a>
+
+            <a href="domain-2/index.html" class="domain-card domain-2">
+                <span class="icon-wrap">🔀</span>
+                <div class="domain-body">
+                    <div class="domain-tag">المجال الثاني</div>
+                    <div class="domain-title">المخططات الانسيابية والخوارزميات</div>
+                    <div class="domain-sub">بناء الخوارزميات وتمثيلها بالمخططات الانسيابية لحل المشكلات</div>
+                </div>
+                <span class="arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+                </span>
+            </a>
+
+            <a href="domain-3/index.html" class="domain-card domain-3">
+                <span class="icon-wrap">🌐</span>
+                <div class="domain-body">
+                    <div class="domain-tag">المجال الثالث</div>
+                    <div class="domain-title">تقنيات الويب</div>
+                    <div class="domain-sub">مبادئ الإنترنت وأساسيات تصميم صفحات الويب</div>
+                </div>
+                <span class="arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+                </span>
+            </a>
+
+        </div>
+
+        <div class="footer">
+            <span class="footer-code">&lt;/&gt;</span>
+            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        </div>
+
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="../courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="../articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><line x1="8" y1="9" x2="16" y2="9"></line><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="12" y2="17"></line></svg>
+                المذكرات
+            </a>
+            <a href="../accounts/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                حول
+            </a>
+        </div>
+    </nav>
+
+</body>
+</html>
