@@ -128,7 +128,7 @@
         .hero-card {
             position: relative;
             background: var(--card-bg);
-            padding: 0 28px 28px;
+            padding: 34px 28px 28px;
             border-radius: 26px;
             text-align: center;
             border: 1px solid var(--border-soft);
@@ -139,30 +139,20 @@
             overflow: hidden;
         }
 
-        .hero-banner {
-            height: 92px;
-            margin: 0 -28px 0;
-            background:
-                radial-gradient(circle at 85% -20%, rgba(255,255,255,0.22) 0%, transparent 55%),
-                linear-gradient(135deg, var(--primary-blue), var(--sky));
-            position: relative;
-        }
-
-        .hero-banner::after {
+        .hero-card::before {
             content: "";
             position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.09) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.09) 1px, transparent 1px);
-            background-size: 18px 18px;
+            top: 0;
+            inset-inline: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--sky));
         }
 
         .avatar-wrapper {
             position: relative;
             width: 92px;
             height: 92px;
-            margin: -46px auto 14px;
+            margin: 0 auto 18px;
             border-radius: 50%;
             padding: 4px;
             background: linear-gradient(135deg, var(--primary-blue), var(--sky));
@@ -473,8 +463,7 @@
         @media (max-width: 460px) {
             .cards-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .section-card { min-height: 132px; padding: 15px; }
-            .hero-card { padding: 0 20px 22px; }
-            .hero-banner { margin: 0 -20px 0; height: 82px; }
+            .hero-card { padding: 28px 20px 22px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -499,8 +488,6 @@
 
         <!-- بطاقة الترحيب -->
         <div class="hero-card">
-            <div class="hero-banner"></div>
-
             <div class="avatar-wrapper">
                 <img src="teacher.jpg" alt="الأستاذ بلوطي عمر">
             </div>
@@ -635,9 +622,7 @@
                الموجهة للطلبة. كل سطر = إعلان منفصل.
                ==================================================== */
             var tickerMessages = [
-    'يمكنكم الاطلاع على ملخصات ودروس السنة الأولى ثانوي عبر موقعنا الإلكتروني.',
-    'تطبيقنا على Google Play سيكون متاحًا مع بداية الموسم الدراسي، ويمكنكم تحميله على أجهزة Android.',
-    'تطبيق App Store غير متوفر حاليًا، وقد يتوفر مستقبلًا.'
+                'مرحبًا بكم في الفضاء الرقمي للأستاذ بلوطي عمر — تابعوا هنا كل الإعلانات الجديدة'
             ];
 
             function initTicker() {
