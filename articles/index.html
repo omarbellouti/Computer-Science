@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أهم الوثائق | الأستاذ بلوطي عمر</title>
+    <!-- Google Fonts: Noto Kufi Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e9edf4;
+            --card-bg: #ffffff;
+            --lesson-bg: #f5f7fb;
+            --primary-blue: #2563eb;
+            --primary-blue-soft: #4f8ef7;
+            --sky: #38bdf8;
+            --text-main: #1c2534;
+            --text-muted: #6b7686;
+            --border-soft: #e3e8f0;
+
+            --articles-1: #d97706;
+            --articles-2: #fbbf24;
+            --green-1: #059669;
+            --green-2: #34d399;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-weight: 600;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 90% 75%, rgba(56, 189, 248, 0.09) 0%, transparent 40%),
+                linear-gradient(rgba(28, 37, 52, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(28, 37, 52, 0.035) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            padding: 22px 16px calc(100px + env(safe-area-inset-bottom));
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(217,119,6,0.09) 0%, rgba(255,255,255,0) 70%);
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* ---------- Breadcrumb / back link ---------- */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover { color: var(--primary-blue); }
+        .back-link svg { width: 16px; height: 16px; }
+
+        /* ---------- Hero ---------- */
+        .hero-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(135deg, var(--articles-1), var(--articles-2));
+            padding: 24px;
+            border-radius: 24px;
+            color: #ffffff;
+            box-shadow: 0 16px 34px rgba(217, 119, 6, 0.28);
+            margin-bottom: 26px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            top: -55px;
+            inset-inline-end: -55px;
+        }
+
+        .hero-card .hero-icon {
+            flex-shrink: 0;
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-card .hero-text { position: relative; z-index: 1; }
+
+        .hero-card .hero-tag {
+            font-size: 12px;
+            font-weight: 700;
+            opacity: 0.9;
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-card h1 {
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .hero-card .hero-sub {
+            font-size: 12.5px;
+            font-weight: 600;
+            opacity: 0.92;
+            margin-top: 4px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---------- Section title ---------- */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 2px 14px;
+            color: var(--text-main);
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .section-title .title-icon {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .section-title.docs .title-icon { background: linear-gradient(135deg, var(--articles-1), var(--articles-2)); box-shadow: 0 6px 14px rgba(217, 119, 6, 0.28); }
+        .section-title.downloads .title-icon { background: linear-gradient(135deg, var(--green-1), var(--green-2)); box-shadow: 0 6px 14px rgba(5, 150, 105, 0.28); }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(28,37,52,0.12), transparent);
+        }
+
+        /* ---------- Document cards ---------- */
+        .doc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .doc-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: 18px;
+            padding: 15px 16px;
+            text-decoration: none;
+            color: var(--text-main);
+            box-shadow: 0 8px 20px rgba(28, 37, 52, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(28, 37, 52, 0.10);
+        }
+
+        .doc-card .doc-icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--articles-1), var(--articles-2));
+        }
+
+        .doc-card .doc-body { flex: 1; }
+
+        .doc-card .doc-title {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .doc-card .doc-hint {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .doc-card .doc-action {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--lesson-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .doc-card .doc-action svg { width: 15px; height: 15px; color: var(--text-muted); }
+
+        /* Download variant */
+        .doc-card.download .doc-icon { background: linear-gradient(135deg, var(--green-1), var(--green-2)); }
+        .doc-card.download .doc-action { background: rgba(5, 150, 105, 0.10); }
+        .doc-card.download .doc-action svg { color: var(--green-1); }
+
+        /* ---------- Footer ---------- */
+        .footer {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .footer-code {
+            font-family: monospace;
+            color: var(--primary-blue);
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* ---------- Bottom nav ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            inset-inline: 0;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-soft);
+            padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+            box-shadow: 0 -8px 24px rgba(28, 37, 52, 0.08);
+        }
+
+        .bottom-nav .nav-inner {
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item svg { width: 21px; height: 21px; }
+        .nav-item.active { color: var(--articles-1); }
+
+        @media (max-width: 460px) {
+            .hero-card { padding: 20px; }
+            .doc-card { padding: 13px 14px; gap: 12px; }
+            .doc-card .doc-icon { width: 40px; height: 40px; font-size: 18px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .glow-orb { animation: none; }
+            .doc-card { transition: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow-orb"></div>
+
+    <div class="page-wrap">
+
+        <a href="../index.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+            الرجوع إلى الرئيسية
+        </a>
+
+        <!-- بطاقة الترحيب -->
+        <div class="hero-card">
+            <span class="hero-icon">📁</span>
+            <div class="hero-text">
+                <div class="hero-tag">قسم المقالات</div>
+                <h1>أهم الوثائق الخاصة بالأستاذ</h1>
+            </div>
+        </div>
+
+        <!-- الوثائق الإدارية -->
+        <div class="section-title docs"><span class="title-icon">📑</span>الوثائق الإدارية</div>
+
+        <div class="doc-list">
+
+            <a href="document-1/index.html" class="doc-card">
+                <span class="doc-icon">📜</span>
+                <div class="doc-body">
+                    <div class="doc-title">القانون الداخلي لمخبر المعلوماتية</div>
+                    <div class="doc-hint">اضغط للاطّلاع على الصفحة</div>
+                </div>
+                <span class="doc-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+                </span>
+            </a>
+
+            <a href="document-2/index.html" class="doc-card">
+                <span class="doc-icon">🗒️</span>
+                <div class="doc-body">
+                    <div class="doc-title">سجل متابعة مخبر المعلوماتية</div>
+                    <div class="doc-hint">اضغط للاطّلاع على الصفحة</div>
+                </div>
+                <span class="doc-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+                </span>
+            </a>
+
+            <a href="document-3/index.html" class="doc-card">
+                <span class="doc-icon">🪑</span>
+                <div class="doc-body">
+                    <div class="doc-title">مخطط جلوس التلاميذ</div>
+                    <div class="doc-hint">اضغط للاطّلاع على الصفحة</div>
+                </div>
+                <span class="doc-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+                </span>
+            </a>
+
+            <a href="document-4/index.html" class="doc-card">
+                <span class="doc-icon">🗓️</span>
+                <div class="doc-body">
+                    <div class="doc-title">رزنامة الندوات الداخلية في الثانوية</div>
+                    <div class="doc-hint">اضغط للاطّلاع على الصفحة</div>
+                </div>
+                <span class="doc-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+                </span>
+            </a>
+
+        </div>
+
+        <!-- التحميلات -->
+        <div class="section-title downloads"><span class="title-icon">⬇️</span>تحميلات PDF</div>
+
+        <div class="doc-list">
+
+            <a href="files/tadarruj-sanawi-informatique.pdf" class="doc-card download" download>
+                <span class="doc-icon">📊</span>
+                <div class="doc-body">
+                    <div class="doc-title">التدرج السنوي لمادة المعلوماتية</div>
+                    <div class="doc-hint">تحميل بصيغة PDF</div>
+                </div>
+                <span class="doc-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14"></path></svg>
+                </span>
+            </a>
+
+            <a href="files/kitab-al-mielumatiya.pdf" class="doc-card download" download>
+                <span class="doc-icon">📘</span>
+                <div class="doc-body">
+                    <div class="doc-title">كتاب المعلوماتية</div>
+                    <div class="doc-hint">تحميل بصيغة PDF على جهازك</div>
+                </div>
+                <span class="doc-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14"></path></svg>
+                </span>
+            </a>
+
+        </div>
+
+        <div class="footer">
+            <span class="footer-code">&lt;/&gt;</span>
+            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        </div>
+
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="../courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="../articles/index.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><line x1="8" y1="9" x2="16" y2="9"></line><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="12" y2="17"></line></svg>
+                المقالات
+            </a>
+            <a href="../accounts/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                حسابي
+            </a>
+        </div>
+    </nav>
+
+</body>
+</html>
