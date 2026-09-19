@@ -265,6 +265,133 @@
         .doc-card.download .doc-action { background: rgba(5, 150, 105, 0.10); }
         .doc-card.download .doc-action svg { color: var(--green-1); }
 
+        /* ---------- Expandable lessons item ---------- */
+        .doc-accordion {
+            background: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(28, 37, 52, 0.06);
+            transition: box-shadow 0.25s ease;
+        }
+
+        .doc-accordion.open { box-shadow: 0 12px 26px rgba(28, 37, 52, 0.10); }
+
+        .doc-accordion-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 15px 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: right;
+            font-family: inherit;
+        }
+
+        .doc-accordion-header .doc-icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky));
+        }
+
+        .doc-accordion-header .doc-body { flex: 1; }
+
+        .doc-accordion-header .doc-title {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .doc-accordion-header .doc-hint {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .doc-accordion-header .chevron {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--lesson-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .doc-accordion-header .chevron svg { width: 13px; height: 13px; color: var(--text-muted); }
+
+        .doc-accordion.open .chevron {
+            transform: rotate(180deg);
+            background: rgba(37, 99, 235, 0.10);
+        }
+
+        .doc-accordion.open .chevron svg { color: var(--primary-blue); }
+
+        .doc-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .doc-accordion-content-inner {
+            padding: 0 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .doc-sublink {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: 13px;
+            background: var(--lesson-bg);
+            border: 1px solid var(--border-soft);
+            text-decoration: none;
+            color: var(--text-main);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .doc-sublink:hover {
+            transform: translateX(-2px);
+            background: #eef2f9;
+        }
+
+        .doc-sublink .sub-icon {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky));
+        }
+
+        .doc-sublink .sub-label {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .doc-sublink .sub-arrow svg { width: 13px; height: 13px; color: var(--text-muted); }
+
         /* ---------- Footer ---------- */
         .footer {
             font-size: 13px;
@@ -361,6 +488,44 @@
 
         <div class="doc-list">
 
+            <div class="doc-accordion" id="lessonsAccordion">
+                <button class="doc-accordion-header" type="button">
+                    <span class="doc-icon">💻</span>
+                    <div class="doc-body">
+                        <div class="doc-title">محتوى دروس المعلوماتية</div>
+                        <div class="doc-hint">اختر القسم للاطّلاع على الدروس</div>
+                    </div>
+                    <span class="chevron">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
+                    </span>
+                </button>
+                <div class="doc-accordion-content">
+                    <div class="doc-accordion-content-inner">
+                        <a href="../1st-literary/index.html" class="doc-sublink">
+                            <span class="sub-icon">📖</span>
+                            <span class="sub-label">دروس السنة الأولى آداب</span>
+                            <span class="sub-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="../1st-science/index.html" class="doc-sublink">
+                            <span class="sub-icon">🔬</span>
+                            <span class="sub-label">دروس السنة الأولى علوم</span>
+                            <span class="sub-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <a href="../lesson-plans/index.html" class="doc-card">
+                <span class="doc-icon" style="background: linear-gradient(135deg, var(--primary-blue), var(--sky));">📔</span>
+                <div class="doc-body">
+                    <div class="doc-title">مذكرات دروس المعلوماتية</div>
+                    <div class="doc-hint">اضغط للاطّلاع على المذكرات</div>
+                </div>
+                <span class="doc-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+                </span>
+            </a>
+
             <a href="document-1/index.html" class="doc-card">
                 <span class="doc-icon">📜</span>
                 <div class="doc-body">
@@ -455,15 +620,32 @@
                 الدورات
             </a>
             <a href="../articles/index.html" class="nav-item active">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><line x1="8" y1="9" x2="16" y2="9"></line><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="12" y2="17"></line></svg>
-                المقالات
-            </a>
-            <a href="../accounts/index.html" class="nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                حسابي
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
+                الوثائق الإدارية
             </a>
         </div>
     </nav>
+
+    <script>
+        (function () {
+            var acc = document.getElementById('lessonsAccordion');
+            if (!acc) return;
+            var header = acc.querySelector('.doc-accordion-header');
+            var content = acc.querySelector('.doc-accordion-content');
+            var inner = acc.querySelector('.doc-accordion-content-inner');
+
+            header.addEventListener('click', function () {
+                var isOpen = acc.classList.contains('open');
+                if (isOpen) {
+                    acc.classList.remove('open');
+                    content.style.maxHeight = null;
+                } else {
+                    acc.classList.add('open');
+                    content.style.maxHeight = inner.offsetHeight + 'px';
+                }
+            });
+        })();
+    </script>
 
 </body>
 </html>
