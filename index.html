@@ -246,6 +246,9 @@
                 text-align: center;
                 font-size: 11.5px;
             }
+            .hero-meta .teacher .name {
+                font-size: 11.5px; /* نفس حجم نص الإطار الأول في الهاتف */
+            }
             .hero-avatar-3d {
                 width: 72px;
                 height: 72px;
@@ -264,31 +267,6 @@
             border: 1px solid rgba(37, 99, 235, 0.18);
             margin-bottom: 12px;
             letter-spacing: 0.5px;
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            color: var(--text-main);
-            letter-spacing: -0.5px;
-            min-height: 1.3em;
-        }
-
-        .typewriter-cursor {
-            display: inline-block;
-            width: 3px;
-            height: 0.8em;
-            margin-inline-start: 3px;
-            vertical-align: -0.05em;
-            background: var(--primary-blue);
-            border-radius: 1px;
-            animation: cursor-blink 0.85s step-end infinite;
-        }
-
-        @keyframes cursor-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
         }
 
         /* ---------- اسم الأستاذ + روابط التواصل (بدون خلفية، حركة 3D سلسة) ---------- */
@@ -313,13 +291,14 @@
 
         .teacher .name {
             display: inline-block;
-            color: var(--primary-blue);
-            font-size: 13px;
-            font-weight: 800;
+            color: var(--primary-deep);  /* لون الإطار الأول (الأبيض يختفي على البطاقة البيضاء) */
+            font-size: 12.5px;           /* نفس حجم نص الإطار الأول */
+            font-weight: 700;            /* نفس السمك */
+            line-height: 1.65;
             transform-origin: right center;
             text-shadow:
-                0 1px 0 rgba(37, 99, 235, 0.20),
-                0 6px 14px rgba(37, 99, 235, 0.22);
+                0 1px 0 rgba(37, 99, 235, 0.15),
+                0 5px 12px rgba(37, 99, 235, 0.18);
         }
 
         .socials {
@@ -342,8 +321,8 @@
         }
 
         .social-link svg {
-            width: 24px;
-            height: 24px;
+            width: 25px;
+            height: 25px;
             filter: drop-shadow(0 4px 5px rgba(var(--shadow-tint), 0.25));
             transition: filter 0.35s ease;
         }
@@ -595,7 +574,6 @@
 
         @media (prefers-reduced-motion: reduce) {
             .glow-orb { animation: none; }
-            .typewriter-cursor { animation: none; opacity: 1; }
             .section-card { transition: none; }
             .ticker__track { animation: none; }
             .hero-meta .teacher,
@@ -635,10 +613,11 @@
                 </div>
             </div>
 
+            <!-- الاسم وروابط التواصل: تحت إطار الـ3D مباشرة، بدون خلفية -->
             <div class="hero-meta" id="heroMeta">
                 <div class="teacher">
-                <span class="name">الأستاذ: بلوطي عمر</span>
-            </div>
+                    <span class="name">الأستاذ: بلوطي عمر</span>
+                </div>
 
                 <div class="socials">
                 <a href="https://www.instagram.com/omar.bellouti/" target="_blank" rel="noopener noreferrer" class="social-link instagram" style="--d:0.15s" aria-label="إنستغرام">
@@ -656,12 +635,10 @@
                         <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.28-1.38a9.87 9.87 0 0 0 4.71 1.2h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.05c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.81-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.15-4.9-4.34-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.15.12.32.02.52-.09.19-.14.31-.28.48-.14.16-.3.36-.42.49-.14.15-.29.3-.12.6.16.29.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.25 1.38.29.14.46.12.63-.07.17-.19.72-.84.92-1.13.19-.29.38-.24.63-.15.26.1 1.64.78 1.92.92.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/>
                     </svg>
                 </a>
-            </div>
+                </div>
             </div>
 
             <span class="badge">المعلوماتية في الثانوي</span>
-
-            <h1 aria-label="المعلوماتية في الثانوي"><span id="typewriterText" aria-hidden="true"></span><span class="typewriter-cursor" id="typewriterCursor" aria-hidden="true"></span></h1>
 
 <p class="description important-notice">
                 فضاؤكم لتعلم المعلوماتية والروبوتيك، ودروس السنة الأولى ثانوي.
@@ -827,36 +804,13 @@
                 track.style.animationDuration = duration + 's';
             }
 
-            function initTypewriter() {
-                var target = document.getElementById('typewriterText');
-                var cursor = document.getElementById('typewriterCursor');
-                if (!target) return;
-
-                var fullText = 'فضاء التعلم الرقمي';
-                var chars = Array.from(fullText);
-                var i = 0;
-
-                function typeNext() {
-                    if (i < chars.length) {
-                        target.textContent += chars[i];
-                        i++;
-                        var delay = 45 + Math.random() * 55;
-                        setTimeout(typeNext, delay);
-                    }
-                }
-
-                setTimeout(typeNext, 350);
-            }
-
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', function () {
                     initHero3dAnimation();
-                    initTypewriter();
                     initTicker();
                 });
             } else {
                 initHero3dAnimation();
-                initTypewriter();
                 initTicker();
             }
         })();
