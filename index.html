@@ -35,10 +35,8 @@
             --ai-2: #f472b6;
             --plans-1: #475569;
             --plans-2: #94a3b8;
-            --exams-1: #b91c1c;
-            --exams-2: #f87171;
-            --workshops-1: #0891b2;
-            --workshops-2: #22d3ee;
+            --accounts-1: #b91c1c;
+            --accounts-2: #f87171;
         }
 
         * {
@@ -129,7 +127,7 @@
         /* ---------- Hero card ---------- */
         .hero-card {
             background: var(--card-bg);
-            padding: 34px 28px 28px;
+            padding: 24px 20px 28px;
             border-radius: 26px;
             text-align: center;
             border: 1px solid var(--border-soft);
@@ -137,27 +135,116 @@
                 0 20px 50px rgba(28, 37, 52, 0.10),
                 inset 0 1px 1px rgba(255, 255, 255, 0.6);
             margin-bottom: 26px;
-        }
-
-        .avatar-wrapper {
             position: relative;
-            width: 92px;
-            height: 92px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            padding: 4px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--sky));
-            box-shadow: 0 10px 26px rgba(37, 99, 235, 0.28);
+            overflow: hidden; /* لضمان عدم خروج أنيميشن الصورة عن نطاق الإطار */
         }
 
-        .avatar-wrapper img {
+        /* ---------- 3D Intro Container Inside Card ---------- */
+        .hero-3d-frame {
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 20px;
+            padding: 16px 18px;
+            margin-bottom: 22px;
+            overflow: hidden; /* محصورة تماماً داخل إطار البطاقة */
+            perspective: 900px;
+            transform-style: preserve-3d;
+            box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.2), 0 8px 20px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+
+        .hero-3d-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            direction: rtl;
+            position: relative;
+            z-index: 2;
+            transform-style: preserve-3d;
+        }
+
+        /* الصورة الشخصية داخل إطار 3D */
+        .hero-avatar-3d {
+            width: 82px;
+            height: 82px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky));
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4);
+            
+            /* تبدأ من أقصى يسار الإطار وتتحرك بنعومة نحو اليمين */
+            transform: translateX(-180%) translateZ(-100px) rotateY(-35deg);
+            opacity: 0;
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease;
+        }
+
+        .hero-avatar-3d img {
             width: 100%;
             height: 100%;
-            display: block;
-            object-fit: cover;
             border-radius: 50%;
-            border: 3px solid #ffffff;
+            object-fit: cover;
+            border: 2px solid #ffffff;
         }
+
+        .hero-avatar-3d.animate-in {
+            transform: translateX(0) translateZ(15px) rotateY(0deg);
+            opacity: 1;
+        }
+
+        /* النص المترفق مع الصورة */
+        .hero-text-3d {
+            color: #ffffff;
+            font-size: 12.5px;
+            font-weight: 700;
+            line-height: 1.65;
+            text-align: right;
+            
+            /* ظهور النص بتأثير 3D بجانب الصورة */
+            transform: translateX(-20px) translateZ(-80px) rotateX(25deg);
+            opacity: 0;
+            transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1.4s ease 0.3s;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-text-3d.animate-in {
+            transform: translateX(0) translateZ(10px) rotateX(0deg);
+            opacity: 1;
+        }
+
+        /* عناصر مكعبة 3D تطفو خلفية الإطار */
+        .cube-3d {
+            position: absolute;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 6px;
+            pointer-events: none;
+            animation: cubeFloat 6s infinite ease-in-out alternate;
+        }
+        .cube-1 { width: 35px; height: 35px; top: 10%; left: 6%; transform: rotateX(45deg) rotateY(45deg); }
+        .cube-2 { width: 22px; height: 22px; bottom: 12%; right: 8%; transform: rotateX(-30deg) rotateY(60deg); animation-delay: -3s; }
+
+        @keyframes cubeFloat {
+            0% { transform: translateY(0) rotateX(0deg) rotateY(0deg) translateZ(-20px); }
+            100% { transform: translateY(-10px) rotateX(180deg) rotateY(180deg) translateZ(20px); }
+        }
+
+        @media (max-width: 480px) {
+            .hero-3d-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            .hero-text-3d {
+                text-align: center;
+                font-size: 11.5px;
+            }
+            .hero-avatar-3d {
+                width: 72px;
+                height: 72px;
+            }
+        }
+        /* ----------------------------------------------- */
 
         .badge {
             display: inline-block;
@@ -253,7 +340,7 @@
             border: 1px solid var(--border-soft);
         }
 
-        /* ---------- Important notice (blinking red/orange text) ---------- */
+        /* ---------- Important notice ---------- */
         .description.important-notice {
             position: relative;
             font-weight: 800;
@@ -278,21 +365,6 @@
         @keyframes notice-blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.55; }
-        }
-
-        @keyframes notice-shake {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-12deg); }
-            75% { transform: rotate(12deg); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .description.important-notice,
-            .description.important-notice .notice-icon {
-                animation: none;
-                color: #ff3b00;
-                -webkit-text-fill-color: #ff3b00;
-            }
         }
 
         /* ---------- Section title ---------- */
@@ -390,8 +462,7 @@
         .card-articles { background: linear-gradient(135deg, var(--articles-1), var(--articles-2)); }
         .card-ai       { background: linear-gradient(135deg, var(--ai-1), var(--ai-2)); }
         .card-plans    { background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); }
-        .card-exams    { background: linear-gradient(135deg, var(--exams-1), var(--exams-2)); }
-        .card-workshops { background: linear-gradient(135deg, var(--workshops-1), var(--workshops-2)); }
+        .card-accounts { background: linear-gradient(135deg, var(--accounts-1), var(--accounts-2)); }
 
         /* ---------- Footer ---------- */
         .footer {
@@ -455,7 +526,7 @@
         @media (max-width: 460px) {
             .cards-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .section-card { min-height: 132px; padding: 15px; }
-            .hero-card { padding: 28px 20px 22px; }
+            .hero-card { padding: 22px 16px 22px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -480,8 +551,19 @@
 
         <!-- بطاقة الترحيب -->
         <div class="hero-card">
-            <div class="avatar-wrapper">
-                <img src="teacher.jpg" alt="الأستاذ بلوطي عمر">
+
+            <!-- الإطار ثلاثي الأبعاد 3D للتأثير والترحيب المحصور داخل البطاقة -->
+            <div class="hero-3d-frame">
+                <div class="cube-3d cube-1"></div>
+                <div class="cube-3d cube-2"></div>
+                <div class="hero-3d-content">
+                    <div class="hero-avatar-3d" id="heroAvatar3D">
+                        <img src="teacher.jpg" alt="الأستاذ بلوطي عمر">
+                    </div>
+                    <div class="hero-text-3d" id="heroText3D">
+                        الفضاء التعليمي الرقمي المعتمد لدروس ومشاريع مادة الإعلام الآلي لجميع المستويات (1AS / 2AS / 3AS) والشعب –
+                    </div>
+                </div>
             </div>
 
             <span class="badge">المعلوماتية في الثانوي</span>
@@ -568,19 +650,11 @@
                 </div>
             </a>
 
-            <a href="workshops/index.html" class="section-card card-workshops">
-                <span class="icon">🛠️</span>
+            <a href="accounts/index.html" class="section-card card-accounts">
+                <span class="icon">💳</span>
                 <div>
-                    <div class="card-title">الورشات التطبيقية</div>
-                    <div class="card-sub">تمارين وتطبيقات عملية</div>
-                </div>
-            </a>
-
-            <a href="exams/index.html" class="section-card card-exams">
-                <span class="icon">📝</span>
-                <div>
-                    <div class="card-title">الاختبارات والفروض</div>
-                    <div class="card-sub">تقييم ومتابعة المستوى</div>
+                    <div class="card-title">الاشتراكات والحسابات</div>
+                    <div class="card-sub">إدارة حسابك واشتراكك</div>
                 </div>
             </a>
 
@@ -613,9 +687,30 @@
 
     <script>
         (function () {
+            
+            // --- دالة تشغيل حركة الصورة والنص داخل إطار البطاقة (في كل تحديث للصفحة) ---
+            function initHero3dAnimation() {
+                var avatar = document.getElementById('heroAvatar3D');
+                var text = document.getElementById('heroText3D');
+                if (!avatar || !text) return;
+
+                // تنظيف أي حالة سابقة ثم إعادة تشغيل الحركة من البداية
+                avatar.classList.remove('animate-in');
+                text.classList.remove('animate-in');
+
+                // إجبار المتصفح على تثبيت الحالة الابتدائية قبل بدء الانتقال
+                void avatar.offsetWidth;
+                void text.offsetWidth;
+
+                // تشغيل انسحاب الصورة من اليسار والظهور السلس 3D في كل مرة
+                setTimeout(function () {
+                    avatar.classList.add('animate-in');
+                    text.classList.add('animate-in');
+                }, 150);
+            }
+
             /* ====================================================
-               شريط الإعلانات: عدّلوا هنا فقط لإضافة/تغيير المعلومات
-               الموجهة للطلبة. كل سطر = إعلان منفصل.
+               شريط الإعلانات
                ==================================================== */
             var tickerMessages = [
                 'مرحبًا بكم في الفضاء الرقمي للأستاذ بلوطي عمر — تابعوا هنا كل الإعلانات الجديدة'
@@ -636,7 +731,6 @@
                     return span;
                 }
 
-                // تكرار المحتوى مرتين لضمان حركة متصلة بلا فراغ
                 track.appendChild(makeItem());
                 track.appendChild(makeItem());
 
@@ -667,10 +761,12 @@
 
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', function () {
+                    initHero3dAnimation();
                     initTypewriter();
                     initTicker();
                 });
             } else {
+                initHero3dAnimation();
                 initTypewriter();
                 initTicker();
             }
