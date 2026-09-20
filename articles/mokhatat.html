@@ -20,7 +20,6 @@
         :root {
             --bg-page: #f0f5ff;
             --card-bg: #ffffff;
-            --lesson-bg: #f8fafc;
             --primary-blue: #2563eb;
             --primary-blue-soft: #3b82f6;
             --primary-deep: #1e3a8a;
@@ -28,9 +27,7 @@
             --text-main: #0f172a;
             --text-muted: #475569;
             --border-soft: #cbd5e1;
-            --topbar-h: 46px;
-            --oak-wood: #d97706;
-            --oak-wood-light: #fef3c7;
+            --topbar-h: 48px;
         }
 
         * {
@@ -52,10 +49,11 @@
             background-size: 100% 100%, 100% 100%, 24px 24px, 24px 24px;
             min-height: 100vh;
             color: var(--text-main);
-            padding: calc(var(--topbar-h) + 16px) 12px calc(80px + env(safe-area-inset-bottom));
+            padding: calc(var(--topbar-h) + 14px) 10px calc(85px + env(safe-area-inset-bottom));
+            overflow-x: hidden;
         }
 
-        /* Top Bar */
+        /* Top Bar Header */
         .app-bar {
             position: fixed;
             top: 0;
@@ -71,10 +69,10 @@
         }
 
         .app-bar__inner {
-            max-width: 980px;
+            max-width: 1100px;
             margin: 0 auto;
-            min-height: 44px;
-            padding: 6px 0;
+            min-height: 46px;
+            padding: 4px 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -86,15 +84,16 @@
             margin: 0 auto;
         }
 
-        /* Card Styles */
+        /* Glassmorphism Cards */
         .glass-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(203, 213, 225, 0.8);
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(37, 99, 235, 0.06);
         }
 
+        /* Responsive 3D Viewport Wrapper */
         .viewport-wrapper-light {
             background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
             border-radius: 24px;
@@ -102,16 +101,16 @@
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.03), 0 15px 35px rgba(30, 58, 138, 0.1);
             position: relative;
             overflow: hidden;
-            height: 600px;
+            height: 580px;
             touch-action: none;
             user-select: none;
         }
 
         .vp-btn {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(8px);
             border: 1px solid #cbd5e1;
             color: var(--primary-deep);
@@ -120,10 +119,10 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
         }
 
-        .vp-btn:hover {
+        .vp-btn:hover, .vp-btn:active {
             background: var(--primary-blue);
             color: #ffffff;
             border-color: var(--primary-blue);
@@ -132,7 +131,7 @@
         .stage-3d {
             width: 100%;
             height: 100%;
-            perspective: 1300px;
+            perspective: 1200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -141,13 +140,14 @@
 
         .stage-3d:active { cursor: grabbing; }
 
+        /* Base dimensions of 3D Room */
         .lab-room-3d {
             width: 780px;
-            height: 540px;
+            height: 520px;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.12s ease-out;
-            transform: rotateX(50deg) rotateZ(-25deg) scale(0.85);
+            transition: transform 0.1s ease-out;
+            transform-origin: center center;
         }
 
         /* Floor: Light Tile Ceramic Pattern */
@@ -155,9 +155,9 @@
             position: absolute;
             inset: 0;
             background-color: #f1f5f9;
-            background-image: 
-                linear-gradient(rgba(148, 163, 184, 0.25) 2px, transparent 2px),
-                linear-gradient(90deg, rgba(148, 163, 184, 0.25) 2px, transparent 2px);
+            background-image:
+                linear-gradient(rgba(148, 163, 184, 0.22) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.22) 2px, transparent 2px);
             background-size: 45px 45px;
             border: 6px solid #cbd5e1;
             border-radius: 18px;
@@ -165,19 +165,20 @@
             transform-style: preserve-3d;
         }
 
-        /* Wall Outlines / Labels */
+        /* Wall Labels */
         .wall-tag {
             position: absolute;
             color: #334155;
             font-size: 11px;
             font-weight: 800;
-            padding: 4px 12px;
-            background: rgba(255, 255, 255, 0.85);
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
             border: 1px solid #cbd5e1;
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             pointer-events: none;
             z-index: 5;
+            white-space: nowrap;
         }
 
         .wall-front-tag { top: -14px; left: 50%; transform: translateX(-50%); background: #eff6ff; border-color: #93c5fd; color: #1e40af; }
@@ -185,13 +186,13 @@
         .wall-right-tag { top: 50%; right: -20px; transform: translateY(-50%) rotate(90deg); }
         .wall-left-tag  { top: 50%; left: -20px; transform: translateY(-50%) rotate(-90deg); }
 
-        /* Front Wall Components */
+        /* Front Wall Layout */
         .front-wall-container {
             position: absolute;
             top: 15px;
             left: 20px;
             right: 20px;
-            height: 70px;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -203,7 +204,7 @@
         /* Entrance Door (Left side of Front Wall) */
         .door-3d-front {
             width: 75px;
-            height: 65px;
+            height: 60px;
             background: linear-gradient(135deg, #10b981, #059669);
             border: 2px solid #a7f3d0;
             border-radius: 8px;
@@ -218,27 +219,27 @@
             pointer-events: auto;
         }
 
-        /* Blackboard / Whiteboard in Center of Front Wall */
+        /* Blackboard in Center of Front Wall */
         .blackboard-3d {
             width: 320px;
-            height: 65px;
+            height: 60px;
             background: linear-gradient(180deg, #1e293b, #0f172a);
-            border: 4px solid #d97706; /* Wooden frame */
+            border: 4px solid #d97706;
             border-radius: 8px;
             color: #f8fafc;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
             text-align: center;
             pointer-events: auto;
         }
 
         /* Teacher Desk (Right side of Front Wall) */
         .teacher-desk-front {
-            width: 130px;
-            height: 65px;
+            width: 125px;
+            height: 60px;
             background: linear-gradient(135deg, #1e3a8a, #2563eb);
             border: 2px solid #60a5fa;
             border-radius: 10px;
@@ -251,13 +252,13 @@
             pointer-events: auto;
         }
 
-        /* Middle U-Tables Facing FRONT Blackboard */
+        /* U-Shape Student Tables Facing Blackboard */
         .u-tables-facing-front {
             position: absolute;
-            left: 200px;
-            top: 130px;
-            width: 380px;
-            height: 250px;
+            left: 190px;
+            top: 120px;
+            width: 400px;
+            height: 240px;
             transform-style: preserve-3d;
             transform: translateZ(10px);
             pointer-events: none;
@@ -277,10 +278,9 @@
             font-weight: 800;
         }
 
-        /* U-Shape facing FRONT (Top side open or sides pointing to front) */
-        .u-table-bottom-side { bottom: 0; left: 0; width: 380px; height: 50px; }
-        .u-table-left-wing   { top: 0; left: 0; width: 55px; height: 200px; }
-        .u-table-right-wing  { top: 0; right: 0; width: 55px; height: 200px; }
+        .u-table-bottom-side { bottom: 0; left: 0; width: 400px; height: 50px; }
+        .u-table-left-wing   { top: 0; left: 0; width: 55px; height: 190px; }
+        .u-table-right-wing  { top: 0; right: 0; width: 55px; height: 190px; }
 
         .u-facing-indicator {
             position: absolute;
@@ -290,7 +290,7 @@
             background: #ffffff;
             border: 2px dashed #2563eb;
             color: #1e3a8a;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 12px;
             font-size: 11px;
             font-weight: 800;
@@ -300,7 +300,7 @@
 
         .pc-node-3d {
             position: absolute;
-            width: 88px;
+            width: 90px;
             height: 66px;
             background: #ffffff;
             border: 2px solid #94a3b8;
@@ -308,7 +308,7 @@
             transform-style: preserve-3d;
             transform: translateZ(16px);
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -353,7 +353,7 @@
 
         .pc-num-tag {
             background: #f1f5f9;
-            padding: 1px 5px;
+            padding: 1px 4px;
             border-radius: 4px;
             color: #1e3a8a;
         }
@@ -383,31 +383,31 @@
         }
 
         /* RIGHT WALL (PCs 1 to 5) */
-        .pos-pc-1 { right: 25px; top: 120px; }
-        .pos-pc-2 { right: 25px; top: 195px; }
-        .pos-pc-3 { right: 25px; top: 270px; }
-        .pos-pc-4 { right: 25px; top: 345px; }
-        .pos-pc-5 { right: 25px; top: 420px; }
+        .pos-pc-1 { right: 20px; top: 110px; }
+        .pos-pc-2 { right: 20px; top: 185px; }
+        .pos-pc-3 { right: 20px; top: 260px; }
+        .pos-pc-4 { right: 20px; top: 335px; }
+        .pos-pc-5 { right: 20px; top: 410px; }
 
-        /* BACK WALL (PCs 6 to 9 - 7,8,9 broken) Opposite Blackboard */
-        .pos-pc-6 { left: 160px; bottom: 20px; }
-        .pos-pc-7 { left: 280px; bottom: 20px; } /* Broken 🔴 */
-        .pos-pc-8 { left: 400px; bottom: 20px; } /* Broken 🔴 */
-        .pos-pc-9 { left: 520px; bottom: 20px; } /* Broken 🔴 */
+        /* BACK WALL (PCs 6 to 9 - 7,8,9 broken) */
+        .pos-pc-6 { left: 150px; bottom: 20px; }
+        .pos-pc-7 { left: 280px; bottom: 20px; }
+        .pos-pc-8 { left: 410px; bottom: 20px; }
+        .pos-pc-9 { left: 540px; bottom: 20px; }
 
         /* LEFT WALL (PCs 10 to 14) */
-        .pos-pc-10 { left: 25px; top: 120px; }
-        .pos-pc-11 { left: 25px; top: 195px; }
-        .pos-pc-12 { left: 25px; top: 270px; }
-        .pos-pc-13 { left: 25px; top: 345px; }
-        .pos-pc-14 { left: 25px; top: 420px; }
+        .pos-pc-10 { left: 20px; top: 110px; }
+        .pos-pc-11 { left: 20px; top: 185px; }
+        .pos-pc-12 { left: 20px; top: 260px; }
+        .pos-pc-13 { left: 20px; top: 335px; }
+        .pos-pc-14 { left: 20px; top: 410px; }
 
         /* 2D Blueprint Styles */
         .plan-2d-container {
             display: none;
             background: #ffffff;
             border-radius: 20px;
-            padding: 24px;
+            padding: 20px;
             border: 2px solid var(--border-soft);
             box-shadow: 0 10px 30px rgba(0,0,0,0.04);
         }
@@ -415,7 +415,7 @@
         .blueprint-box {
             border: 3px solid var(--primary-deep);
             border-radius: 18px;
-            padding: 20px;
+            padding: 18px;
             background: #f8fafc;
             background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
             background-size: 16px 16px;
@@ -440,7 +440,7 @@
             border-color: #fca5a5;
         }
 
-        /* Bottom Navigation - Exactly 3 items */
+        /* Bottom Navigation Bar - Exactly 3 items */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -483,7 +483,7 @@
             background: rgba(37, 99, 235, 0.08);
         }
 
-        /* Modal Styles */
+        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -517,17 +517,19 @@
 
         .modal-overlay.active .modal-card { transform: scale(1); }
 
+        /* Media Responsive Adjustments for Mobile Screens */
+        @media (max-width: 768px) {
+            .viewport-wrapper-light { height: 460px; }
+            .wall-tag { font-size: 9.5px; padding: 2px 6px; }
+        }
+
         @media print {
-            .app-bar, .bottom-nav, .toolbar-card, .viewport-wrapper-light, .modal-overlay {
+            .app-bar, .bottom-nav, .glass-card, .viewport-wrapper-light, .modal-overlay, #controlsBar {
                 display: none !important;
             }
             body { background: white !important; padding: 0 !important; }
             .plan-2d-container { display: block !important; box-shadow: none !important; border: none !important; }
-        }
-
-        @media (max-width: 768px) {
-            .viewport-wrapper-light { height: 480px; }
-            .lab-room-3d { transform: rotateX(50deg) rotateZ(-25deg) scale(0.65); }
+            .print-header-show { display: block !important; }
         }
     </style>
 </head>
@@ -537,59 +539,90 @@
     <!-- Top App Bar -->
     <a href="../index.html" class="app-bar" aria-label="العودة للصفحة الرئيسية">
         <span class="app-bar__inner">
-            <svg class="w-5 h-5" viewBox="0 0 512 512" aria-hidden="true">
+            <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 512 512" aria-hidden="true">
                 <polygon fill="#00c8ff" points="60,20 285,256 60,492"/>
                 <polygon fill="#00e676" points="60,20 372,204 285,256"/>
                 <polygon fill="#ffd400" points="372,204 460,256 372,308 285,256"/>
                 <polygon fill="#ff3d47" points="60,492 372,308 285,256"/>
             </svg>
-            <span class="text-xs sm:text-sm font-bold text-white">مخطط جلوس القسم الرقمي - <bdi>مخبر المعلوماتية 3D</bdi></span>
+            <span class="text-xs sm:text-sm font-bold text-white truncate">مخطط جلوس القسم الرقمي - <bdi>مخبر المعلوماتية 3D</bdi></span>
         </span>
     </a>
 
+    <!-- Print Only Header -->
+    <div class="hidden print-header-show mb-4 text-center border-b-2 border-slate-900 pb-3">
+        <h2 class="text-xl font-black text-slate-900">مخطط جلوس التلاميذ بمخبر المعلوماتية</h2>
+        <p id="printClassTitle" class="text-sm font-bold text-blue-900 mt-1">القسم: 1 ج م ع ت 1</p>
+        <p class="text-xs text-slate-600">الأستاذ المؤطر: بلوطي عمر | السنة الدراسية: 2025 - 2026</p>
+    </div>
+
     <div class="page-wrap">
 
-        <!-- Hero Header -->
-        <div class="glass-card p-5 mb-4">
-            <div class="flex flex-wrap items-center justify-between gap-3">
+        <!-- Header Card with Class Selector -->
+        <div class="glass-card p-4 sm:p-5 mb-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                
+                <!-- Title & Professor -->
                 <div>
-                    <h1 class="text-lg sm:text-xl font-extrabold text-blue-900 flex items-center gap-2">
+                    <h1 class="text-base sm:text-lg font-black text-blue-900 flex items-center gap-2">
                         <i class="fa-solid fa-chalkboard-user text-blue-600"></i> مخطط جلوس التلاميذ في المخبر
                     </h1>
-                    <p class="text-xs text-slate-500 mt-1">الأستاذ: بلوطي عمر | توزيع هندسي وتفاعلي ثلاثي الأبعاد</p>
+                    <p class="text-xs text-slate-500 mt-0.5">الأستاذ: بلوطي عمر | إشراف وإدارة الأقسام الرقمية</p>
                 </div>
-                <div class="flex items-center gap-2 flex-wrap">
-                    <span class="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
-                        <i class="fa-solid fa-desktop ml-1"></i> 11 شغال
-                    </span>
-                    <span class="px-3 py-1.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold">
-                        <i class="fa-solid fa-triangle-exclamation ml-1"></i> 3 معطلة 🔴
-                    </span>
-                    <span class="px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold">
-                        <i class="fa-solid fa-users ml-1"></i> 22 تلميذ
-                    </span>
+
+                <!-- Class Dropdown Selector -->
+                <div class="flex items-center gap-2 w-full md:w-auto">
+                    <label for="classSelect" class="text-xs font-bold text-slate-700 whitespace-nowrap">
+                        <i class="fa-solid fa-graduation-cap text-blue-600 ml-1"></i> اختر القسم:
+                    </label>
+                    <select id="classSelect" onchange="changeClass(this.value)"
+                            class="w-full md:w-56 p-2.5 rounded-xl border-2 border-blue-600 bg-blue-50 text-blue-950 font-black text-xs focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer shadow-sm">
+                        <option value="1gmct1">🧪 1 ج م ع ت 1 (علوم 1)</option>
+                        <option value="1gmct2">🧪 1 ج م ع ت 2 (علوم 2)</option>
+                        <option value="1gmct3">🧪 1 ج م ع ت 3 (علوم 3)</option>
+                        <option value="1gmct4">🧪 1 ج م ع ت 4 (علوم 4)</option>
+                        <option value="1gmad1">📖 1 ج م آد 1 (آداب 1)</option>
+                        <option value="1gmad2">📖 1 ج م آد 2 (آداب 2)</option>
+                    </select>
                 </div>
+
+            </div>
+
+            <!-- Class Statistics Bar -->
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-200/80 flex-wrap">
+                <span class="px-2.5 py-1 rounded-lg bg-blue-100 text-blue-900 text-[11px] font-extrabold" id="badgeClassName">
+                    القسم الحالي: 1 ج م ع ت 1
+                </span>
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-bold">
+                    <i class="fa-solid fa-desktop ml-1"></i> 11 شغال
+                </span>
+                <span class="px-2.5 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-[11px] font-bold">
+                    <i class="fa-solid fa-triangle-exclamation ml-1"></i> 3 معطلة (7، 8، 9) 🔴
+                </span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-bold" id="badgeStudentCount">
+                    <i class="fa-solid fa-users ml-1"></i> 22 تلميذ مسجل
+                </span>
             </div>
         </div>
 
-        <!-- Controls & Search Toolbar -->
-        <div class="glass-card p-4 mb-4 flex flex-col md:flex-row items-center justify-between gap-3">
+        <!-- Toolbar & Search -->
+        <div id="controlsBar" class="glass-card p-3.5 mb-4 flex flex-col md:flex-row items-center justify-between gap-3">
             <!-- Search input -->
             <div class="relative w-full md:w-80">
-                <i class="fa-solid fa-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="ابحث عن اسم تلميذ فوراً..."
-                       class="w-full pr-9 pl-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-xs text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white transition-all">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="ابحث عن اسم تلميذ في هذا القسم..."
+                       class="w-full pr-8 pl-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-xs text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white transition-all">
             </div>
 
-            <!-- View Switcher -->
-            <div class="flex items-center gap-2 w-full md:w-auto justify-end">
-                <button id="btnView3d" onclick="switchView('3d')" class="px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-md hover:bg-blue-700 transition">
-                    <i class="fa-solid fa-cube ml-1"></i> بيئة 3D فاتحة
+            <!-- View Switcher & Action Buttons -->
+            <div class="flex items-center gap-2 w-full md:w-auto justify-end flex-wrap sm:flex-nowrap">
+                <button id="btnView3d" onclick="switchView('3d')" class="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-md hover:bg-blue-700 transition">
+                    <i class="fa-solid fa-cube ml-1"></i> بيئة 3D
                 </button>
-                <button id="btnView2d" onclick="switchView('2d')" class="px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition">
-                    <i class="fa-solid fa-map ml-1"></i> مخطط 2D طباعة
+                <button id="btnView2d" onclick="switchView('2d')" class="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-map ml-1"></i> مخطط 2D مسطح
                 </button>
-                <button onclick="window.print()" class="px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition">
+                <button onclick="window.print()" class="px-3.5 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-900 transition shadow-sm">
                     <i class="fa-solid fa-print ml-1"></i> طباعة
                 </button>
             </div>
@@ -598,20 +631,22 @@
         <!-- 3D Interactive Viewport -->
         <div id="viewport3D" class="viewport-wrapper-light">
             
-            <!-- Orbit Preset Buttons -->
+            <!-- Orbit & Scale Controls -->
             <div class="absolute top-3 right-3 z-20 flex flex-col gap-1.5">
                 <button class="vp-btn" onclick="setPresetAngle('iso')" title="منظر 3D مائل"><i class="fa-solid fa-cube"></i></button>
                 <button class="vp-btn" onclick="setPresetAngle('top')" title="منظر علوي 2D"><i class="fa-solid fa-border-all"></i></button>
                 <button class="vp-btn" onclick="setPresetAngle('front')" title="منظر من السبورة"><i class="fa-solid fa-eye"></i></button>
-                <button class="vp-btn" onclick="resetZoom()" title="إعادة ضبط"><i class="fa-solid fa-rotate-right"></i></button>
+                <button class="vp-btn" onclick="adjustZoom(0.1)" title="تكبير"><i class="fa-solid fa-plus"></i></button>
+                <button class="vp-btn" onclick="adjustZoom(-0.1)" title="تصغير"><i class="fa-solid fa-minus"></i></button>
+                <button class="vp-btn" onclick="resetZoom()" title="إعادة ضبط الحجم"><i class="fa-solid fa-rotate-right"></i></button>
             </div>
 
-            <!-- Helper Badge -->
-            <div class="absolute bottom-3 right-3 z-20 bg-white/90 backdrop-blur-md border border-slate-300 text-slate-700 text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-sm pointer-events-none">
-                <i class="fa-solid fa-hand-pointer text-blue-600 ml-1"></i> انقر وسحب للتدوير | انقر على حاسوب لتعديل التلاميذ
+            <!-- Touch / Mobile Helper Badge -->
+            <div class="absolute bottom-3 right-3 left-3 sm:left-auto z-20 bg-white/95 backdrop-blur-md border border-slate-300 text-slate-700 text-[10.5px] font-bold px-3 py-1.5 rounded-xl shadow-sm text-center sm:text-right pointer-events-none">
+                <i class="fa-solid fa-hand-pointer text-blue-600 ml-1"></i> بالسحب للتدوير | انقر على أي حاسوب لتعديل التلاميذ
             </div>
 
-            <!-- 3D Stage -->
+            <!-- 3D Stage Container -->
             <div class="stage-3d" id="stage3d">
                 <div class="lab-room-3d" id="room3d">
                     
@@ -663,12 +698,12 @@
             </div>
         </div>
 
-        <!-- 2D Printable Blueprint View -->
+        <!-- 2D Blueprint View -->
         <div id="viewport2D" class="plan-2d-container">
             <div class="blueprint-box">
                 <!-- Front Wall Header -->
                 <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-3 mb-4 text-center">
-                    <span class="text-xs font-black text-blue-900 block mb-2">الجدار الأمامي (السبورة في المنتصف)</span>
+                    <span class="text-xs font-black text-blue-900 block mb-2" id="bpFrontClassHeader">الجدار الأمامي (السبورة في المنتصف) - قسم 1 ج م ع ت 1</span>
                     <div class="flex items-center justify-between gap-2">
                         <div class="bg-emerald-100 border border-emerald-300 text-emerald-800 font-bold text-xs p-2 rounded-lg w-1/4">
                             <i class="fa-solid fa-door-open ml-1"></i> باب الدخول
@@ -690,7 +725,7 @@
                     </div>
 
                     <!-- Middle U-Tables -->
-                    <div class="w-full md:w-2/4 flex flex-col items-center justify-center border-2 border-amber-300 bg-amber-50/50 rounded-xl p-4 my-2">
+                    <div class="w-full md:w-2/4 flex flex-col items-center justify-center border-2 border-amber-300 bg-amber-50/60 rounded-xl p-4 my-2">
                         <i class="fa-solid fa-table-cells-large text-2xl text-amber-600 mb-1"></i>
                         <span class="text-xs font-bold text-amber-900">طاولات التلاميذ المنتصف (شكل U)</span>
                         <span class="text-[11px] text-amber-700 mt-1">جميع المقاعد موجهة نحو السبورة</span>
@@ -752,12 +787,12 @@
 
                 <div class="mb-3">
                     <label class="block text-xs font-bold text-slate-700 mb-1">ملاحظات إضافية:</label>
-                    <input type="text" id="modalNotes" placeholder="ملاحظات حول العتاد أو التلميذ..." class="w-full p-2.5 rounded-xl border border-slate-300 bg-slate-50 text-xs font-bold focus:outline-none focus:border-blue-600">
+                    <input type="text" id="modalNotes" placeholder="ملاحظات حول التلميذ أو الحاسوب..." class="w-full p-2.5 rounded-xl border border-slate-300 bg-slate-50 text-xs font-bold focus:outline-none focus:border-blue-600">
                 </div>
 
                 <div class="flex items-center justify-end gap-2 mt-5">
                     <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200">إلغاء</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 shadow-md">حفظ التغييرات</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 shadow-md">حفظ للقسم الحالي</button>
                 </div>
             </form>
         </div>
@@ -787,64 +822,181 @@
     </nav>
 
     <script>
-        /* Exact PC Seating Config according to the specific classroom layout */
-        const DEFAULT_PCS = [
-            /* Right Wall (1-5) */
-            { id: 1, wall: 'right', posClass: 'pos-pc-1', status: 'active', s1: 'بن علي محمد', s2: 'براهيمي فاطمة', notes: '' },
-            { id: 2, wall: 'right', posClass: 'pos-pc-2', status: 'active', s1: 'سعيدي أحمد', s2: 'بلخير سارة', notes: '' },
-            { id: 3, wall: 'right', posClass: 'pos-pc-3', status: 'active', s1: 'قاسمي زينب', s2: 'منصوري يوسف', notes: '' },
-            { id: 4, wall: 'right', posClass: 'pos-pc-4', status: 'active', s1: 'حمادي عبد الرحمن', s2: 'دراجي خديجة', notes: '' },
-            { id: 5, wall: 'right', posClass: 'pos-pc-5', status: 'active', s1: 'زيتوني أمين', s2: 'طاهري مريم', notes: '' },
+        /* Class Names Map */
+        const CLASSES_MAP = {
+            '1gmct1': '🧪 1 ج م ع ت 1 (علوم 1)',
+            '1gmct2': '🧪 1 ج م ع ت 2 (علوم 2)',
+            '1gmct3': '🧪 1 ج م ع ت 3 (علوم 3)',
+            '1gmct4': '🧪 1 ج م ع ت 4 (علوم 4)',
+            '1gmad1': '📖 1 ج م آد 1 (آداب 1)',
+            '1gmad2': '📖 1 ج م آد 2 (آداب 2)'
+        };
 
-            /* Back Wall Opposite Blackboard (6-9) - 7,8,9 Broken 🔴 */
-            { id: 6, wall: 'back', posClass: 'pos-pc-6', status: 'active', s1: 'رحماني بلال', s2: 'بلقاسم شيماء', notes: '' },
-            { id: 7, wall: 'back', posClass: 'pos-pc-7', status: 'broken', s1: '', s2: '', notes: 'عطل في الشاشة والتغذية' },
-            { id: 8, wall: 'back', posClass: 'pos-pc-8', status: 'broken', s1: '', s2: '', notes: 'عطل في الوحدة المركزية' },
-            { id: 9, wall: 'back', posClass: 'pos-pc-9', status: 'broken', s1: '', s2: '', notes: 'عطل في القرص الصلب' },
+        /* Pre-populated Sample Data Generator for each class */
+        const SAMPLE_STUDENTS_BY_CLASS = {
+            '1gmct1': [
+                ['بن علي محمد', 'براهيمي فاطمة'], ['سعيدي أحمد', 'بلخير سارة'], ['قاسمي زينب', 'منصوري يوسف'],
+                ['حمادي عبد الرحمن', 'دراجي خديجة'], ['زيتوني أمين', 'طاهري مريم'], ['رحماني بلال', 'بلقاسم شيماء'],
+                ['', ''], ['', ''], ['', ''], ['شريفي خالد', 'عثماني أسماء'], ['عباسي أيوب', 'بن سالم هدى'],
+                ['طيباني عمر', 'حداد لينة'], ['جبار ياسين', 'مخلوفي إيمان'], ['قدوري حمزة', 'بوغزالة سلوى']
+            ],
+            '1gmct2': [
+                ['بوعزيز كمال', 'مزاهي ريم'], ['حمداني أنس', 'عمارة نادية'], ['عزوز طارق', 'بوعبدالله مريم'],
+                ['بن زيان مهدي', 'عيساوي حنان'], ['دريدي إسلام', 'طالبي هاجر'], ['سليماني عبد القادر', 'مرابط أمل'],
+                ['', ''], ['', ''], ['', ''], ['صالحي وليد', 'بوضياف منار'], ['كراش محمد', 'لعريبي إكرام'],
+                ['مزاري يونس', 'زروقي أسماء'], ['يحياوي حمزة', 'بوزيد نسرين'], ['قريشي صلاح', 'حليمي عبير']
+            ],
+            '1gmct3': [
+                ['تواتي فاروق', 'زروقي أمينة'], ['حاج علي سامي', 'بن يحيى رانيا'], ['رزيقي إلياس', 'مبروك سلمى'],
+                ['ساعد أسامة', 'قسوم خلود'], ['بوشريط ريان', 'حدادي كوثر'], ['محفوظي هيثم', 'مسعودي إيناس'],
+                ['', ''], ['', ''], ['', ''], ['نوي عبد النور', 'مبارك زهرة'], ['بن عمر سفيان', 'بوعلي نهال'],
+                ['ناصري رؤوف', 'قادري هبة'], ['سعيداني رضوان', 'بشير منال'], ['خليفي عادل', 'معتوق نور']
+            ],
+            '1gmct4': [
+                ['بلعالم رفيق', 'شريف آية'], ['غانم زكرياء', 'حساني صفاء'], ['بوزيان عصام', 'قوار مرام'],
+                ['رمضاني أمير', 'سعدودي أريج'], ['مرزوقي معاذ', 'طالب نورهان'], ['عياد لؤي', 'رحال ملاك'],
+                ['', ''], ['', ''], ['', ''], ['كريم أسامة', 'سالمي تسنيم'], ['بن طالب زكريا', 'خليل رغد'],
+                ['فارس يوسف', 'بن عبيد روان'], ['حمودة جابر', 'مبروكي دانية'], ['شليغم أنور', 'بوزيان بشرى']
+            ],
+            '1gmad1': [
+                ['مداني حكيم', 'براهيمي سارة'], ['عيساوي مصطفى', 'شريف زهرة'], ['خليلي ياسر', 'دريدي آلاء'],
+                ['بوعبد الله رشيد', 'قادري ياسمين'], ['صالحي توفيق', 'زرقي مروة'], ['حماني عماد', 'بن علي سندس'],
+                ['', ''], ['', ''], ['', ''], ['بوزيان مالك', 'حموش غادة'], ['لطفي أيمن', 'مرزوق شيماء'],
+                ['سعدي طارق', 'بن عباد ندى'], ['ميباركي نذير', 'بوعكاز رقية'], ['قاسم جلال', 'زيدان سجود']
+            ],
+            '1gmad2': [
+                ['بن يعقوب هشام', 'زايدي جيهان'], ['سليماني كريم', 'قواسمي لمياء'], ['رزوقي بلال', 'فرحاتي إيمان'],
+                ['شريف أسامة', 'بومدين نهاد'], ['سالمي مهدي', 'بوعزيز سمية'], ['طاهر حمزة', 'رحماني عفاف'],
+                ['', ''], ['', ''], ['', ''], ['حامدي وائل', 'طالبي بثينة'], ['بلحسن فؤاد', 'حمادي أصالة'],
+                ['زيداني عبد اللطيف', 'خليف مروة'], ['قادري شرف الدين', 'بوعلي وسام'], ['صالح عبد الجليل', 'بن سعد جنات']
+            ]
+        };
 
-            /* Left Wall (10-14) */
-            { id: 10, wall: 'left', posClass: 'pos-pc-10', status: 'active', s1: 'شريفي خالد', s2: 'عثماني أسماء', notes: '' },
-            { id: 11, wall: 'left', posClass: 'pos-pc-11', status: 'active', s1: 'عباسي أيوب', s2: 'بن سالم هدى', notes: '' },
-            { id: 12, wall: 'left', posClass: 'pos-pc-12', status: 'active', s1: 'طيباني عمر', s2: 'حداد لينة', notes: '' },
-            { id: 13, wall: 'left', posClass: 'pos-pc-13', status: 'active', s1: 'جبار ياسين', s2: 'مخلوفي إيمان', notes: '' },
-            { id: 14, wall: 'left', posClass: 'pos-pc-14', status: 'active', s1: 'قدوري حمزة', s2: 'بوغزالة سلوى', notes: '' }
-        ];
-
-        let pcsData = [];
+        /* State Variables */
+        let currentClassId = '1gmct1';
+        let allClassData = {};
+        let activePcsData = [];
 
         /* 3D Orbit Control State */
         let rotX = 50;
         let rotZ = -25;
-        let scale = 0.85;
+        let baseScale = 0.85;
+        let userZoom = 1.0;
         let isDragging = false;
         let startX = 0;
         let startY = 0;
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadPcsData();
-            render3dNodes();
-            render2dBlueprint();
+            loadAllClassesData();
+            initResponsiveScaling();
+            switchClassData(currentClassId);
             init3dControls();
+            window.addEventListener('resize', handleAutoResize);
         });
 
-        function loadPcsData() {
-            const saved = localStorage.getItem('lab_seating_plan_v2');
-            if (saved) {
-                try { pcsData = JSON.parse(saved); } catch (e) { pcsData = [...DEFAULT_PCS]; }
-            } else {
-                pcsData = [...DEFAULT_PCS];
-            }
+        /* Dynamic Base Scale Calculation based on device screen width */
+        function calculateAutoBaseScale() {
+            const vp = document.getElementById('viewport3D');
+            if (!vp) return 0.85;
+            const width = vp.clientWidth;
+            if (width <= 380) return 0.42;
+            if (width <= 480) return 0.50;
+            if (width <= 640) return 0.62;
+            if (width <= 768) return 0.72;
+            return 0.85;
         }
 
-        function savePcsData() {
-            localStorage.setItem('lab_seating_plan_v2', JSON.stringify(pcsData));
+        function initResponsiveScaling() {
+            baseScale = calculateAutoBaseScale();
+            apply3dTransform();
+        }
+
+        function handleAutoResize() {
+            baseScale = calculateAutoBaseScale();
+            apply3dTransform();
+        }
+
+        function getDefaultPcsForClass(classId) {
+            const studentsList = SAMPLE_STUDENTS_BY_CLASS[classId] || SAMPLE_STUDENTS_BY_CLASS['1gmct1'];
+            
+            return [
+                /* Right Wall (1-5) */
+                { id: 1, wall: 'right', posClass: 'pos-pc-1', status: 'active', s1: studentsList[0][0], s2: studentsList[0][1], notes: '' },
+                { id: 2, wall: 'right', posClass: 'pos-pc-2', status: 'active', s1: studentsList[1][0], s2: studentsList[1][1], notes: '' },
+                { id: 3, wall: 'right', posClass: 'pos-pc-3', status: 'active', s1: studentsList[2][0], s2: studentsList[2][1], notes: '' },
+                { id: 4, wall: 'right', posClass: 'pos-pc-4', status: 'active', s1: studentsList[3][0], s2: studentsList[3][1], notes: '' },
+                { id: 5, wall: 'right', posClass: 'pos-pc-5', status: 'active', s1: studentsList[4][0], s2: studentsList[4][1], notes: '' },
+
+                /* Back Wall Opposite Blackboard (6-9) - 7,8,9 Broken 🔴 */
+                { id: 6, wall: 'back', posClass: 'pos-pc-6', status: 'active', s1: studentsList[5][0], s2: studentsList[5][1], notes: '' },
+                { id: 7, wall: 'back', posClass: 'pos-pc-7', status: 'broken', s1: '', s2: '', notes: 'عطل في الشاشة والتغذية' },
+                { id: 8, wall: 'back', posClass: 'pos-pc-8', status: 'broken', s1: '', s2: '', notes: 'عطل في الوحدة المركزية' },
+                { id: 9, wall: 'back', posClass: 'pos-pc-9', status: 'broken', s1: '', s2: '', notes: 'عطل في القرص الصلب' },
+
+                /* Left Wall (10-14) */
+                { id: 10, wall: 'left', posClass: 'pos-pc-10', status: 'active', s1: studentsList[9][0], s2: studentsList[9][1], notes: '' },
+                { id: 11, wall: 'left', posClass: 'pos-pc-11', status: 'active', s1: studentsList[10][0], s2: studentsList[10][1], notes: '' },
+                { id: 12, wall: 'left', posClass: 'pos-pc-12', status: 'active', s1: studentsList[11][0], s2: studentsList[11][1], notes: '' },
+                { id: 13, wall: 'left', posClass: 'pos-pc-13', status: 'active', s1: studentsList[12][0], s2: studentsList[12][1], notes: '' },
+                { id: 14, wall: 'left', posClass: 'pos-pc-14', status: 'active', s1: studentsList[13][0], s2: studentsList[13][1], notes: '' }
+            ];
+        }
+
+        function loadAllClassesData() {
+            const saved = localStorage.getItem('lab_multi_class_seating_v1');
+            if (saved) {
+                try {
+                    allClassData = JSON.parse(saved);
+                } catch (e) {
+                    allClassData = {};
+                }
+            }
+
+            // Ensure all classes exist
+            Object.keys(CLASSES_MAP).forEach(cid => {
+                if (!allClassData[cid]) {
+                    allClassData[cid] = getDefaultPcsForClass(cid);
+                }
+            });
+        }
+
+        function saveAllClassesData() {
+            localStorage.setItem('lab_multi_class_seating_v1', JSON.stringify(allClassData));
+        }
+
+        function changeClass(newClassId) {
+            currentClassId = newClassId;
+            switchClassData(currentClassId);
+        }
+
+        function switchClassData(classId) {
+            activePcsData = allClassData[classId] || getDefaultPcsForClass(classId);
+            
+            // Update Header Information
+            const className = CLASSES_MAP[classId];
+            document.getElementById('badgeClassName').innerText = `القسم الحالي: ${className}`;
+            document.getElementById('printClassTitle').innerText = `القسم: ${className}`;
+            document.getElementById('bpFrontClassHeader').innerText = `الجدار الأمامي (السبورة في المنتصف) - قسم ${className}`;
+
+            // Count total students
+            let count = 0;
+            activePcsData.forEach(p => {
+                if (p.status === 'active') {
+                    if (p.s1) count++;
+                    if (p.s2) count++;
+                }
+            });
+            document.getElementById('badgeStudentCount').innerHTML = `<i class="fa-solid fa-users ml-1"></i> ${count} تلميذ مسجل`;
+
+            render3dNodes();
+            render2dBlueprint();
         }
 
         function render3dNodes() {
             const container = document.getElementById('pcNodes3dContainer');
             container.innerHTML = '';
 
-            pcsData.forEach(pc => {
+            activePcsData.forEach(pc => {
                 const isBroken = pc.status === 'broken';
                 const node = document.createElement('div');
                 node.className = `pc-node-3d ${pc.posClass} ${isBroken ? 'broken' : ''}`;
@@ -856,9 +1008,9 @@
                         <span class="pc-num-tag">حاسوب ${pc.id}</span>
                         <span class="pc-status-tag ${isBroken ? 'off' : 'ok'}">${isBroken ? '🔴 معطل' : 'شغال'}</span>
                     </div>
-                    <div class="flex flex-col gap-1 mt-1">
+                    <div class="flex flex-col gap-0.5 mt-1">
                         ${isBroken ? `
-                            <div class="text-[8px] font-bold text-red-600 text-center py-1 bg-red-100 rounded">🔴 معطل</div>
+                            <div class="text-[8px] font-bold text-red-600 text-center py-1 bg-red-100/80 rounded">🔴 معطل</div>
                         ` : `
                             <div class="student-chip">${pc.s1 || 'فارغ'}</div>
                             <div class="student-chip">${pc.s2 || 'فارغ'}</div>
@@ -878,7 +1030,7 @@
             rightCol.innerHTML = '';
             backRow.innerHTML = '';
 
-            pcsData.forEach(pc => {
+            activePcsData.forEach(pc => {
                 const isBroken = pc.status === 'broken';
                 const card = document.createElement('div');
                 card.className = `bp-pc-card ${isBroken ? 'broken' : ''}`;
@@ -919,8 +1071,8 @@
                 const deltaX = e.clientX - startX;
                 const deltaY = e.clientY - startY;
 
-                rotZ += deltaX * 0.4;
-                rotX = Math.max(15, Math.min(85, rotX - deltaY * 0.3));
+                rotZ += deltaX * 0.35;
+                rotX = Math.max(10, Math.min(85, rotX - deltaY * 0.25));
 
                 startX = e.clientX;
                 startY = e.clientY;
@@ -929,44 +1081,56 @@
 
             window.addEventListener('mouseup', () => isDragging = false);
 
-            /* Touch support */
+            /* Touch events for smooth mobile rotation */
             viewport.addEventListener('touchstart', (e) => {
                 if (e.touches.length === 1) {
                     isDragging = true;
                     startX = e.touches[0].clientX;
                     startY = e.touches[0].clientY;
                 }
-            });
+            }, { passive: true });
 
             window.addEventListener('touchmove', (e) => {
                 if (!isDragging || e.touches.length !== 1) return;
                 const deltaX = e.touches[0].clientX - startX;
                 const deltaY = e.touches[0].clientY - startY;
 
-                rotZ += deltaX * 0.4;
-                rotX = Math.max(15, Math.min(85, rotX - deltaY * 0.3));
+                rotZ += deltaX * 0.35;
+                rotX = Math.max(10, Math.min(85, rotX - deltaY * 0.25));
 
                 startX = e.touches[0].clientX;
                 startY = e.touches[0].clientY;
                 apply3dTransform();
-            });
+            }, { passive: true });
 
             window.addEventListener('touchend', () => isDragging = false);
         }
 
         function apply3dTransform() {
             const room = document.getElementById('room3d');
-            room.style.transform = `rotateX(${rotX}deg) rotateZ(${rotZ}deg) scale(${scale})`;
+            if (room) {
+                const finalScale = baseScale * userZoom;
+                room.style.transform = `rotateX(${rotX}deg) rotateZ(${rotZ}deg) scale(${finalScale})`;
+            }
         }
 
         function setPresetAngle(preset) {
-            if (preset === 'iso') { rotX = 50; rotZ = -25; scale = 0.85; }
-            else if (preset === 'top') { rotX = 0; rotZ = 0; scale = 0.8; }
-            else if (preset === 'front') { rotX = 65; rotZ = 0; scale = 0.9; }
+            if (preset === 'iso') { rotX = 50; rotZ = -25; userZoom = 1.0; }
+            else if (preset === 'top') { rotX = 0; rotZ = 0; userZoom = 0.95; }
+            else if (preset === 'front') { rotX = 65; rotZ = 0; userZoom = 1.05; }
             apply3dTransform();
         }
 
-        function resetZoom() { setPresetAngle('iso'); }
+        function adjustZoom(amount) {
+            userZoom = Math.max(0.4, Math.min(2.0, userZoom + amount));
+            apply3dTransform();
+        }
+
+        function resetZoom() {
+            userZoom = 1.0;
+            baseScale = calculateAutoBaseScale();
+            setPresetAngle('iso');
+        }
 
         function switchView(mode) {
             const vp3d = document.getElementById('viewport3D');
@@ -977,19 +1141,19 @@
             if (mode === '3d') {
                 vp3d.style.display = 'block';
                 vp2d.style.display = 'none';
-                btn3d.className = "px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-md hover:bg-blue-700 transition";
-                btn2d.className = "px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition";
+                btn3d.className = "flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-md hover:bg-blue-700 transition";
+                btn2d.className = "flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition";
             } else {
                 vp3d.style.display = 'none';
                 vp2d.style.display = 'block';
-                btn2d.className = "px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-md hover:bg-blue-700 transition";
-                btn3d.className = "px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition";
+                btn2d.className = "flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-md hover:bg-blue-700 transition";
+                btn3d.className = "flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition";
             }
         }
 
         function handleSearch(q) {
             const query = q.trim().toLowerCase();
-            pcsData.forEach(pc => {
+            activePcsData.forEach(pc => {
                 const node3d = document.getElementById(`pc-node-3d-${pc.id}`);
                 const match = query !== '' && (
                     (pc.s1 && pc.s1.toLowerCase().includes(query)) ||
@@ -1005,11 +1169,11 @@
         }
 
         function openModal(pcId) {
-            const pc = pcsData.find(p => p.id === pcId);
+            const pc = activePcsData.find(p => p.id === pcId);
             if (!pc) return;
 
             document.getElementById('modalPcId').value = pc.id;
-            document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-desktop text-blue-600"></i> تعديل بيانات حاسوب ${pc.id}`;
+            document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-desktop text-blue-600"></i> تعديل حاسوب ${pc.id} (${CLASSES_MAP[currentClassId]})`;
             document.getElementById('modalPcStatus').value = pc.status;
             document.getElementById('modalStudent1').value = pc.s1 || '';
             document.getElementById('modalStudent2').value = pc.s2 || '';
@@ -1036,16 +1200,17 @@
             const s2 = document.getElementById('modalStudent2').value.trim();
             const notes = document.getElementById('modalNotes').value.trim();
 
-            const idx = pcsData.findIndex(p => p.id === id);
+            const idx = activePcsData.findIndex(p => p.id === id);
             if (idx !== -1) {
-                pcsData[idx].status = status;
-                pcsData[idx].s1 = status === 'broken' ? '' : s1;
-                pcsData[idx].s2 = status === 'broken' ? '' : s2;
-                pcsData[idx].notes = notes;
+                activePcsData[idx].status = status;
+                activePcsData[idx].s1 = status === 'broken' ? '' : s1;
+                activePcsData[idx].s2 = status === 'broken' ? '' : s2;
+                activePcsData[idx].notes = notes;
 
-                savePcsData();
-                render3dNodes();
-                render2dBlueprint();
+                // Save into master class data
+                allClassData[currentClassId] = activePcsData;
+                saveAllClassesData();
+                switchClassData(currentClassId);
                 closeModal();
             }
         }
