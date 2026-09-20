@@ -152,7 +152,7 @@
                 linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
             border-radius: 20px;
             padding: 16px 18px;
-            margin-bottom: 22px;
+            margin-bottom: 14px;
             overflow: hidden; /* محصورة تماماً داخل إطار البطاقة */
             perspective: 900px;
             transform-style: preserve-3d;
@@ -291,50 +291,106 @@
             50% { opacity: 0; }
         }
 
+        /* ---------- اسم الأستاذ + روابط التواصل (بدون خلفية، حركة 3D سلسة) ---------- */
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* الاسم أقصى اليمين، الأيقونات أقصى اليسار */
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0 2px 20px;
+        }
+
+        /* قبل تشغيل الحركة تبقى العناصر مخفية (تُشغَّل من الجافاسكربت في كل تحديث) */
+        .hero-meta:not(.animate-in) .teacher,
+        .hero-meta:not(.animate-in) .social-link { opacity: 0; }
+
         .teacher {
-            color: var(--text-muted);
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 12px;
+            margin: 0;
+            text-align: right;
+            transform-origin: right center;
         }
 
         .teacher .name {
+            display: inline-block;
             color: var(--primary-blue);
-            font-weight: 700;
+            font-size: 14.5px;
+            font-weight: 800;
+            transform-origin: right center;
+            text-shadow:
+                0 1px 0 rgba(37, 99, 235, 0.20),
+                0 6px 14px rgba(37, 99, 235, 0.22);
         }
 
         .socials {
             display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
         }
 
         .social-link {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 13px;
-            background: var(--lesson-bg);
-            border: 1px solid var(--border-soft);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 38px;
+            height: 38px;
+            background: none;      /* بدون خلفية */
+            border: none;
+            box-shadow: none;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .social-link svg { width: 19px; height: 19px; transition: transform 0.3s ease; }
-        .social-link:hover svg { transform: scale(1.15); }
-
-        .social-link.facebook:hover {
-            background: rgba(24, 119, 242, 0.10);
-            border-color: var(--facebook);
-            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.18);
+        .social-link svg {
+            width: 25px;
+            height: 25px;
+            filter: drop-shadow(0 4px 5px rgba(var(--shadow-tint), 0.25));
+            transition: filter 0.35s ease;
         }
 
-        .social-link.whatsapp:hover {
-            background: rgba(37, 211, 102, 0.10);
-            border-color: var(--whatsapp);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.18);
+        /* حركة الدخول ثلاثية الأبعاد */
+        .hero-meta.animate-in .teacher {
+            animation: nameIn3d 1.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        }
+        .hero-meta.animate-in .social-link {
+            animation: socialIn3d 1.4s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) backwards;
+        }
+
+        /* حركة عائمة ناعمة مستمرة بعد الدخول */
+        .hero-meta.animate-in .teacher .name {
+            animation: nameSway3d 8s ease-in-out 1.8s infinite;
+        }
+        .hero-meta.animate-in .social-link svg {
+            animation: iconFloat3d 3.6s ease-in-out calc(1.8s + var(--d, 0s)) infinite alternate;
+        }
+
+        /* تفاعل عند اللمس / المرور */
+        .social-link:hover {
+            transform: perspective(500px) translateY(-4px) translateZ(26px) rotateY(-14deg) scale(1.12);
+        }
+        .social-link.instagram:hover svg { filter: drop-shadow(0 8px 10px rgba(228, 64, 95, 0.45)); }
+        .social-link.facebook:hover svg  { filter: drop-shadow(0 8px 10px rgba(24, 119, 242, 0.45)); }
+        .social-link.whatsapp:hover svg  { filter: drop-shadow(0 8px 10px rgba(37, 211, 102, 0.45)); }
+
+        @keyframes nameIn3d {
+            from { opacity: 0; transform: perspective(600px) translateX(80px) translateZ(-120px) rotateY(40deg); }
+            to   { opacity: 1; transform: perspective(600px) translateX(0) translateZ(0) rotateY(0deg); }
+        }
+
+        @keyframes socialIn3d {
+            from { opacity: 0; transform: perspective(600px) translateX(-80px) translateZ(-140px) rotateY(-50deg) rotateX(25deg) scale(0.6); }
+            to   { opacity: 1; transform: perspective(600px) translateX(0) translateZ(0) rotateY(0deg) rotateX(0deg) scale(1); }
+        }
+
+        @keyframes nameSway3d {
+            0%, 100% { transform: perspective(500px) rotateY(0deg); }
+            25%      { transform: perspective(500px) rotateY(6deg); }
+            75%      { transform: perspective(500px) rotateY(-6deg); }
+        }
+
+        @keyframes iconFloat3d {
+            from { transform: perspective(160px) translateY(1px) translateZ(0) rotateY(-14deg) rotateX(6deg); }
+            to   { transform: perspective(160px) translateY(-3px) translateZ(10px) rotateY(14deg) rotateX(-6deg); }
         }
 
         .description {
@@ -542,8 +598,13 @@
             .typewriter-cursor { animation: none; opacity: 1; }
             .section-card { transition: none; }
             .ticker__track { animation: none; }
+            .hero-meta .teacher,
+            .hero-meta .teacher .name,
+            .hero-meta .social-link,
+            .hero-meta .social-link svg { animation: none !important; }
         }
     </style>
+    <noscript><style>.hero-meta .teacher, .hero-meta .social-link { opacity: 1 !important; }</style></noscript>
 </head>
 
 <body>
@@ -574,33 +635,35 @@
                 </div>
             </div>
 
-            <span class="badge">المعلوماتية في الثانوي</span>
-
-            <h1 aria-label="المعلوماتية في الثانوي"><span id="typewriterText" aria-hidden="true"></span><span class="typewriter-cursor" id="typewriterCursor" aria-hidden="true"></span></h1>
-
-            <div class="teacher">
+            <div class="hero-meta" id="heroMeta">
+                <div class="teacher">
                 <span class="name">الأستاذ: بلوطي عمر</span>
             </div>
 
-            <div class="socials">
-                <a href="https://www.instagram.com/omar.bellouti/" target="_blank" rel="noopener noreferrer" class="social-link instagram" aria-label="إنستغرام">
+                <div class="socials">
+                <a href="https://www.instagram.com/omar.bellouti/" target="_blank" rel="noopener noreferrer" class="social-link instagram" style="--d:0.15s" aria-label="إنستغرام">
                     <svg viewBox="0 0 24 24" fill="#E4405F">
                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
                 </a>
-                <a href="https://www.facebook.com/Omar.Belloutii" target="_blank" rel="noopener noreferrer" class="social-link facebook" aria-label="فيسبوك">
+                <a href="https://www.facebook.com/Omar.Belloutii" target="_blank" rel="noopener noreferrer" class="social-link facebook" style="--d:0.30s" aria-label="فيسبوك">
                     <svg viewBox="0 0 24 24" fill="#1877f2">
                         <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.45 2.91h-2.33V22c4.78-.76 8.44-4.92 8.44-9.94z"/>
                     </svg>
                 </a>
-                <a href="https://wa.me/213656618032" target="_blank" rel="noopener noreferrer" class="social-link whatsapp" aria-label="واتساب">
+                <a href="https://wa.me/213656618032" target="_blank" rel="noopener noreferrer" class="social-link whatsapp" style="--d:0.45s" aria-label="واتساب">
                     <svg viewBox="0 0 24 24" fill="#25d366">
                         <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.28-1.38a9.87 9.87 0 0 0 4.71 1.2h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.05c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.81-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.15-4.9-4.34-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.15.12.32.02.52-.09.19-.14.31-.28.48-.14.16-.3.36-.42.49-.14.15-.29.3-.12.6.16.29.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.25 1.38.29.14.46.12.63-.07.17-.19.72-.84.92-1.13.19-.29.38-.24.63-.15.26.1 1.64.78 1.92.92.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/>
                     </svg>
                 </a>
             </div>
+            </div>
 
-            <p class="description important-notice">
+            <span class="badge">المعلوماتية في الثانوي</span>
+
+            <h1 aria-label="المعلوماتية في الثانوي"><span id="typewriterText" aria-hidden="true"></span><span class="typewriter-cursor" id="typewriterCursor" aria-hidden="true"></span></h1>
+
+<p class="description important-notice">
                 فضاؤكم لتعلم المعلوماتية والروبوتيك، ودروس السنة الأولى ثانوي.
             </p>
         </div>
@@ -723,6 +786,16 @@
                     avatar.classList.add('animate-in');
                     text.classList.add('animate-in');
                 }, 150);
+
+                // حركة الاسم وأيقونات التواصل (تبدأ بعد حركة الإطار بقليل)
+                var meta = document.getElementById('heroMeta');
+                if (meta) {
+                    meta.classList.remove('animate-in');
+                    void meta.offsetWidth;
+                    setTimeout(function () {
+                        meta.classList.add('animate-in');
+                    }, 900);
+                }
             }
 
             /* ====================================================
