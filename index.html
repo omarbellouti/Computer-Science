@@ -10,33 +10,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-page: #e9edf4;
+            --bg-page: #e8f0fc;
             --card-bg: #ffffff;
-            --lesson-bg: #f5f7fb;
+            --lesson-bg: #f2f7fe;
             --primary-blue: #2563eb;
             --primary-blue-soft: #4f8ef7;
+            --primary-deep: #1e3a8a;
             --sky: #38bdf8;
-            --text-main: #1c2534;
-            --text-muted: #6b7686;
-            --border-soft: #e3e8f0;
+            --text-main: #14254a;
+            --text-muted: #5f7092;
+            --border-soft: #d9e5f6;
+            --shadow-tint: 20, 37, 74;
             --whatsapp: #25d366;
             --facebook: #1877f2;
 
             /* Section accent colors */
-            --literary-1: #6d5bd0;
-            --literary-2: #9b8afb;
-            --science-1: #059669;
-            --science-2: #34d399;
+            /* لوحة باردة متناسقة مبنية حول الأزرق الأساسي للموقع */
+            --literary-1: #4338ca;
+            --literary-2: #6366f1;
+            --science-1: #0f766e;
+            --science-2: #14b8a6;
             --courses-1: #2563eb;
             --courses-2: #38bdf8;
-            --articles-1: #d97706;
-            --articles-2: #fbbf24;
-            --ai-1: #db2777;
-            --ai-2: #f472b6;
-            --plans-1: #475569;
-            --plans-2: #94a3b8;
-            --accounts-1: #b91c1c;
-            --accounts-2: #f87171;
+            --articles-1: #334155;
+            --articles-2: #64748b;
+            --ai-1: #6d28d9;
+            --ai-2: #8b5cf6;
+            --plans-1: #0e7490;
+            --plans-2: #06b6d4;
+            --workshops-1: #1e3a8a;
+            --workshops-2: #3b82f6;
+            --exams-1: #047857;
+            --exams-2: #10b981;
         }
 
         * {
@@ -52,10 +57,10 @@
         body {
             background-color: var(--bg-page);
             background-image:
-                radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.07) 0%, transparent 40%),
-                radial-gradient(circle at 90% 75%, rgba(56, 189, 248, 0.09) 0%, transparent 40%),
-                linear-gradient(rgba(28, 37, 52, 0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(28, 37, 52, 0.035) 1px, transparent 1px);
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.20) 0%, transparent 45%),
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
             min-height: 100vh;
             color: var(--text-main);
@@ -69,7 +74,7 @@
             width: 380px;
             height: 380px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(56,189,248,0.16) 0%, rgba(255,255,255,0) 70%);
             top: 30%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -132,7 +137,7 @@
             text-align: center;
             border: 1px solid var(--border-soft);
             box-shadow:
-                0 20px 50px rgba(28, 37, 52, 0.10),
+                0 20px 50px rgba(var(--shadow-tint), 0.10),
                 inset 0 1px 1px rgba(255, 255, 255, 0.6);
             margin-bottom: 26px;
             position: relative;
@@ -142,15 +147,17 @@
         /* ---------- 3D Intro Container Inside Card ---------- */
         .hero-3d-frame {
             position: relative;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background:
+                radial-gradient(circle at 85% 25%, rgba(56, 189, 248, 0.45) 0%, transparent 55%),
+                linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
             border-radius: 20px;
             padding: 16px 18px;
             margin-bottom: 22px;
             overflow: hidden; /* محصورة تماماً داخل إطار البطاقة */
             perspective: 900px;
             transform-style: preserve-3d;
-            box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.2), 0 8px 20px rgba(0, 0, 0, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.12), 0 10px 24px rgba(37, 99, 235, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.28);
         }
 
         .hero-3d-content {
@@ -170,8 +177,8 @@
             flex-shrink: 0;
             border-radius: 50%;
             padding: 3px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--sky));
-            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4);
+            background: linear-gradient(135deg, #ffffff, #bae6fd);
+            box-shadow: 0 8px 22px rgba(20, 37, 74, 0.35);
             
             /* تبدأ من أقصى يسار الإطار وتتحرك بنعومة نحو اليمين */
             transform: translateX(-180%) translateZ(-100px) rotateY(-35deg);
@@ -184,7 +191,7 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #ffffff;
+            border: 2px solid var(--primary-blue);
         }
 
         .hero-avatar-3d.animate-in {
@@ -215,8 +222,8 @@
         /* عناصر مكعبة 3D تطفو خلفية الإطار */
         .cube-3d {
             position: absolute;
-            background: rgba(56, 189, 248, 0.08);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 6px;
             pointer-events: none;
             animation: cubeFloat 6s infinite ease-in-out alternate;
@@ -331,7 +338,7 @@
         }
 
         .description {
-            color: #3f4a5c;
+            color: #2b3d63;
             font-size: 14px;
             line-height: 1.7;
             background: var(--lesson-bg);
@@ -417,13 +424,13 @@
             text-decoration: none;
             color: #ffffff;
             overflow: hidden;
-            box-shadow: 0 12px 26px rgba(28, 37, 52, 0.14);
+            box-shadow: 0 12px 26px rgba(var(--shadow-tint), 0.16);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .section-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 16px 32px rgba(28, 37, 52, 0.20);
+            box-shadow: 0 16px 32px rgba(var(--shadow-tint), 0.24);
         }
 
         .section-card::after {
@@ -456,13 +463,14 @@
             z-index: 1;
         }
 
-        .card-literary { background: linear-gradient(135deg, var(--literary-1), var(--literary-2)); }
-        .card-science  { background: linear-gradient(135deg, var(--science-1), var(--science-2)); }
-        .card-courses  { background: linear-gradient(135deg, var(--courses-1), var(--courses-2)); }
-        .card-articles { background: linear-gradient(135deg, var(--articles-1), var(--articles-2)); }
-        .card-ai       { background: linear-gradient(135deg, var(--ai-1), var(--ai-2)); }
-        .card-plans    { background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); }
-        .card-accounts { background: linear-gradient(135deg, var(--accounts-1), var(--accounts-2)); }
+        .card-literary { background: linear-gradient(315deg, var(--literary-1), var(--literary-2)); }
+        .card-science  { background: linear-gradient(315deg, var(--science-1), var(--science-2)); }
+        .card-courses  { background: linear-gradient(315deg, var(--courses-1), var(--courses-2)); }
+        .card-articles { background: linear-gradient(315deg, var(--articles-1), var(--articles-2)); }
+        .card-ai       { background: linear-gradient(315deg, var(--ai-1), var(--ai-2)); }
+        .card-plans    { background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); }
+        .card-workshops { background: linear-gradient(315deg, var(--workshops-1), var(--workshops-2)); }
+        .card-exams    { background: linear-gradient(315deg, var(--exams-1), var(--exams-2)); }
 
         /* ---------- Footer ---------- */
         .footer {
@@ -495,7 +503,7 @@
             backdrop-filter: blur(10px);
             border-top: 1px solid var(--border-soft);
             padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
-            box-shadow: 0 -8px 24px rgba(28, 37, 52, 0.08);
+            box-shadow: 0 -8px 24px rgba(var(--shadow-tint), 0.10);
         }
 
         .bottom-nav .nav-inner {
@@ -650,11 +658,19 @@
                 </div>
             </a>
 
-            <a href="accounts/index.html" class="section-card card-accounts">
-                <span class="icon">💳</span>
+            <a href="accounts/index.html" class="section-card card-workshops">
+                <span class="icon">🛠️</span>
                 <div>
-                    <div class="card-title">الاشتراكات والحسابات</div>
-                    <div class="card-sub">إدارة حسابك واشتراكك</div>
+                    <div class="card-title">الورشات التطبيقية</div>
+                    <div class="card-sub">تطبيقات عملية ومشاريع</div>
+                </div>
+            </a>
+
+            <a href="exams/index.html" class="section-card card-exams">
+                <span class="icon">📝</span>
+                <div>
+                    <div class="card-title">الاختبارات والفروض</div>
+                    <div class="card-sub">نماذج فروض واختبارات</div>
                 </div>
             </a>
 
