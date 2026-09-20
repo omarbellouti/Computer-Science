@@ -21,6 +21,7 @@
             --text-muted: #5f7092;
             --border-soft: #d9e5f6;
             --shadow-tint: 20, 37, 74;
+            --topbar-h: 46px; /* يُحدَّث تلقائياً من الجافاسكربت حسب ارتفاع الشريط الفعلي */
             --whatsapp: #25d366;
             --facebook: #1877f2;
 
@@ -66,7 +67,8 @@
             color: var(--text-main);
             overflow-x: hidden;
             position: relative;
-            padding: 22px 16px calc(100px + env(safe-area-inset-bottom));
+            /* المسافة العلوية = ارتفاع الشريط المثبت + هامش */
+            padding: calc(var(--topbar-h) + 22px) 16px calc(100px + env(safe-area-inset-bottom));
         }
 
         .glow-orb {
@@ -96,37 +98,57 @@
             margin: 0 auto;
         }
 
-        /* ---------- Announcements ticker ---------- */
-        .ticker {
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--primary-blue), var(--sky));
-            border-radius: 14px;
-            margin-bottom: 18px;
-            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
-        }
-
-        .ticker__track {
-            display: flex;
-            width: max-content;
-            animation: ticker-scroll 20s linear infinite;
-        }
-
-        .ticker:hover .ticker__track {
-            animation-play-state: paused;
-        }
-
-        .ticker__item {
-            display: inline-block;
-            white-space: nowrap;
-            padding: 10px 0;
+        /* ---------- الشريط العلوي المثبت: تحميل التطبيق ---------- */
+        .app-bar {
+            position: fixed;
+            top: 0;
+            inset-inline: 0;
+            z-index: 20;
+            display: block;
+            text-decoration: none;
             color: #ffffff;
-            font-size: 13px;
-            font-weight: 700;
+            /* نفس تدرج الإطار ثلاثي الأبعاد */
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 0 6px 18px rgba(var(--shadow-tint), 0.22);
+            padding: env(safe-area-inset-top, 0px) 14px 0;
+            -webkit-tap-highlight-color: transparent;
+            transition: filter 0.25s ease;
         }
 
-        @keyframes ticker-scroll {
-            from { transform: translateX(-50%); }
-            to { transform: translateX(0); }
+        .app-bar:hover { filter: brightness(1.08); }
+        .app-bar:active { filter: brightness(0.94); }
+
+        .app-bar__inner {
+            max-width: 640px;
+            margin: 0 auto;
+            min-height: 44px;
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .app-bar__icon {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+        }
+
+        /* نفس خصائص نص الإطار الأول: الخط، الحجم، السمك، اللون، الظل */
+        .app-bar__text {
+            color: #ffffff;
+            font-size: 12.5px;
+            font-weight: 700;
+            line-height: 1.65;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        @media (max-width: 480px) {
+            .app-bar__text { font-size: 11.5px; }
         }
 
         /* ---------- Hero card ---------- */
@@ -575,7 +597,6 @@
         @media (prefers-reduced-motion: reduce) {
             .glow-orb { animation: none; }
             .section-card { transition: none; }
-            .ticker__track { animation: none; }
             .hero-meta .teacher,
             .hero-meta .teacher .name,
             .hero-meta .social-link,
@@ -587,14 +608,23 @@
 
 <body>
 
+    <!-- شريط مثبت في أعلى الصفحة: تحميل التطبيق من Play Store -->
+    <a href="application/index.html" class="app-bar" id="appBar" aria-label="يمكنك تحميل التطبيق الخاص بنا من على Play Store">
+        <span class="app-bar__inner">
+            <svg class="app-bar__icon" viewBox="0 0 512 512" aria-hidden="true">
+                <polygon fill="#00c8ff" points="60,20 285,256 60,492"/>
+                <polygon fill="#00e676" points="60,20 372,204 285,256"/>
+                <polygon fill="#ffd400" points="372,204 460,256 372,308 285,256"/>
+                <polygon fill="#ff3d47" points="60,492 372,308 285,256"/>
+            </svg>
+            <span class="app-bar__text">يمكنك تحميل التطبيق الخاص بنا من على <bdi>Play Store</bdi></span>
+        </span>
+    </a>
+
+
     <div class="glow-orb"></div>
 
     <div class="page-wrap">
-
-        <!-- شريط الإعلانات المتحرك -->
-        <div class="ticker" role="region" aria-label="إعلانات للطلبة">
-            <div class="ticker__track" id="tickerTrack"></div>
-        </div>
 
         <!-- بطاقة الترحيب -->
         <div class="hero-card">
@@ -608,7 +638,7 @@
                         <img src="teacher.jpg" alt="الأستاذ بلوطي عمر">
                     </div>
                     <div class="hero-text-3d" id="heroText3D">
-                    الفضاء الرقمي المعتمد لدروس المعلوماتية لمستوى السنة الأولى ثانوي، و مشاريع وتطبيقات الروبوتيك.
+                        الفضاء التعليمي الرقمي المعتمد لدروس ومشاريع مادة الإعلام الآلي لجميع المستويات (1AS / 2AS / 3AS) والشعب –
                     </div>
                 </div>
             </div>
@@ -776,42 +806,30 @@
             }
 
             /* ====================================================
-               شريط الإعلانات
+               الشريط العلوي المثبت: مزامنة ارتفاعه مع مسافة أعلى الصفحة
                ==================================================== */
-            var tickerMessages = [
-                'مرحبًا بكم في الفضاء الرقمي للأستاذ بلوطي عمر — تابعوا هنا كل الإعلانات الجديدة'
-            ];
+            function initAppBar() {
+                var bar = document.getElementById('appBar');
+                if (!bar) return;
 
-            function initTicker() {
-                var track = document.getElementById('tickerTrack');
-                if (!track || !tickerMessages.length) return;
-
-                var content = tickerMessages
-                    .map(function (msg) { return '📢 ' + msg; })
-                    .join('\u00A0\u00A0\u00A0•\u00A0\u00A0\u00A0');
-
-                function makeItem() {
-                    var span = document.createElement('span');
-                    span.className = 'ticker__item';
-                    span.textContent = content + '\u00A0\u00A0\u00A0•\u00A0\u00A0\u00A0';
-                    return span;
+                function sync() {
+                    document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
                 }
 
-                track.appendChild(makeItem());
-                track.appendChild(makeItem());
-
-                var duration = Math.max(14, content.length * 0.09);
-                track.style.animationDuration = duration + 's';
+                sync();
+                window.addEventListener('resize', sync);
+                window.addEventListener('load', sync);
+                if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
             }
 
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', function () {
                     initHero3dAnimation();
-                    initTicker();
+                    initAppBar();
                 });
             } else {
                 initHero3dAnimation();
-                initTicker();
+                initAppBar();
             }
         })();
     </script>
