@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدورة التكوينية الجارية الآن | الأستاذ بلوطي عمر</title>
+    <!-- Google Fonts: Noto Kufi Arabic & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e9edf4;
+            --card-bg: #ffffff;
+            --lesson-bg: #f5f7fb;
+            --primary-blue: #2563eb;
+            --primary-blue-soft: #4f8ef7;
+            --sky: #38bdf8;
+            --text-main: #1c2534;
+            --text-muted: #6b7686;
+            --border-soft: #e3e8f0;
+
+            --courses-1: #4f46e5;
+            --courses-2: #818cf8;
+
+            --status-live: #059669;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-weight: 600;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(79, 70, 229, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 90% 75%, rgba(56, 189, 248, 0.09) 0%, transparent 40%),
+                linear-gradient(rgba(28, 37, 52, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(28, 37, 52, 0.035) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            padding: 22px 16px calc(100px + env(safe-area-inset-bottom));
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(79,70,229,0.10) 0%, rgba(255,255,255,0) 70%);
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        /* ---------- بيئة ثلاثية الأبعاد طافية في خلفية الصفحة كاملة ---------- */
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            perspective: 1200px;
+        }
+
+        .bg-cube-wrap {
+            position: absolute;
+            animation: bg-cube-float 9s ease-in-out infinite;
+            opacity: 0.5;
+        }
+
+        .bg-cube-wrap.b1 { width: 34px; height: 34px; top: 12%;  inset-inline-start: 8%;  animation-duration: 8s; }
+        .bg-cube-wrap.b2 { width: 22px; height: 22px; top: 68%;  inset-inline-start: 12%; animation-duration: 10.5s; animation-delay: 1s; }
+        .bg-cube-wrap.b3 { width: 26px; height: 26px; top: 22%;  inset-inline-start: 85%; animation-duration: 9.5s;  animation-delay: 0.4s; }
+        .bg-cube-wrap.b4 { width: 18px; height: 18px; top: 78%;  inset-inline-start: 80%; animation-duration: 11s;   animation-delay: 1.6s; }
+        .bg-cube-wrap.b5 { width: 30px; height: 30px; top: 46%;  inset-inline-start: 92%; animation-duration: 8.6s; animation-delay: 0.8s; }
+
+        .bg-cube {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: bg-cube-spin 16s linear infinite;
+        }
+
+        .bg-cube-wrap.b2 .bg-cube { animation-duration: 20s; }
+        .bg-cube-wrap.b3 .bg-cube { animation-duration: 13s; }
+        .bg-cube-wrap.b4 .bg-cube { animation-duration: 22s; }
+        .bg-cube-wrap.b5 .bg-cube { animation-duration: 17s; }
+
+        .bg-cube .bface {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(79, 70, 229, 0.28);
+            background: rgba(79, 70, 229, 0.05);
+        }
+
+        .bg-cube .bface.front  { transform: translateZ(13px); }
+        .bg-cube .bface.back   { transform: translateZ(-13px) rotateY(180deg); }
+        .bg-cube .bface.right  { transform: rotateY(90deg) translateZ(13px); }
+        .bg-cube .bface.left   { transform: rotateY(-90deg) translateZ(13px); }
+        .bg-cube .bface.top    { transform: rotateX(90deg) translateZ(13px); }
+        .bg-cube .bface.bottom { transform: rotateX(-90deg) translateZ(13px); }
+
+        @keyframes bg-cube-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-16px); }
+        }
+
+        @keyframes bg-cube-spin {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* ---------- Breadcrumb / back link ---------- */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .back-link:hover { color: var(--primary-blue); transform: translateX(-3px); }
+        [dir="rtl"] .back-link:hover { transform: translateX(3px); }
+        .back-link svg { width: 16px; height: 16px; }
+
+        /* ---------- Hero ---------- */
+        .hero-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(135deg, var(--courses-1), var(--courses-2));
+            padding: 24px;
+            border-radius: 24px;
+            color: #ffffff;
+            box-shadow: 0 16px 34px rgba(79, 70, 229, 0.28);
+            margin-bottom: 26px;
+            position: relative;
+            overflow: hidden;
+            perspective: 800px;
+            opacity: 0;
+            transform: translateY(18px) scale(0.97);
+            animation: hero-in 0.7s cubic-bezier(.2,.9,.3,1) forwards;
+        }
+
+        @keyframes hero-in {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            top: -55px;
+            inset-inline-end: -55px;
+        }
+
+        .hero-cube-wrap {
+            position: absolute;
+            z-index: 0;
+            animation: hero-cube-float 6s ease-in-out infinite;
+        }
+
+        .hero-cube-wrap.hc1 { width: 22px; height: 22px; top: 14%; inset-inline-start: 55%; animation-duration: 5.5s; }
+        .hero-cube-wrap.hc2 { width: 16px; height: 16px; bottom: 18%; inset-inline-start: 68%; animation-duration: 7.2s; animation-delay: 0.7s; }
+        .hero-cube-wrap.hc3 { width: 14px; height: 14px; top: 55%; inset-inline-start: 42%; animation-duration: 6.4s; animation-delay: 1.3s; }
+
+        .hero-cube {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: hero-cube-spin 10s linear infinite;
+        }
+
+        .hero-cube-wrap.hc2 .hero-cube { animation-duration: 14s; }
+        .hero-cube-wrap.hc3 .hero-cube { animation-duration: 8s; }
+
+        .hero-cube .hface {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-cube .hface.front  { transform: translateZ(9px); }
+        .hero-cube .hface.back   { transform: translateZ(-9px) rotateY(180deg); }
+        .hero-cube .hface.right  { transform: rotateY(90deg) translateZ(9px); }
+        .hero-cube .hface.left   { transform: rotateY(-90deg) translateZ(9px); }
+        .hero-cube .hface.top    { transform: rotateX(90deg) translateZ(9px); }
+        .hero-cube .hface.bottom { transform: rotateX(-90deg) translateZ(9px); }
+
+        @keyframes hero-cube-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes hero-cube-spin {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .hero-card .hero-icon {
+            flex-shrink: 0;
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            position: relative;
+            z-index: 1;
+            animation: hero-icon-float 3.4s ease-in-out infinite;
+        }
+
+        @keyframes hero-icon-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(-4deg); }
+        }
+
+        .hero-card .hero-text { position: relative; z-index: 1; }
+
+        .hero-card .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            opacity: 0.95;
+            margin-bottom: 5px;
+            letter-spacing: 0.3px;
+            background: rgba(255, 255, 255, 0.16);
+            padding: 3px 10px 3px 8px;
+            border-radius: 50px;
+        }
+
+        .hero-card .hero-tag .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 0 rgba(74, 222, 128, 0.6);
+            animation: live-pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes live-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+            70% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
+
+        .hero-card h1 {
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.5;
+        }
+
+        /* ---------- Section title ---------- */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 2px 16px;
+            color: var(--text-main);
+            font-size: 15px;
+            font-weight: 800;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fade-up 0.6s ease forwards;
+            animation-delay: 0.15s;
+        }
+
+        @keyframes fade-up {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title .title-icon {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--courses-1), var(--courses-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: 0 6px 14px rgba(79, 70, 229, 0.28);
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(79,70,229,0.22), transparent);
+        }
+
+        /* ---------- Lessons list ---------- */
+        .lessons-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 20px;
+            perspective: 1000px;
+        }
+
+        .lesson-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07);
+            opacity: 0;
+            transform: translateY(20px) scale(0.96);
+            animation: card-in 0.6s cubic-bezier(.2,.9,.3,1) forwards;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .lessons-list .lesson-card:nth-child(1) { animation-delay: 0.25s; }
+        .lessons-list .lesson-card:nth-child(2) { animation-delay: 0.35s; }
+        .lessons-list .lesson-card:nth-child(3) { animation-delay: 0.45s; }
+        .lessons-list .lesson-card:nth-child(4) { animation-delay: 0.55s; }
+        .lessons-list .lesson-card:nth-child(5) { animation-delay: 0.65s; }
+        .lessons-list .lesson-card:nth-child(6) { animation-delay: 0.75s; }
+
+        @keyframes card-in {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-4px) rotateX(2deg);
+            box-shadow: 0 18px 36px rgba(28, 37, 52, 0.14);
+            border-color: rgba(79, 70, 229, 0.25);
+        }
+
+        .lesson-number {
+            flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--sky) 100%);
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.30);
+            animation: icon-float 3.6s ease-in-out infinite;
+        }
+
+        @keyframes icon-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(-3deg); }
+        }
+
+        .lessons-list .lesson-card:nth-child(1) .lesson-number { animation-delay: 0.1s; }
+        .lessons-list .lesson-card:nth-child(2) .lesson-number { animation-delay: 0.5s; }
+        .lessons-list .lesson-card:nth-child(3) .lesson-number { animation-delay: 0.9s; }
+        .lessons-list .lesson-card:nth-child(4) .lesson-number { animation-delay: 1.3s; }
+        .lessons-list .lesson-card:nth-child(5) .lesson-number { animation-delay: 1.7s; }
+        .lessons-list .lesson-card:nth-child(6) .lesson-number { animation-delay: 2.1s; }
+
+        .lesson-info { flex: 1; min-width: 0; text-align: right; }
+
+        .lesson-title {
+            font-size: 14.5px;
+            font-weight: 800;
+            line-height: 1.5;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .lesson-sub {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .lesson-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            text-decoration: none;
+            border: 1px solid var(--border-soft);
+            background: var(--lesson-bg);
+            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .icon-btn svg {
+            width: 17px;
+            height: 17px;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-btn:hover svg { transform: scale(1.15); }
+        .icon-btn:hover { transform: translateY(-2px); }
+
+        .icon-btn.pdf:hover {
+            background: rgba(37, 99, 235, 0.10);
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
+        }
+
+        .icon-btn.interactive:hover {
+            background: rgba(56, 189, 248, 0.14);
+            border-color: var(--sky);
+            color: #0284c7;
+            box-shadow: 0 8px 18px rgba(56, 189, 248, 0.20);
+        }
+
+        /* ---------- حصة قادمة: تمييز بوميض واضح ---------- */
+        .lesson-card.upcoming {
+            border-color: rgba(37, 99, 235, 0.35);
+            animation: card-in 0.6s cubic-bezier(.2,.9,.3,1) forwards, upcoming-glow 2.2s ease-in-out infinite;
+        }
+
+        @keyframes upcoming-glow {
+            0%, 100% { box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07), 0 0 0 0 rgba(37, 99, 235, 0.28); }
+            50% { box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07), 0 0 0 7px rgba(37, 99, 235, 0); }
+        }
+
+        .lesson-number.upcoming-number {
+            background: linear-gradient(135deg, var(--status-live) 0%, #34d399 100%);
+            box-shadow: 0 8px 18px rgba(5, 150, 105, 0.32);
+        }
+
+        .badge-soon {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            background: rgba(37, 99, 235, 0.10);
+            padding: 3px 10px;
+            border-radius: 50px;
+            margin-top: 6px;
+        }
+
+        .badge-soon .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            animation: blink-dot 1.2s ease-in-out infinite;
+        }
+
+        @keyframes blink-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lesson-card.upcoming { animation: none !important; box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07); }
+            .badge-soon .dot { animation: none !important; }
+        }
+
+        /* ---------- Footer ---------- */
+        .footer {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .footer-code {
+            font-family: 'Fira Code', monospace;
+            color: var(--primary-blue);
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* ---------- Bottom nav ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            inset-inline: 0;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-soft);
+            padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+            box-shadow: 0 -8px 24px rgba(28, 37, 52, 0.08);
+        }
+
+        .bottom-nav .nav-inner {
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item svg { width: 21px; height: 21px; }
+        .nav-item.active { color: var(--primary-blue); }
+
+        @media (max-width: 460px) {
+            .hero-card { padding: 20px; }
+            .lesson-card { padding: 13px; gap: 12px; }
+            .lesson-number { width: 40px; height: 40px; font-size: 14px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .glow-orb, .bg-cube-wrap, .bg-cube { animation: none !important; }
+            .lesson-card, .icon-btn { transition: none; }
+            .hero-card, .section-title, .lesson-card {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .hero-cube-wrap, .hero-cube, .hero-icon, .lesson-number, .hero-tag .dot {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow-orb"></div>
+
+    <!-- بيئة ثلاثية الأبعاد طافية في خلفية الصفحة -->
+    <div class="bg-scene" aria-hidden="true">
+        <div class="bg-cube-wrap b1"><div class="bg-cube">
+            <div class="bface front"></div><div class="bface back"></div>
+            <div class="bface right"></div><div class="bface left"></div>
+            <div class="bface top"></div><div class="bface bottom"></div>
+        </div></div>
+        <div class="bg-cube-wrap b2"><div class="bg-cube">
+            <div class="bface front"></div><div class="bface back"></div>
+            <div class="bface right"></div><div class="bface left"></div>
+            <div class="bface top"></div><div class="bface bottom"></div>
+        </div></div>
+        <div class="bg-cube-wrap b3"><div class="bg-cube">
+            <div class="bface front"></div><div class="bface back"></div>
+            <div class="bface right"></div><div class="bface left"></div>
+            <div class="bface top"></div><div class="bface bottom"></div>
+        </div></div>
+        <div class="bg-cube-wrap b4"><div class="bg-cube">
+            <div class="bface front"></div><div class="bface back"></div>
+            <div class="bface right"></div><div class="bface left"></div>
+            <div class="bface top"></div><div class="bface bottom"></div>
+        </div></div>
+        <div class="bg-cube-wrap b5"><div class="bg-cube">
+            <div class="bface front"></div><div class="bface back"></div>
+            <div class="bface right"></div><div class="bface left"></div>
+            <div class="bface top"></div><div class="bface bottom"></div>
+        </div></div>
+    </div>
+
+    <div class="page-wrap">
+
+        <a href="https://omarbellouti.github.io/Computer-Science/courses/index.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+            العودة إلى الدورات التكوينية
+        </a>
+
+        <!-- بطاقة الترحيب -->
+        <div class="hero-card">
+            <div class="hero-cube-wrap hc1"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
+            <div class="hero-cube-wrap hc2"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
+            <div class="hero-cube-wrap hc3"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
+            <span class="hero-icon">💻</span>
+            <div class="hero-text">
+                <div class="hero-tag"><span class="dot"></span>جارية الآن</div>
+                <h1>الدورة التكوينية الجارية الآن</h1>
+            </div>
+        </div>
+
+        <!-- قائمة الحصص -->
+        <div class="section-title"><span class="title-icon">📚</span>حصص الدورة</div>
+
+        <div class="lessons-list">
+
+            <!-- الحصة الأولى -->
+            <div class="lesson-card">
+                <div class="lesson-number">01</div>
+                <div class="lesson-info">
+                    <div class="lesson-title">الحصة الأولى</div>
+                    <div class="lesson-sub">درس بصيغة PDF</div>
+                </div>
+                <div class="lesson-actions">
+                    <a href="lesson1.pdf" download class="icon-btn pdf" aria-label="تحميل الحصة الأولى" title="تحميل PDF">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- الحصة الثانية -->
+            <div class="lesson-card">
+                <div class="lesson-number">02</div>
+                <div class="lesson-info">
+                    <div class="lesson-title">الحصة الثانية</div>
+                    <div class="lesson-sub">درس + إختبار تجريبي</div>
+                </div>
+                <div class="lesson-actions">
+                    <a href="lesson2.html" class="icon-btn interactive" aria-label="فتح الحصة الثانية" title="فتح الدرس التفاعلي">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </a>
+                    <a href="EXAMEN WORD.html" class="icon-btn interactive" aria-label="إختبار 1 تجريبي Word" title="إختبار 1 تجريبي Word">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- الحصة الثالثة والرابعة -->
+            <div class="lesson-card">
+                <div class="lesson-number">03</div>
+                <div class="lesson-info">
+                    <div class="lesson-title">الحصة الثالثة + الرابعة</div>
+                    <div class="lesson-sub">فتح الدرس التفاعلي</div>
+                </div>
+                <div class="lesson-actions">
+                    <a href="lesson3et4.html" class="icon-btn interactive" aria-label="فتح الحصة الثالثة" title="فتح الدرس التفاعلي">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- الحصة الخامسة -->
+            <div class="lesson-card">
+                <div class="lesson-number">05</div>
+                <div class="lesson-info">
+                    <div class="lesson-title">الحصة الخامسة</div>
+                    <div class="lesson-sub">تم إجراء الاختبار التطبيقي</div>
+                </div>
+                <div class="lesson-actions">
+                    <a href="lesson5.html" class="icon-btn interactive" aria-label="فتح الحصة الخامسة" title="فتح الدرس التفاعلي">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- الحصة السادسة (قادمة) -->
+            <div class="lesson-card upcoming">
+                <div class="lesson-number upcoming-number">06</div>
+                <div class="lesson-info">
+                    <div class="lesson-title">الحصة السادسة</div>
+                    <div class="lesson-sub">يوم الثلاثاء 22 سبتمبر 2026 — الساعة 9 صباحًا</div>
+                    <span class="badge-soon"><span class="dot"></span>الحصة القادمة</span>
+                </div>
+                <div class="lesson-actions">
+                    <a href="lesson6.html" class="icon-btn interactive" aria-label="فتح ملخص الحصة السادسة" title="فتح ملخص الدرس">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <span class="footer-code">&lt;/&gt;</span>
+            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        </div>
+
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="https://omarbellouti.github.io/Computer-Science/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="https://omarbellouti.github.io/Computer-Science/courses/index.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="https://omarbellouti.github.io/Computer-Science/articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
+                الوثائق الإدارية
+            </a>
+        </div>
+    </nav>
+
+</body>
+</html>
