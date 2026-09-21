@@ -110,6 +110,14 @@
             margin-bottom: 26px;
             position: relative;
             overflow: hidden;
+            perspective: 800px;
+            opacity: 0;
+            transform: translateY(18px) scale(0.97);
+            animation: hero-in 0.7s cubic-bezier(.2,.9,.3,1) forwards;
+        }
+
+        @keyframes hero-in {
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .hero-card::after {
@@ -121,6 +129,51 @@
             background: rgba(255, 255, 255, 0.14);
             top: -55px;
             inset-inline-end: -55px;
+        }
+
+        /* عناصر ثلاثية الأبعاد طافية في خلفية البطاقة */
+        .hero-cube-wrap {
+            position: absolute;
+            z-index: 0;
+            animation: hero-cube-float 6s ease-in-out infinite;
+        }
+
+        .hero-cube-wrap.hc1 { width: 22px; height: 22px; top: 14%; inset-inline-start: 55%; animation-duration: 5.5s; }
+        .hero-cube-wrap.hc2 { width: 16px; height: 16px; bottom: 18%; inset-inline-start: 68%; animation-duration: 7.2s; animation-delay: 0.7s; }
+        .hero-cube-wrap.hc3 { width: 14px; height: 14px; top: 55%; inset-inline-start: 42%; animation-duration: 6.4s; animation-delay: 1.3s; }
+
+        .hero-cube {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: hero-cube-spin 10s linear infinite;
+        }
+
+        .hero-cube-wrap.hc2 .hero-cube { animation-duration: 14s; }
+        .hero-cube-wrap.hc3 .hero-cube { animation-duration: 8s; }
+
+        .hero-cube .hface {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-cube .hface.front  { transform: translateZ(9px); }
+        .hero-cube .hface.back   { transform: translateZ(-9px) rotateY(180deg); }
+        .hero-cube .hface.right  { transform: rotateY(90deg) translateZ(9px); }
+        .hero-cube .hface.left   { transform: rotateY(-90deg) translateZ(9px); }
+        .hero-cube .hface.top    { transform: rotateX(90deg) translateZ(9px); }
+        .hero-cube .hface.bottom { transform: rotateX(-90deg) translateZ(9px); }
+
+        @keyframes hero-cube-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes hero-cube-spin {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
         }
 
         .hero-card .hero-icon {
@@ -135,6 +188,12 @@
             font-size: 28px;
             position: relative;
             z-index: 1;
+            animation: hero-icon-float 3.4s ease-in-out infinite;
+        }
+
+        @keyframes hero-icon-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(-4deg); }
         }
 
         .hero-card .hero-text { position: relative; z-index: 1; }
@@ -162,6 +221,14 @@
             color: var(--text-main);
             font-size: 15px;
             font-weight: 800;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fade-up 0.6s ease forwards;
+            animation-delay: 0.15s;
+        }
+
+        @keyframes fade-up {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title .title-icon {
@@ -190,6 +257,7 @@
             flex-direction: column;
             gap: 14px;
             margin-bottom: 20px;
+            perspective: 1000px;
         }
 
         .course-card {
@@ -198,7 +266,26 @@
             border-radius: 20px;
             box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07);
             overflow: hidden;
-            transition: box-shadow 0.25s ease;
+            opacity: 0;
+            transform: translateY(20px) scale(0.96);
+            animation: card-in 0.6s cubic-bezier(.2,.9,.3,1) forwards;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .courses-list .course-card:nth-child(1) { animation-delay: 0.25s; }
+        .courses-list .course-card:nth-child(2) { animation-delay: 0.35s; }
+        .courses-list .course-card:nth-child(3) { animation-delay: 0.45s; }
+        .courses-list .course-card:nth-child(4) { animation-delay: 0.55s; }
+        .courses-list .course-card:nth-child(5) { animation-delay: 0.65s; }
+
+        @keyframes card-in {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px) rotateX(2deg);
+            box-shadow: 0 18px 36px rgba(28, 37, 52, 0.14);
+            border-color: rgba(79, 70, 229, 0.25);
         }
 
         .course-card.open { box-shadow: 0 16px 32px rgba(28, 37, 52, 0.13); }
@@ -228,6 +315,33 @@
             justify-content: center;
             font-size: 23px;
             color: #fff;
+            position: relative;
+            animation: icon-float 3.6s ease-in-out infinite;
+        }
+
+        @keyframes icon-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(-3deg); }
+        }
+
+        .courses-list .course-card:nth-child(1) .course-icon { animation-delay: 0.1s; }
+        .courses-list .course-card:nth-child(2) .course-icon { animation-delay: 0.5s; }
+        .courses-list .course-card:nth-child(3) .course-icon { animation-delay: 0.9s; }
+        .courses-list .course-card:nth-child(4) .course-icon { animation-delay: 1.3s; }
+        .courses-list .course-card:nth-child(5) .course-icon { animation-delay: 1.7s; }
+
+        .course-icon.live-icon::before {
+            content: "";
+            position: absolute;
+            inset: -6px;
+            border-radius: 19px;
+            border: 2px solid var(--status-live);
+            animation: live-ring 1.8s ease-out infinite;
+        }
+
+        @keyframes live-ring {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.35); opacity: 0; }
         }
 
         .course-body { flex: 1; min-width: 0; }
@@ -403,6 +517,14 @@
             .glow-orb { animation: none; }
             .course-card, .course-chevron, .course-note { transition: none; }
             .status-live .dot { animation: none; }
+            .hero-card, .section-title, .course-card {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .hero-cube-wrap, .hero-cube, .hero-icon, .course-icon, .live-icon::before {
+                animation: none !important;
+            }
         }
     </style>
 </head>
@@ -420,6 +542,21 @@
 
         <!-- بطاقة الترحيب -->
         <div class="hero-card">
+            <div class="hero-cube-wrap hc1"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
+            <div class="hero-cube-wrap hc2"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
+            <div class="hero-cube-wrap hc3"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
             <span class="hero-icon">🎓</span>
             <div class="hero-text">
                 <div class="hero-tag">قسم الدورات</div>
@@ -456,7 +593,7 @@
             <!-- الدورة 2: جارية، رابط خارجي -->
             <a href="https://omarbellouti.github.io/CS-courses/" target="_blank" rel="noopener" class="course-card">
                 <span class="course-main" style="cursor: pointer;">
-                    <span class="course-icon" style="background: linear-gradient(135deg, var(--status-live), #34d399);">💻</span>
+                    <span class="course-icon live-icon" style="background: linear-gradient(135deg, var(--status-live), #34d399);">💻</span>
                     <div class="course-body">
                         <div class="course-title">دورة تكوينية في مبادئ الإعلام الآلي</div>
                         <span class="status-badge status-live"><span class="dot"></span>جارية — بدأت في 28 أوت 2026</span>
