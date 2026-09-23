@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>المساعد الذكي للمعلوماتية | الأستاذ بلوطي عمر</title>
+    <!-- Google Fonts: Noto Kufi Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            page: '#e8f0fc',
+                            primary: '#2563eb',
+                            deep: '#1e3a8a',
+                            sky: '#38bdf8',
+                            muted: '#5f7092',
+                            card: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        arabic: ['Noto Kufi Arabic', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-page: #e8f0fc;
+            --primary-blue: #2563eb;
+            --primary-deep: #1e3a8a;
+            --sky: #38bdf8;
+            --text-main: #14254a;
+            --text-muted: #5f7092;
+            --border-soft: #d9e5f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.18) 0%, transparent 45%),
+                linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+            color: var(--text-main);
+            min-height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Custom Scrollbar for smooth experience */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(226, 232, 240, 0.6);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        /* Glassmorphism effects */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .glass-header {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.96) 0%, rgba(37, 99, 235, 0.94) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .user-bubble {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            border-radius: 20px 20px 4px 20px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.22);
+        }
+
+        .ai-bubble {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e293b;
+            border: 1px solid var(--border-soft);
+            border-radius: 20px 20px 20px 4px;
+            box-shadow: 0 6px 18px rgba(20, 37, 74, 0.06);
+        }
+
+        /* Typing indicator animation */
+        .typing-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Suggestion chip pulse */
+        .chip-btn {
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .chip-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.18);
+        }
+        .chip-btn:active {
+            transform: scale(0.96);
+        }
+    </style>
+</head>
+<body class="font-arabic antialiased h-screen flex flex-col justify-between">
+
+    <!-- Navbar / Header -->
+    <header class="glass-header text-white px-4 py-3 shadow-lg z-20 flex-shrink-0 border-b border-white/20">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            
+            <!-- Right side: Back button & Teacher avatar -->
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all text-white flex items-center justify-center" title="العودة للرئيسية">
+                    <svg class="w-5 h-5 rtl:rotate-0 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </a>
+                
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-full border-2 border-sky-300 p-0.5 bg-white shadow-md">
+                        <img src="../teacher.jpg" onerror="this.src='https://placehold.co/100x100/1e3a8a/ffffff?text=AI'" alt="الأستاذ بلوطي عمر" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></span>
+                </div>
+
+                <div>
+                    <h1 class="text-sm sm:text-base font-extrabold text-white leading-tight flex items-center gap-1.5">
+                        المساعد الذكي للمعلوماتية
+                        <span class="bg-sky-400/30 text-sky-200 text-[10px] px-2 py-0.5 rounded-full font-bold border border-sky-300/30">AI 3.1</span>
+                    </h1>
+                    <p class="text-[11px] text-blue-100/90 font-medium">الفضاء الرقمي للأستاذ بلوطي عمر</p>
+                </div>
+            </div>
+
+            <!-- Left side: Actions (Clear Chat, Voice status) -->
+            <div class="flex items-center gap-2">
+                <button id="clearChatBtn" class="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-red-500/30 hover:border-red-300/40 border border-white/15 text-xs text-white/90 flex items-center gap-1.5 transition-all" title="مسح المحادثة">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                    <span class="hidden sm:inline font-bold">مواضيع جديدة</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Main Chat Container -->
+    <main class="flex-1 overflow-y-auto px-3 sm:px-6 py-4 space-y-4 max-w-4xl w-full mx-auto" id="chatContainer">
+        
+        <!-- Welcome Message Box -->
+        <div class="ai-msg-wrap flex gap-3 max-w-[92%] sm:max-w-[85%] items-start animate-fade-in">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 to-sky-400 flex items-center justify-center text-white flex-shrink-0 shadow-md mt-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <div class="ai-bubble p-4 text-sm sm:text-base leading-relaxed space-y-2">
+                <div class="font-extrabold text-blue-900 border-b border-blue-100 pb-1.5 flex items-center justify-between">
+                    <span>مرحباً بك في مساعد المعلوماتية الذكي! 🤖✨</span>
+                    <span class="text-[10px] text-gray-400 font-normal">الآن</span>
+                </div>
+                <p>أنا هنا لمساعدتك في كل ما يتعلق بمادة **المعلوماتية للتعليم الثانوي** (خاصة السنة الأولى ثانوي جذع مشترك علوم وآداب):</p>
+                <ul class="list-disc list-inside text-xs sm:text-sm text-gray-700 space-y-1 font-medium pr-1">
+                    <li>المكونات المادية والبرمجية للحاسوب 🖥️</li>
+                    <li>المخططات الانسيابية والخوارزميات 📐</li>
+                    <li>برمجيات معالجة النصوص (Word) والجداول (Excel) 📊</li>
+                    <li>حل التمارين ومراجعة دروس الاختبارات والفروض 📝</li>
+                </ul>
+                <p class="text-xs text-blue-700 font-semibold pt-1">كيف يمكنني مساعدتك اليوم في دراستك؟</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Section with Chips and Input -->
+    <footer class="w-full max-w-4xl mx-auto px-3 sm:px-6 pb-3 pt-1 flex-shrink-0 z-10">
+        
+        <!-- Typing Indicator (Hidden by default) -->
+        <div id="typingIndicator" class="hidden flex items-center gap-2 mb-2 text-xs text-brand-muted font-bold px-2">
+            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                <svg class="w-3.5 h-3.5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
+            <span>المساعد الذكي يفكر ويكتب الإجابة...</span>
+            <div class="flex items-center gap-1">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+            </div>
+        </div>
+
+        <!-- Quick Suggestion Chips Horizontal Bar -->
+        <div class="mb-2.5 overflow-x-auto no-scrollbar py-1 flex items-center gap-2 text-xs whitespace-nowrap">
+            <span class="text-brand-muted font-bold text-[11px] pl-1 flex items-center gap-1">
+                💡 اقتراحات:
+            </span>
+            <button onclick="sendQuickPrompt('ما هي المكونات المادية الأساسية للحاسوب؟')" class="chip-btn bg-white hover:bg-blue-50 text-blue-900 border border-blue-200 px-3 py-1.5 rounded-xl font-bold shadow-sm">
+                🖥️ المكونات المادية للحاسوب
+            </button>
+            <button onclick="sendQuickPrompt('اشرح لي المخطط الانسيابي مع رسم مثال بالأسهم للتعليمات الشرطية')" class="chip-btn bg-white hover:bg-blue-50 text-blue-900 border border-blue-200 px-3 py-1.5 rounded-xl font-bold shadow-sm">
+                📐 شرح المخطط الانسيابي
+            </button>
+            <button onclick="sendQuickPrompt('كيف أصلح الأخطاء وأنسق الجداول باحترافية في برنامج Word؟')" class="chip-btn bg-white hover:bg-blue-50 text-blue-900 border border-blue-200 px-3 py-1.5 rounded-xl font-bold shadow-sm">
+                📝 تنسيق الجداول في Word
+            </button>
+            <button onclick="sendQuickPrompt('ما هو الفرق بين نظام التشغيل والبرمجيات التطبيقية؟')" class="chip-btn bg-white hover:bg-blue-50 text-blue-900 border border-blue-200 px-3 py-1.5 rounded-xl font-bold shadow-sm">
+                ⚙️ نظام التشغيل vs البرمجيات
+            </button>
+            <button onclick="sendQuickPrompt('شرح مفهوم الخوارزمية والهيكل العام لها بلغة بسيطة')" class="chip-btn bg-white hover:bg-blue-50 text-blue-900 border border-blue-200 px-3 py-1.5 rounded-xl font-bold shadow-sm">
+                🧮 مفهوم الخوارزمية
+            </button>
+        </div>
+
+        <!-- Message Input Box -->
+        <div class="glass-panel p-2 rounded-2xl shadow-xl border border-white/80 relative">
+            <form id="chatForm" onsubmit="handleFormSubmit(event)" class="flex items-end gap-2">
+                
+                <!-- Dictation / Microphone Button -->
+                <button type="button" id="micBtn" onclick="toggleSpeechRecognition()" class="p-3 rounded-xl text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-all flex-shrink-0" title="إدخال بصوتك">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 016 0v6a3 3 0 01-3 3z"/>
+                    </svg>
+                </button>
+
+                <!-- Textarea -->
+                <textarea id="userInput" rows="1" placeholder="اسأل المساعد الذكي عن أي درس في المعلوماتية..." class="flex-1 bg-transparent px-2 py-2 text-sm sm:text-base text-gray-800 placeholder-gray-400 resize-none focus:outline-none max-h-32 font-medium leading-relaxed" oninput="autoResizeTextarea(this)" onkeydown="handleKeyDown(event)"></textarea>
+
+                <!-- Send Button -->
+                <button type="submit" id="sendBtn" class="p-3 bg-gradient-to-tr from-blue-700 to-blue-500 hover:from-blue-800 hover:to-blue-600 text-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all flex-shrink-0 flex items-center justify-center">
+                    <svg class="w-5 h-5 rtl:rotate-180 rotate-0 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                    </svg>
+                </button>
+
+            </form>
+        </div>
+
+        <!-- Footer Copyright/Note -->
+        <p class="text-[10px] text-center text-brand-muted mt-2 font-semibold">
+            تم التطوير الفائق للفضاء الرقمي الخاص للأستاذ بلوطي عمر • جميع الإجابات مخصصة للمنهاج الثانوي
+        </p>
+
+    </footer>
+
+    <script>
+        // Global variables for conversation tracking
+        let conversationHistory = [];
+        let isGenerating = false;
+        let recognition = null;
+
+        // Auto-scroll chat to bottom
+        function scrollToBottom() {
+            const container = document.getElementById('chatContainer');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Dynamic auto-resizing for text area
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        // Keyboard press handler (Enter sends, Shift+Enter new line)
+        function handleKeyDown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                document.getElementById('chatForm').requestSubmit();
+            }
+        }
+
+        // Simple Markdown parser for beautiful output
+        function parseMarkdown(text) {
+            if (!text) return '';
+
+            // Escape script/html to prevent injection
+            let escaped = text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+            // Code blocks ```code```
+            escaped = escaped.replace(/```([a-zA-Z]*)\n?([\s\S]*?)```/g, function(match, lang, code) {
+                return `<div class="my-3 rounded-xl overflow-hidden bg-slate-900 border border-slate-700 text-left dir-ltr shadow-lg">
+                    <div class="bg-slate-800 px-3 py-1.5 text-[11px] text-slate-300 font-mono flex justify-between items-center border-b border-slate-700">
+                        <span>${lang || 'code'}</span>
+                        <button onclick="copyToClipboard(this)" data-code="${encodeURIComponent(code)}" class="bg-slate-700 hover:bg-slate-600 text-white px-2 py-0.5 rounded text-[10px] transition">نسخ الكود</button>
+                    </div>
+                    <pre class="p-3 text-xs text-emerald-400 font-mono overflow-x-auto"><code>${code.trim()}</code></pre>
+                </div>`;
+            });
+
+            // Inline code `code`
+            escaped = escaped.replace(/`([^`]+)`/g, '<code class="bg-blue-100 text-blue-900 px-1.5 py-0.5 rounded text-xs font-mono dir-ltr inline-block border border-blue-200">$1</code>');
+
+            // Bold **text**
+            escaped = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-extrabold text-blue-950">$1</strong>');
+
+            // Italic *text*
+            escaped = escaped.replace(/\*([^*]+)\*/g, '<em class="italic text-slate-700">$1</em>');
+
+            // Format line breaks and lists
+            let lines = escaped.split('\n');
+            let resultHtml = [];
+            let inList = false;
+
+            for (let line of lines) {
+                let trimmed = line.trim();
+                if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+                    if (!inList) {
+                        resultHtml.push('<ul class="list-disc list-inside space-y-1 my-2 pr-1 font-medium">');
+                        inList = true;
+                    }
+                    resultHtml.push(`<li class="leading-relaxed">${trimmed.substring(2)}</li>`);
+                } else if (/^\d+\.\s/.test(trimmed)) {
+                    if (!inList) {
+                        resultHtml.push('<ol class="list-decimal list-inside space-y-1 my-2 pr-1 font-medium">');
+                        inList = true;
+                    }
+                    resultHtml.push(`<li class="leading-relaxed">${trimmed.replace(/^\d+\.\s/, '')}</li>`);
+                } else {
+                    if (inList) {
+                        resultHtml.push(inList === 'ul' ? '</ul>' : '</ol>');
+                        inList = false;
+                    }
+                    if (trimmed === '') {
+                        resultHtml.push('<div class="h-1.5"></div>');
+                    } else {
+                        resultHtml.push(`<p class="leading-relaxed">${trimmed}</p>`);
+                    }
+                }
+            }
+            if (inList) resultHtml.push('</ul>');
+
+            return resultHtml.join('');
+        }
+
+        // Append user bubble
+        function appendUserMessage(text) {
+            const chatContainer = document.getElementById('chatContainer');
+            const userWrap = document.createElement('div');
+            userWrap.className = "user-msg-wrap flex gap-2.5 max-w-[90%] sm:max-w-[80%] items-start mr-auto flex-row-reverse animate-fade-in";
+            
+            const now = new Date().toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' });
+
+            userWrap.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white flex-shrink-0 shadow-md mt-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                <div class="user-bubble p-3.5 text-sm sm:text-base leading-relaxed space-y-1">
+                    <div class="text-[10px] text-blue-100 font-semibold text-left">${now}</div>
+                    <div>${text.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            chatContainer.appendChild(userWrap);
+            scrollToBottom();
+        }
+
+        // Append AI bubble
+        function appendAIMessage(parsedHtml, rawText) {
+            const chatContainer = document.getElementById('chatContainer');
+            const aiWrap = document.createElement('div');
+            aiWrap.className = "ai-msg-wrap flex gap-3 max-w-[92%] sm:max-w-[85%] items-start animate-fade-in";
+
+            const now = new Date().toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' });
+
+            aiWrap.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 to-sky-400 flex items-center justify-center text-white flex-shrink-0 shadow-md mt-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div class="ai-bubble p-4 text-sm sm:text-base leading-relaxed space-y-2 relative group w-full">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-1.5 mb-2">
+                        <span class="font-extrabold text-blue-900 text-xs sm:text-sm">المساعد الذكي للمعلوماتية</span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="speakText(this)" data-text="${encodeURIComponent(rawText)}" class="text-gray-400 hover:text-blue-600 transition" title="قراءة إجابة بصوت">
+                                🔊
+                            </button>
+                            <span class="text-[10px] text-gray-400 font-normal">${now}</span>
+                        </div>
+                    </div>
+                    <div class="space-y-1">${parsedHtml}</div>
+                </div>
+            `;
+            chatContainer.appendChild(aiWrap);
+            scrollToBottom();
+        }
+
+        // Call Gemini API
+        async function fetchGeminiResponse(userPrompt) {
+            const apiKey = ""; // API key will be injected automatically by runtime if available
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            // Push user turn to history
+            conversationHistory.push({
+                role: "user",
+                parts: [{ text: userPrompt }]
+            });
+
+            // Define rich System Instruction specifically tailored for Omar Bellouti's Informatics portal
+            const systemInstruction = {
+                parts: [{
+                    text: `أنت "المساعد التعليمي الذكي في مادة المعلوماتية" بالمرحلة الثانوية على المنصة الرقمية للأستاذ بلوطي عمر (Omar Bellouti).
+مهمتك الأساسية هي الإجابة عن كافة تساؤلات التلاميذ والأساتذة في مادة المعلوماتية للتعليم الثانوي بالجزائر (السنة الأولى ثانوي جذع مشترك علوم وتكنولوجيا وجذع مشترك آداب).
+المجالات التعلمية المشمولة:
+1. تقنية المعلومات وبنية الحاسوب (المكونات المادية، المكونات البرمجية، ووحدات الإدخال/الإخراج والذاكرة).
+2. نظام التشغيل (معالجة الملفات والمجلدات والإعدادات).
+3. البرمجيات الجاهزة والمكتبية (معالج النصوص Word، المجدول Excel، العروض التقديمية).
+4. الخوارزميات والمخططات الانسيابية (المفهوم، الهيكل العام، التعليمات الشرطية، وحلقات التكرار).
+
+طريقة الرد والأسلوب:
+- بأسلوب تربوي مبسط، مشجع، ورائع.
+- استخدم التنسيق الممنهج (نقاط شارحة، نصوص عريضة للكلمات المفتاحية، وأمثلة توضيحية خوارزمية أو مخططات نصية بأسهم).
+- تحدث باللغة العربية الفصحى الواضحة والراقية.`
+                }]
+            };
+
+            const payload = {
+                contents: conversationHistory,
+                systemInstruction: systemInstruction
+            };
+
+            let retries = 0;
+            const maxRetries = 3;
+            let delay = 1000;
+
+            while (retries <= maxRetries) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`خطأ في الاتصال: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    const candidate = data.candidates?.[0];
+                    const replyText = candidate?.content?.parts?.[0]?.text;
+
+                    if (replyText) {
+                        // Push model turn to history
+                        conversationHistory.push({
+                            role: "model",
+                            parts: [{ text: replyText }]
+                        });
+                        return replyText;
+                    } else {
+                        throw new Error("لم يتم استلام نص متناسق من المساعد.");
+                    }
+                } catch (err) {
+                    retries++;
+                    if (retries > maxRetries) {
+                        conversationHistory.pop(); // Remove pending turn on failure
+                        throw err;
+                    }
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        // Handle message submission
+        async function handleFormSubmit(event) {
+            if (event) event.preventDefault();
+
+            const inputEl = document.getElementById('userInput');
+            const prompt = inputEl.value.trim();
+
+            if (!prompt || isGenerating) return;
+
+            // Update UI state
+            isGenerating = true;
+            inputEl.value = '';
+            inputEl.style.height = 'auto';
+            document.getElementById('typingIndicator').classList.remove('hidden');
+            document.getElementById('sendBtn').disabled = true;
+
+            // Render user bubble
+            appendUserMessage(prompt);
+
+            try {
+                // Get AI response
+                const rawResponse = await fetchGeminiResponse(prompt);
+                const parsedHtml = parseMarkdown(rawResponse);
+                appendAIMessage(parsedHtml, rawResponse);
+            } catch (error) {
+                console.error("Gemini Error:", error);
+                const errorHtml = `<div class="text-red-600 font-bold">عذراً، حدث خطأ أثناء الاتصال بالمساعد الذكي. يُرجى التحقق من الاتصال بالإنترنت ومحاولة إعادة إرسال السؤال مرة أخرى. 🔄</div>`;
+                appendAIMessage(errorHtml, "حدث خطأ في الاتصال");
+            } finally {
+                isGenerating = false;
+                document.getElementById('typingIndicator').classList.add('hidden');
+                document.getElementById('sendBtn').disabled = false;
+            }
+        }
+
+        // Quick Suggestion Chips handler
+        function sendQuickPrompt(text) {
+            const inputEl = document.getElementById('userInput');
+            inputEl.value = text;
+            autoResizeTextarea(inputEl);
+            handleFormSubmit(null);
+        }
+
+        // Clear Chat logic
+        document.getElementById('clearChatBtn').addEventListener('click', function() {
+            if (conversationHistory.length === 0) return;
+            
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = `
+                <div class="ai-msg-wrap flex gap-3 max-w-[92%] sm:max-w-[85%] items-start animate-fade-in">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 to-sky-400 flex items-center justify-center text-white flex-shrink-0 shadow-md mt-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div class="ai-bubble p-4 text-sm sm:text-base leading-relaxed space-y-2">
+                        <div class="font-extrabold text-blue-900 border-b border-blue-100 pb-1.5 flex items-center justify-between">
+                            <span>محيط محادثة جديد جاهز! ✨</span>
+                        </div>
+                        <p>تم بدء موضوع جديد. تفضل بطرح أي سؤال يتعلق بمادة المعلوماتية للتعليم الثانوي وسأجيبك فوراً!</p>
+                    </div>
+                </div>
+            `;
+            conversationHistory = [];
+        });
+
+        // Copy Code helper
+        function copyToClipboard(btn) {
+            const rawCode = decodeURIComponent(btn.getAttribute('data-code'));
+            navigator.clipboard.writeText(rawCode).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = "تم النسخ! ✓";
+                btn.classList.add('bg-emerald-600');
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.remove('bg-emerald-600');
+                }, 2000);
+            }).catch(err => {
+                console.error("Copy failed", err);
+            });
+        }
+
+        // Text To Speech (TTS) reader using browser Web Speech API
+        function speakText(btn) {
+            const text = decodeURIComponent(btn.getAttribute('data-text'));
+            if (!('speechSynthesis' in window)) {
+                alert('عذراً، متصفحك لا يدعم خاصية القراءة الصوتية النصية.');
+                return;
+            }
+
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ar-SA';
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Speech Recognition (Dictation)
+        function toggleSpeechRecognition() {
+            const micBtn = document.getElementById('micBtn');
+            const inputEl = document.getElementById('userInput');
+
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert('خاصية الإملاء الصوتي غير مدعومة في متصفحك الحالي. يمكنك استخدام Google Chrome.');
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (recognition) {
+                recognition.stop();
+                recognition = null;
+                micBtn.classList.remove('text-red-500', 'bg-red-50', 'animate-pulse');
+                return;
+            }
+
+            recognition = new SpeechRecognition();
+            recognition.lang = 'ar-SA';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onstart = function() {
+                micBtn.classList.add('text-red-500', 'bg-red-50', 'animate-pulse');
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                inputEl.value += (inputEl.value ? ' ' : '') + transcript;
+                autoResizeTextarea(inputEl);
+            };
+
+            recognition.onerror = function() {
+                micBtn.classList.remove('text-red-500', 'bg-red-50', 'animate-pulse');
+                recognition = null;
+            };
+
+            recognition.onend = function() {
+                micBtn.classList.remove('text-red-500', 'bg-red-50', 'animate-pulse');
+                recognition = null;
+            };
+
+            recognition.start();
+        }
+    </script>
+</body>
+</html>
