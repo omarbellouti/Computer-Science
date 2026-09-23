@@ -562,10 +562,9 @@
             scrollToBottom();
         }
 
-        // Call Gemini API
+        // Call Gemini API via Cloudflare Worker Proxy
         async function fetchGeminiResponse(userPrompt) {
-            const apiKey = "AQ.Ab8RN6J33V0L9reAz-oCy2kl9Lkx4n7yTn7I_Yd3ri2sh7BMzw"; // API key will be injected automatically by runtime if available
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            const apiUrl = "https://ai-chat-proxy.the-bellouti.workers.dev/";
 
             // Push user turn to history
             conversationHistory.push({
@@ -664,7 +663,7 @@
                 appendAIMessage(parsedHtml, rawResponse);
             } catch (error) {
                 console.error("Gemini Error:", error);
-                const errorHtml = `<div class="text-red-600 font-bold">عذراً، حدث خطأ أثناء الاتصال بالمساعد الذكي. يُرجى التحقق من الاتصال بالإنترنت ومحاولة إعادة إرسال السؤال مرة أخرى. 🔄</div>`;
+                const errorHtml = `<div class="text-red-600 font-bold">عذراً، حدث خطأ أثناء الاتصال بالمساعد الذكي عبر Cloudflare. يُرجى التحقق من اتصال الإنترنت ومحاولة إعادة إرسال السؤال مرة أخرى. 🔄</div>`;
                 appendAIMessage(errorHtml, "حدث خطأ في الاتصال");
             } finally {
                 isGenerating = false;
