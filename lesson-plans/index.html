@@ -108,6 +108,65 @@
                 0 20px 50px rgba(28, 37, 52, 0.10),
                 inset 0 1px 1px rgba(255, 255, 255, 0.6);
             margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+            perspective: 800px;
+            opacity: 0;
+            transform: translateY(18px) scale(0.97);
+            animation: hero-in 0.7s cubic-bezier(.2,.9,.3,1) forwards;
+        }
+
+        @keyframes hero-in {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .hero-card > * { position: relative; z-index: 1; }
+
+        /* مكعبات ثلاثية الأبعاد طافية في خلفية البطاقة */
+        .hero-cube-wrap {
+            position: absolute;
+            z-index: 0;
+            animation: hero-cube-float 6s ease-in-out infinite;
+        }
+
+        .hero-cube-wrap.hc1 { width: 20px; height: 20px; top: 12%; inset-inline-start: 8%; animation-duration: 5.5s; }
+        .hero-cube-wrap.hc2 { width: 15px; height: 15px; top: 18%; inset-inline-end: 10%; animation-duration: 7.2s; animation-delay: 0.7s; }
+        .hero-cube-wrap.hc3 { width: 14px; height: 14px; bottom: 14%; inset-inline-start: 14%; animation-duration: 6.4s; animation-delay: 1.3s; }
+        .hero-cube-wrap.hc4 { width: 12px; height: 12px; bottom: 18%; inset-inline-end: 12%; animation-duration: 8s; animation-delay: 0.4s; }
+
+        .hero-cube {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: hero-cube-spin 10s linear infinite;
+        }
+
+        .hero-cube-wrap.hc2 .hero-cube { animation-duration: 14s; }
+        .hero-cube-wrap.hc3 .hero-cube { animation-duration: 8s; }
+        .hero-cube-wrap.hc4 .hero-cube { animation-duration: 17s; }
+
+        .hero-cube .hface {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(37, 99, 235, 0.28);
+            background: rgba(56, 189, 248, 0.08);
+        }
+
+        .hero-cube .hface.front  { transform: translateZ(8px); }
+        .hero-cube .hface.back   { transform: translateZ(-8px) rotateY(180deg); }
+        .hero-cube .hface.right  { transform: rotateY(90deg) translateZ(8px); }
+        .hero-cube .hface.left   { transform: rotateY(-90deg) translateZ(8px); }
+        .hero-cube .hface.top    { transform: rotateX(90deg) translateZ(8px); }
+        .hero-cube .hface.bottom { transform: rotateX(-90deg) translateZ(8px); }
+
+        @keyframes hero-cube-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes hero-cube-spin {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
         }
 
         .hero-card .hero-emoji {
@@ -121,6 +180,12 @@
             justify-content: center;
             font-size: 28px;
             box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+            animation: hero-icon-float 3.4s ease-in-out infinite;
+        }
+
+        @keyframes hero-icon-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(-4deg); }
         }
 
         .badge {
@@ -160,6 +225,14 @@
             color: var(--text-main);
             font-size: 15px;
             font-weight: 800;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fade-up 0.6s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fade-up {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title .title-icon {
@@ -188,6 +261,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 16px;
             margin-bottom: 24px;
+            perspective: 1000px;
         }
 
         .choice-card {
@@ -204,7 +278,17 @@
             color: #ffffff;
             overflow: hidden;
             box-shadow: 0 14px 30px rgba(28, 37, 52, 0.16);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            opacity: 0;
+            transform: translateY(24px) scale(0.94);
+            animation: card-in 0.6s cubic-bezier(.2,.9,.3,1) forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .choice-grid .choice-card:nth-child(1) { animation-delay: 0.3s; }
+        .choice-grid .choice-card:nth-child(2) { animation-delay: 0.45s; }
+
+        @keyframes card-in {
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .choice-card::after {
@@ -257,7 +341,7 @@
         }
 
         .choice-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px) rotateX(4deg);
             box-shadow: 0 20px 38px rgba(28, 37, 52, 0.24);
         }
 
@@ -347,6 +431,14 @@
         @media (prefers-reduced-motion: reduce) {
             .glow-orb { animation: none; }
             .choice-card, .choice-icon { transition: none; animation: none; }
+            .hero-card, .section-title {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .hero-cube-wrap, .hero-cube, .hero-emoji {
+                animation: none !important;
+            }
         }
     </style>
 </head>
@@ -364,6 +456,26 @@
 
         <!-- بطاقة الترحيب -->
         <div class="hero-card">
+            <div class="hero-cube-wrap hc1"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
+            <div class="hero-cube-wrap hc2"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
+            <div class="hero-cube-wrap hc3"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
+            <div class="hero-cube-wrap hc4"><div class="hero-cube">
+                <div class="hface front"></div><div class="hface back"></div>
+                <div class="hface right"></div><div class="hface left"></div>
+                <div class="hface top"></div><div class="hface bottom"></div>
+            </div></div>
             <div class="hero-emoji">📔</div>
             <span class="badge">قسم المذكرات</span>
             <h1>مذكرات دروس المعلوماتية</h1>
