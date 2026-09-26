@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كراس التلميذ | تقنية المعلومات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-page:#e8f0fc; --card-bg:#ffffff; --lesson-bg:#f2f7fe;
+  --primary-blue:#2563eb; --primary-blue-soft:#4f8ef7; --primary-deep:#1e3a8a; --sky:#38bdf8;
+  --text-main:#14254a; --text-muted:#5f7092; --border-soft:#d9e5f6; --shadow-tint:20,37,74;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:600}
+html{scroll-behavior:smooth}
+body{
+  background-color:var(--bg-page);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(37,99,235,.16) 0%, transparent 45%),
+    radial-gradient(circle at 92% 65%, rgba(56,189,248,.20) 0%, transparent 45%),
+    linear-gradient(rgba(37,99,235,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,.05) 1px, transparent 1px);
+  background-size:100% 100%,100% 100%,30px 30px,30px 30px;
+  min-height:100vh; color:var(--text-main); overflow-x:hidden; position:relative;
+  padding:calc(24px + env(safe-area-inset-top,0px)) 16px calc(60px + env(safe-area-inset-bottom,0px));
+}
+.glow-orb{position:fixed;width:380px;height:380px;border-radius:50%;
+  background:radial-gradient(circle, rgba(56,189,248,.16) 0%, rgba(255,255,255,0) 70%);
+  top:35%;left:50%;transform:translate(-50%,-50%);z-index:0;pointer-events:none;
+  animation:pulse 6s infinite alternate ease-in-out}
+@keyframes pulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.4}100%{transform:translate(-50%,-50%) scale(1.2);opacity:.8}}
+.wrap{position:relative;z-index:1;width:100%;max-width:640px;margin:0 auto}
+
+.page-head{background:var(--card-bg);border-radius:26px;padding:22px 20px;text-align:center;
+  border:1px solid var(--border-soft);box-shadow:0 20px 50px rgba(var(--shadow-tint),.10);margin-bottom:22px}
+.page-head .kicker{color:var(--primary-blue);font-size:12.5px;margin-bottom:6px}
+.page-head h1{color:var(--primary-deep);font-size:19px;line-height:1.5;margin-bottom:8px}
+.page-head p{color:var(--text-muted);font-size:12.5px;line-height:1.7}
+
+.flow{display:flex;align-items:center;justify-content:center;gap:6px;margin:24px 0 28px;perspective:900px}
+.flow-step{flex:1;max-width:150px;background:linear-gradient(135deg,var(--primary-deep) 0%,#1d4ed8 55%,var(--primary-blue) 100%);
+  color:#fff;border-radius:16px;padding:14px 8px;text-align:center;font-size:12.5px;line-height:1.5;
+  box-shadow:0 12px 26px rgba(var(--shadow-tint),.20);
+  opacity:0;transform:translateY(30px) translateZ(-80px) rotateX(-25deg);
+  transition:transform 1s cubic-bezier(.16,1,.3,1),opacity .9s ease}
+.flow-step.in{opacity:1;transform:translateY(0) translateZ(0) rotateX(0deg)}
+.flow-step:nth-child(3){transition-delay:.15s}
+.flow-step:nth-child(5){transition-delay:.3s}
+.flow-arrow{font-size:20px;color:var(--sky);flex-shrink:0}
+
+.sec{background:var(--card-bg);border-radius:22px;padding:20px 18px;margin-bottom:18px;
+  border:1px solid var(--border-soft);box-shadow:0 14px 32px rgba(var(--shadow-tint),.09);
+  opacity:0;transform:perspective(800px) translateY(28px) rotateX(-10deg);
+  transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .7s ease}
+.sec.in{opacity:1;transform:perspective(800px) translateY(0) rotateX(0deg)}
+.sec-title{display:flex;align-items:center;gap:10px;margin-bottom:14px;color:var(--text-main);font-size:15.5px;font-weight:800}
+.sec-title .ico{flex-shrink:0;width:32px;height:32px;border-radius:10px;
+  background:linear-gradient(135deg,var(--primary-blue),var(--sky));display:flex;align-items:center;justify-content:center;
+  font-size:15px;box-shadow:0 6px 14px rgba(37,99,235,.28);color:#fff;
+  animation:iconFloat 3.6s ease-in-out infinite alternate}
+@keyframes iconFloat{from{transform:perspective(160px) rotateY(-10deg) rotateX(4deg)}to{transform:perspective(160px) rotateY(10deg) rotateX(-4deg)}}
+
+.term{background:var(--lesson-bg);border:1px solid var(--border-soft);border-radius:14px;padding:12px 14px;margin-bottom:10px;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease}
+.term:hover{transform:perspective(600px) translateY(-3px) translateZ(6px) rotateX(2deg);box-shadow:0 10px 22px rgba(var(--shadow-tint),.15)}
+.term:last-child{margin-bottom:0}
+.term b{color:var(--primary-deep);display:block;margin-bottom:4px;font-size:13.5px}
+.term .fr{color:var(--primary-blue-soft);font-weight:700}
+.term p{color:#2b3d63;font-size:13px;line-height:1.8;font-weight:400}
+.term .ex{margin-top:6px;color:var(--text-muted);font-size:12px;font-weight:400}
+.term .ex i{color:var(--primary-blue);font-style:normal;font-weight:700}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 10px}
+.split .chip{background:linear-gradient(135deg,var(--primary-blue),var(--sky));color:#fff;border-radius:12px;padding:10px;text-align:center;
+  font-size:12px;line-height:1.6;box-shadow:0 8px 18px rgba(37,99,235,.22);
+  transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.split .chip:hover{transform:perspective(500px) translateY(-4px) rotateX(6deg) scale(1.03)}
+.split .chip b{display:block;font-size:13px;margin-bottom:2px}
+
+.dims{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.dim{background:var(--lesson-bg);border:1px solid var(--border-soft);border-radius:14px;padding:12px;
+  transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease}
+.dim:hover{transform:perspective(600px) translateY(-4px) translateZ(10px) rotateY(4deg);box-shadow:0 12px 24px rgba(var(--shadow-tint),.16)}
+.dim b{color:var(--primary-deep);display:block;font-size:12.8px;margin-bottom:4px}
+.dim span{color:#2b3d63;font-size:11.8px;line-height:1.7;font-weight:400}
+
+.timeline{position:relative;padding-inline-start:26px;margin-top:6px}
+.timeline::before{content:"";position:absolute;inset-inline-start:9px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(var(--primary-blue),var(--sky))}
+.tl-item{position:relative;margin-bottom:14px}
+.tl-item:last-child{margin-bottom:0}
+.tl-item::before{content:"";position:absolute;inset-inline-start:-26px;top:4px;width:14px;height:14px;border-radius:50%;
+  background:var(--card-bg);border:3px solid var(--primary-blue);box-shadow:0 0 0 4px rgba(37,99,235,.12)}
+.tl-item .year{color:var(--primary-deep);font-size:13.5px;display:block;margin-bottom:3px}
+.tl-item p{color:#2b3d63;font-size:12.8px;line-height:1.75;font-weight:400}
+
+.pc-head{display:flex;align-items:center;gap:8px;margin:14px 0 8px}
+.pc-head:first-child{margin-top:0}
+.pc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.pc-head span{font-size:13px;color:var(--text-main)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:6px}
+.pc-list li{background:var(--lesson-bg);border:1px solid var(--border-soft);border-radius:12px;padding:10px 12px;
+  font-size:12.5px;line-height:1.75;color:#2b3d63;font-weight:400;
+  border-inline-end:3px solid var(--pc-c,var(--primary-blue));
+  transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.pc-list li:hover{transform:translateX(-3px)}
+.pc-list.neg li{--pc-c:#e35d5d}
+
+.domain-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.domain-card{background:var(--lesson-bg);border:1px solid var(--border-soft);border-radius:14px;padding:12px;display:flex;gap:9px;
+  align-items:flex-start;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease}
+.domain-card:hover{transform:perspective(600px) translateY(-4px) rotateY(-4deg) translateZ(8px);box-shadow:0 12px 24px rgba(var(--shadow-tint),.16)}
+.domain-card .em{font-size:19px;flex-shrink:0;filter:drop-shadow(0 3px 5px rgba(37,99,235,.25))}
+.domain-card b{display:block;color:var(--primary-deep);font-size:12.3px;margin-bottom:3px}
+.domain-card span{color:var(--text-muted);font-size:11.3px;line-height:1.6;font-weight:400}
+
+@media (max-width:420px){
+  .page-head h1{font-size:17px}
+  .flow-step{font-size:11.5px;padding:12px 6px}
+  .flow-arrow{font-size:16px}
+  .dims{grid-template-columns:1fr}
+  .domain-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s !important;transition-duration:.001s !important}
+}
+</style>
+</head>
+<body>
+<div class="glow-orb"></div>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">بيئة التعامل مع الحاسوب — تقنية المعلومات</div>
+    <h1>ما يكتبه التلميذ على الكراس</h1>
+    <p>البيانات والمعلومات والمعالجة، التقنية وتكنولوجيا الإعلام والاتصال، وعلم المعلوماتية</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step">بيانات</div>
+    <span class="flow-arrow">⟸</span>
+    <div class="flow-step">معالجة</div>
+    <span class="flow-arrow">⟸</span>
+    <div class="flow-step">معلومات</div>
+  </div>
+
+  <section class="sec">
+    <div class="sec-title"><span class="ico">1</span>البيانات، المعلومات، والمعالجة</div>
+    <div class="term">
+      <b>البيانات <span class="fr">(Data / Données)</span></b>
+      <p>هي مجموعة من القيم الأولية أو الحقائق الخام المتكونة من الأرقام أو الكلمات أو الحروف أو الصور أو الرموز المتعلقة بموضوع معين والممثلة في شكلها الخام، والتي لا يمكن الاستفادة منها بشكلها الحالي إلا بعد معالجتها.</p>
+      <div class="ex"><i>أمثلة:</i> الاسم، سنة الميلاد، مكان الميلاد، رقم التسجيل، صورة التلميذ مبعثرة.</div>
+    </div>
+    <div class="term">
+      <b>المعلومات <span class="fr">(Informations)</span></b>
+      <p>هي تلك البيانات التي تمت معالجتها بحيث أصبحت ذات معنى وباتت مرتبطة بسياق معين يسهل فهمه والاستفادة منه.</p>
+      <div class="ex"><i>مثال:</i> تصنيف التلاميذ حسب الجنس أو حسب الفوج التربوي.</div>
+    </div>
+    <div class="term">
+      <b>المعالجة <span class="fr">(Traitement)</span></b>
+      <p>هي عملية تحويل البيانات الخام إلى معلومات مفيدة من خلال إجراء مجموعة من العمليات المنطقية أو الرياضية عليها.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title"><span class="ico">2</span>التقنية وتكنولوجيا الإعلام والاتصال</div>
+    <div class="term">
+      <b>التقنية <span class="fr">(Technique)</span></b>
+      <p>هي المهارة والقدرة والخبرة الفنية التي يمتلكها الشخص في ممارسة الأعمال وتعتمد على العلم والمعرفة للإنتاج.</p>
+    </div>
+    <div class="term">
+      <b>التكنولوجيا <span class="fr">(Technologie)</span></b>
+      <p>مصطلح يوناني الأصل يتكون من مقطعين:</p>
+      <div class="split">
+        <div class="chip"><b>تكنو</b>Techno — المهارة الفنية</div>
+        <div class="chip"><b>لوجي</b>Logos — العلم أو الدراسة</div>
+      </div>
+      <div class="ex"><i>تعريفها:</i> علم المهارات الفنية وتطبيقاتها العملية.</div>
+    </div>
+    <div class="term">
+      <b>تكنولوجيا الإعلام والاتصال <span class="fr">(TIC)</span></b>
+      <p>هي التلاقي والتزاوج الذي تم بين أجهزة وعتاد الكمبيوتر والبرمجيات بمختلف أنواعها مع شبكات الاتصالات والإنترنت، والتي تشكل مجموعة من الأدوات والوسائط المتعددة التي تسمح بجمع، تخزين، معالجة، ونشر المعلومات وتيسير التواصل.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title"><span class="ico">3</span>المعلوماتية <span class="fr" style="font-size:12.5px">(Informatique)</span></div>
+    <div class="term">
+      <b>تعريف المعلوماتية</b>
+      <p>هو العلم الحديث الذي يعالج المعلومات بطريقة آلية وسريعة باستخدام جهاز الحاسوب وبرامج خاصة صممت لهذا الغرض.</p>
+    </div>
+    <div class="term" style="margin-bottom:0">
+      <b>أبعاد المنظومة المعلوماتية</b>
+      <p>تجمع المنظومة المعلوماتية أربعة أبعاد أساسية متكاملة لضمان تشغيل واستغلال النظام بشكل صحيح:</p>
+      <div class="dims">
+        <div class="dim"><b>الأجهزة / العتاد</b><span>Matériels — المكونات الفيزيائية الملموسة للحاسوب وملحقاته</span></div>
+        <div class="dim"><b>البرمجيات</b><span>Logiciels — أنظمة التشغيل والبرامج والتطبيقات التي تدير العتاد وتشغله</span></div>
+        <div class="dim"><b>الموارد المعرفية</b><span>البيانات الخام والمعلومات المعالجة والنتائج</span></div>
+        <div class="dim"><b>الموارد البشرية</b><span>المبرمجون والمستخدمون والتقنيون الذين يديرون ويستغلون المنظومة</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title"><span class="ico">4</span>مراحل تطور تقنية المعلومات</div>
+    <p style="color:#2b3d63;font-size:12.8px;line-height:1.8;font-weight:400;margin-bottom:12px">مرت تقنية المعلومات بتطور متسارع عبر الزمن وصولاً إلى شكلها الحالي، ويصنف هذا التطور التاريخي لأجهزة معالجة المعلومات في عدة مراحل، من أبرزها:</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="year">1951م</span>
+        <p>بدأ تشغيل الكمبيوتر المعروف باسم <b style="font-weight:700;color:var(--primary-blue-soft)">EDVAC</b> لمعالجة المعلومات.</p>
+      </div>
+      <div class="tl-item">
+        <span class="year">1981م</span>
+        <p>ظهور أول حاسوب محمول يعتمد في تشغيله على المعالج الدقيق.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title"><span class="ico">5</span>خصائص وسلبيات تكنولوجيا الإعلام والاتصال (TIC)</div>
+    <div class="pc-head"><span class="pc-dot" style="background:var(--primary-blue)"></span><span>خصائص ومميزات TIC</span></div>
+    <ul class="pc-list">
+      <li>ربح الوقت والجهد، والاستغلال العقلاني والإيجابي للموارد.</li>
+      <li>تقديم خدمات أفضل للجمهور وزيادة الدقة والتقليل من الأخطاء.</li>
+      <li>توفير معلومات حديثة بكميات هائلة وجعل الاتصالات أسرع وأقل تكلفة.</li>
+    </ul>
+    <div class="pc-head"><span class="pc-dot" style="background:#e35d5d"></span><span>سلبيات استخدام TIC</span></div>
+    <ul class="pc-list neg">
+      <li>تشتت الانتباه لمن يستعمل التكنولوجيا بطريقة مكثفة ومفرطة.</li>
+      <li>تقليل مهارات الإنسان بسبب الاعتماد الكلي على التكنولوجيا.</li>
+      <li>الإصابة ببعض الأضرار الصحية نتيجة الجلوس الطويل أمام الأجهزة (مثل: ضعف النظر، مشاكل العمود الفقري، الانطواء، وتوتر الجهاز العصبي).</li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title"><span class="ico">6</span>مجالات استعمال تكنولوجيا الإعلام والاتصال (TIC)</div>
+    <p style="color:#2b3d63;font-size:12.8px;line-height:1.8;font-weight:400;margin-bottom:12px">تأثرت جميع الميادين الحياتية بالتطور التكنولوجي، ومن أبرزها:</p>
+    <div class="domain-grid">
+      <div class="domain-card"><span class="em">🏛️</span><div><b>الإدارة الرقمية</b><span>ملف الحالة المدنية، جواز السفر البيومتري، الحكومة الإلكترونية</span></div></div>
+      <div class="domain-card"><span class="em">🎓</span><div><b>التكوين والتعليم</b><span>التعليم الإلكتروني والتعليم عن بعد (E-learning)</span></div></div>
+      <div class="domain-card"><span class="em">🏥</span><div><b>الصحة والتطبيب</b><span>الملفات الطبية الرقمية، متابعة المرضى، تبادل المعرفة بين المستشفيات</span></div></div>
+      <div class="domain-card"><span class="em">💹</span><div><b>الاقتصاد</b><span>التجارة الإلكترونية (E-commerce) والأسواق المالية (البورصة)</span></div></div>
+      <div class="domain-card"><span class="em">🏗️</span><div><b>تهيئة الإقليم والعمران</b><span>الملف الوطني للسكن والتسجيل الإلكتروني (مثل: وكالة عدل AADL)</span></div></div>
+      <div class="domain-card"><span class="em">🚗</span><div><b>النقل</b><span>تحديد المواقع (GPS) وتسهيل التجول والتذاكر الإلكترونية</span></div></div>
+      <div class="domain-card" style="grid-column:1/-1"><span class="em">🛡️</span><div><b>المجال العسكري</b><span>التحكم في الصواريخ الموجهة بالحاسوب، القنابل الذكية، والتواصل السري</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title"><span class="ico">7</span>تكنولوجيا الإعلام والاتصال في التعليم (TICE)</div>
+    <div class="term">
+      <p>تعتبر وسيلة هامة لإثراء وتسهيل العملية التعليمية التعلمية، حيث أصبح جهاز الكمبيوتر الأداة الرئيسية داخل القسم التي تركز على نشاط المتعلم وإيجابيته، وتساهم في:</p>
+    </div>
+    <div class="term">
+      <b>التحول في أسلوب التعليم</b>
+      <p>من التعليم القائم على التلقين، إلى التعليم الذي يدعم القدرة على التفكير، والابتكار، والتعلم الذاتي (المقاربة بالكفاءات).</p>
+    </div>
+    <div class="term" style="margin-bottom:0">
+      <b>تخزين واسترجاع المعلومات</b>
+      <p>تخزين واسترجاع كم هائل من المعلومات المعرفية بسرعة فائقة.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var flowSteps = document.querySelectorAll('.flow-step');
+  setTimeout(function(){ flowSteps.forEach(function(el){ el.classList.add('in'); }); }, 150);
+
+  var secs = document.querySelectorAll('.sec');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.15});
+    secs.forEach(function(s){ io.observe(s); });
+  } else {
+    secs.forEach(function(s){ s.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>
