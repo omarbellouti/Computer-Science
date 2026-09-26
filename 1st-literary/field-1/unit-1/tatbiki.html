@@ -1,210 +1,514 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>مذكرة الدرس 1 | تقويم تشخيصي</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg-page:#e8f0fc; --card-bg:#ffffff; --lesson-bg:#f2f7fe;
-  --primary-blue:#2563eb; --primary-blue-soft:#4f8ef7; --primary-deep:#1e3a8a; --sky:#38bdf8;
-  --text-main:#14254a; --text-muted:#5f7092; --border-soft:#d9e5f6; --shadow-tint:20,37,74;
-}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:600}
-html{scroll-behavior:smooth}
-body{
-  background-color:var(--bg-page);
-  background-image:
-    radial-gradient(circle at 10% 6%, rgba(37,99,235,.16) 0%, transparent 45%),
-    radial-gradient(circle at 94% 60%, rgba(56,189,248,.20) 0%, transparent 45%);
-  min-height:100vh; color:var(--text-main); overflow-x:hidden; position:relative;
-  padding:18px 10px 40px;
-}
-.glow-orb{position:fixed;width:340px;height:340px;border-radius:50%;
-  background:radial-gradient(circle, rgba(56,189,248,.16) 0%, rgba(255,255,255,0) 70%);
-  top:25%;left:50%;transform:translate(-50%,-50%);z-index:0;pointer-events:none;
-  animation:pulse 6s infinite alternate ease-in-out}
-@keyframes pulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.4}100%{transform:translate(-50%,-50%) scale(1.2);opacity:.8}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مذكرة تطبيقية | تقويم تشخيصي — المجال 1 | الأستاذ بلوطي عمر</title>
+    <!-- Google Fonts: Noto Kufi Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e8f0fc;
+            --card-bg: #ffffff;
+            --lesson-bg: #f2f7fe;
+            --primary-blue: #2563eb;
+            --primary-blue-soft: #4f8ef7;
+            --primary-deep: #1e3a8a;
+            --sky: #38bdf8;
+            --text-main: #14254a;
+            --text-muted: #5f7092;
+            --border-soft: #d9e5f6;
+            --shadow-tint: 20, 37, 74;
+            --topbar-h: 46px;
+            /* لون قسم "مذكرات الدروس" (plans) */
+            --plans-1: #0e7490;
+            --plans-2: #06b6d4;
+        }
 
-.page-outer{position:relative;z-index:1;display:flex;justify-content:center;width:100%}
-.page{
-  width:794px;min-height:1123px;background:var(--card-bg);
-  padding:20px 30px 22px;border-radius:14px;
-  box-shadow:0 26px 60px rgba(var(--shadow-tint),.18);
-  transform-origin:top center;
-  border:1px solid var(--border-soft);
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-weight: 600;
+        }
 
-.head{
-  background:linear-gradient(135deg,var(--primary-deep) 0%,#1d4ed8 55%,var(--primary-blue) 100%);
-  border-radius:16px;padding:13px 16px;color:#fff;margin-bottom:12px;position:relative;overflow:hidden;
-  perspective:800px;
-  opacity:0;transform:translateY(-24px) rotateX(-16deg);
-  animation:headIn .9s cubic-bezier(.16,1,.3,1) .1s forwards;
-}
-@keyframes headIn{to{opacity:1;transform:translateY(0) rotateX(0)}}
-.head .cube{position:absolute;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:6px;pointer-events:none;animation:cubeFloat 6s infinite ease-in-out alternate}
-.head .c1{width:30px;height:30px;top:8%;left:4%;transform:rotateX(45deg) rotateY(45deg)}
-.head .c2{width:20px;height:20px;bottom:10%;right:6%;transform:rotateX(-30deg) rotateY(60deg);animation-delay:-3s}
-@keyframes cubeFloat{0%{transform:translateY(0) rotateX(0) rotateY(0) translateZ(-15px)}100%{transform:translateY(-6px) rotateX(120deg) rotateY(120deg) translateZ(12px)}}
-.head-title{font-size:14.5px;text-align:center;margin-bottom:9px;text-shadow:0 2px 8px rgba(0,0,0,.35);position:relative;z-index:1}
-.head-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;position:relative;z-index:1}
-.head-cell{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:9px;padding:6px 9px;font-size:9.8px;line-height:1.55}
-.head-cell b{display:block;font-size:9.1px;color:#bfdcff;margin-bottom:1px;font-weight:700}
+        html { scroll-behavior: smooth; }
 
-.stage{
-  background:var(--lesson-bg);border:1px solid var(--border-soft);border-radius:13px;
-  padding:10px 12px;margin-bottom:9px;
-  opacity:0;transform:perspective(700px) translateY(22px) rotateX(-8deg);
-  transition:transform .3s ease,box-shadow .3s ease;
-}
-.stage.in{animation:stageIn .8s cubic-bezier(.16,1,.3,1) forwards}
-@keyframes stageIn{to{opacity:1;transform:perspective(700px) translateY(0) rotateX(0)}}
-.stage:hover{box-shadow:0 12px 26px rgba(var(--shadow-tint),.14)}
-.stage-head{display:flex;align-items:center;gap:7px;margin-bottom:7px}
-.stage-badge{
-  flex-shrink:0;min-width:42px;height:21px;border-radius:7px;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,var(--primary-blue),var(--sky));color:#fff;font-size:9.8px;
-  box-shadow:0 5px 12px rgba(37,99,235,.28);
-  animation:iconFloat 3.6s ease-in-out infinite alternate;
-}
-@keyframes iconFloat{from{transform:perspective(160px) rotateY(-8deg)}to{transform:perspective(160px) rotateY(8deg)}}
-.stage-head h3{font-size:12.6px;color:var(--primary-deep)}
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.20) 0%, transparent 45%),
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            padding: calc(var(--topbar-h) + 22px) 16px calc(100px + env(safe-area-inset-bottom));
+        }
+        .glow-orb {
+            position: fixed;
+            width: 380px; height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(56,189,248,0.16) 0%, rgba(255,255,255,0) 70%);
+            top: 30%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0; pointer-events: none;
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
 
-.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.field{background:#fff;border:1px solid var(--border-soft);border-radius:9px;padding:7px 9px;
-  transition:transform .3s cubic-bezier(.16,1,.3,1);}
-.field:hover{transform:perspective(500px) translateY(-2px) translateZ(4px) rotateX(2deg)}
-.field b{display:block;color:var(--primary-blue);font-size:9.4px;margin-bottom:3px}
-.field ul{list-style:none;display:flex;flex-direction:column;gap:2px}
-.field li{position:relative;padding-inline-start:10px;color:#2b3d63;font-size:9px;line-height:1.48;font-weight:400}
-.field li::before{content:"";position:absolute;inset-inline-start:0;top:5.5px;width:4.5px;height:4.5px;border-radius:50%;background:var(--sky)}
-.field p{color:#2b3d63;font-size:9px;line-height:1.48;font-weight:400}
+        .page-wrap {
+            position: relative; z-index: 1;
+            width: 100%; max-width: 640px; margin: 0 auto;
+        }
 
-@media (max-width:480px){ .page{padding:20px 18px 24px} .head-grid{grid-template-columns:1fr} }
+        /* ---------- الشريط العلوي المثبت ---------- */
+        .app-bar {
+            position: fixed; top: 0; inset-inline: 0; z-index: 20;
+            display: block; text-decoration: none; color: #ffffff;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 0 6px 18px rgba(var(--shadow-tint), 0.22);
+            padding: env(safe-area-inset-top, 0px) 14px 0;
+            -webkit-tap-highlight-color: transparent;
+            transition: filter 0.25s ease;
+        }
+        .app-bar:hover { filter: brightness(1.08); }
+        .app-bar:active { filter: brightness(0.94); }
+        .app-bar__inner {
+            max-width: 640px; margin: 0 auto; min-height: 44px; padding: 6px 0;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .app-bar__icon { width: 22px; height: 22px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+        .app-bar__text { color: #ffffff; font-size: 12.5px; font-weight: 700; line-height: 1.65; text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+        @media (max-width: 480px) { .app-bar__text { font-size: 11.5px; } }
+        /* ---------- زر العودة ---------- */
+        .back-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 42px; height: 42px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            color: #ffffff; text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 0 8px 18px rgba(var(--shadow-tint), 0.22);
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+        }
+        .back-btn:hover { transform: translateY(-2px) scale(1.06); filter: brightness(1.08); }
+        .back-btn:active { transform: scale(0.95); }
+        .back-btn svg { width: 22px; height: 22px; }
 
-@media print{
-  @page{ size:A4; margin:8mm; }
-  html,body{background:#fff !important;padding:0 !important;min-height:0 !important;height:auto !important}
-  .glow-orb{display:none !important}
-  .page-outer{display:block !important;height:auto !important}
-  .page{
-    width:100% !important; min-height:0 !important; box-shadow:none !important; border:none !important;
-    padding:0 !important; transform:none !important; border-radius:0 !important;
-  }
-  *{animation:none !important;transition:none !important;opacity:1 !important;
-    transform:none !important;}
-  .stage{page-break-inside:avoid}
-}
-</style>
+        /* شريط الإجراءات العلوي: العودة + تحميل PDF */
+        .top-actions {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; margin-bottom: 16px;
+        }
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            height: 42px; padding: 0 16px; border-radius: 999px;
+            background: linear-gradient(135deg, var(--plans-1), var(--plans-2));
+            color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 800;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 0 8px 18px rgba(6, 182, 212, 0.30);
+            -webkit-tap-highlight-color: transparent; white-space: nowrap;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+        }
+        .download-btn:hover { transform: translateY(-2px) scale(1.04); filter: brightness(1.06); }
+        .download-btn:active { transform: scale(0.97); }
+        .download-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+        @media (max-width: 380px) { .download-btn { font-size: 12px; padding: 0 13px; } }
+
+        /* ---------- عنوان القسم ---------- */
+        .section-title {
+            display: flex; align-items: center; gap: 10px;
+            margin: 0 2px 16px; color: var(--text-main);
+            font-size: 15px; font-weight: 800;
+        }
+        .section-title .title-icon {
+            flex-shrink: 0; width: 30px; height: 30px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky));
+            display: flex; align-items: center; justify-content: center; font-size: 14px;
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28);
+        }
+        .section-title::after {
+            content: ""; flex: 1; height: 1px;
+            background: linear-gradient(90deg, rgba(37,99,235,0.25), transparent);
+        }
+
+        /* ---------- بطاقة رأس المذكرة ---------- */
+        .doc-card {
+            background: var(--card-bg);
+            padding: 22px 20px 24px; border-radius: 26px;
+            border: 1px solid var(--border-soft);
+            box-shadow: 0 20px 50px rgba(var(--shadow-tint), 0.10), inset 0 1px 1px rgba(255,255,255,0.6);
+            margin-bottom: 22px; position: relative; overflow: hidden;
+        }
+        .doc-badge {
+            display: inline-block;
+            background: linear-gradient(315deg, var(--plans-1), var(--plans-2));
+            color: #fff; font-size: 12px; font-weight: 800;
+            padding: 6px 14px; border-radius: 999px; margin-bottom: 12px;
+            box-shadow: 0 6px 14px rgba(6, 182, 212, 0.30);
+        }
+        .doc-title {
+            color: var(--primary-deep); font-size: 19px; font-weight: 900;
+            line-height: 1.5; margin-bottom: 4px;
+        }
+        .doc-subtitle { color: var(--text-muted); font-size: 13px; font-weight: 700; margin-bottom: 16px; }
+
+        .meta-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;
+        }
+        .meta-item {
+            background: var(--lesson-bg); border: 1px solid var(--border-soft);
+            border-radius: 14px; padding: 10px 12px;
+        }
+        .meta-item.full { grid-column: 1 / -1; }
+        .meta-label { display: block; color: var(--primary-blue); font-size: 11px; font-weight: 800; margin-bottom: 3px; }
+        .meta-value { display: block; color: var(--text-main); font-size: 13.5px; font-weight: 700; line-height: 1.55; }
+
+        .highlight-box {
+            background: var(--lesson-bg); border: 1px solid var(--border-soft);
+            border-right: 4px solid var(--primary-blue);
+            border-radius: 14px; padding: 12px 14px; margin-top: 12px;
+        }
+        .highlight-box .hl-label { color: var(--primary-blue); font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+        .highlight-box .hl-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.7; }
+        .highlight-box ul { margin: 4px 8px 0; padding-inline-start: 18px; }
+        .highlight-box li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.9; }
+        /* ---------- بطاقة مرحلة ---------- */
+        .stage-card {
+            background: var(--card-bg); border: 1px solid var(--border-soft);
+            border-radius: 22px; overflow: hidden; margin-bottom: 16px;
+            box-shadow: 0 12px 26px rgba(var(--shadow-tint), 0.12);
+            opacity: 0;
+            transform: perspective(700px) translateY(24px) translateZ(-60px) rotateX(-12deg);
+            animation: cardIn3d 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) forwards;
+        }
+        @keyframes cardIn3d {
+            to { opacity: 1; transform: perspective(700px) translateY(0) translateZ(0) rotateX(0deg); }
+        }
+        .stage-head {
+            position: relative; display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; padding: 14px 16px; color: #fff; overflow: hidden;
+            background: linear-gradient(315deg, var(--plans-1), var(--plans-2));
+        }
+        .stage-head::after {
+            content: ""; position: absolute; width: 110px; height: 110px; border-radius: 50%;
+            background: rgba(255,255,255,0.14); top: -42px; inset-inline-end: -30px; pointer-events: none;
+        }
+        .stage-head .stage-name { position: relative; z-index: 1; font-size: 16px; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.18); }
+        .stage-head .stage-name .num { opacity: 0.85; font-size: 13px; margin-inline-start: 4px; }
+        .duration-badge {
+            position: relative; z-index: 1; flex-shrink: 0;
+            background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 999px; padding: 5px 12px; font-size: 12.5px; font-weight: 800; white-space: nowrap;
+        }
+        .stage-body { padding: 14px 16px 16px; }
+        .stage-lead { color: #2b3d63; font-size: 13.5px; font-weight: 700; line-height: 1.7; margin-bottom: 12px; }
+
+        .field { margin-top: 12px; }
+        .field-label {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--primary-blue); font-size: 12.5px; font-weight: 800; margin-bottom: 6px;
+        }
+        .field-label::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); }
+        .field-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.75; }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip {
+            background: var(--lesson-bg); border: 1px solid var(--border-soft);
+            color: var(--primary-deep); font-size: 12.5px; font-weight: 700;
+            padding: 6px 12px; border-radius: 999px;
+        }
+
+        /* بطاقات الأنشطة داخل مرحلة الإنجاز */
+        .activity {
+            background: var(--lesson-bg); border: 1px solid var(--border-soft);
+            border-radius: 16px; padding: 12px 14px; margin-top: 10px;
+        }
+        .activity-title {
+            display: flex; align-items: center; gap: 8px;
+            color: var(--primary-deep); font-size: 14px; font-weight: 800; margin-bottom: 8px;
+        }
+        .activity-title .step-num {
+            flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px;
+            background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); color: #fff;
+            display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800;
+        }
+        .activity-row { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.7; margin-top: 5px; }
+        .activity-row .r-label { flex-shrink: 0; color: var(--primary-blue); font-weight: 800; min-width: 74px; }
+        .activity-row .r-val { color: #2b3d63; font-weight: 600; }
+        /* ---------- الفوتر ---------- */
+        .footer {
+            font-size: 13px; color: var(--text-muted);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            text-align: center; margin-top: 26px;
+        }
+        .footer-code { font-family: monospace; color: var(--primary-blue); font-size: 12px; opacity: 0.8; }
+
+        /* ---------- شريط التنقل السفلي ---------- */
+        .bottom-nav {
+            position: fixed; bottom: 0; inset-inline: 0; z-index: 5;
+            display: flex; justify-content: center; gap: 4px;
+            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-soft);
+            padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+            box-shadow: 0 -8px 24px rgba(var(--shadow-tint), 0.10);
+        }
+        .bottom-nav .nav-inner { width: 100%; max-width: 640px; display: flex; justify-content: space-around; }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 3px;
+            text-decoration: none; color: var(--text-muted);
+            font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px;
+            transition: color 0.2s ease;
+        }
+        .nav-item svg { width: 21px; height: 21px; }
+        .nav-item.active { color: var(--primary-blue); }
+
+        @media (max-width: 460px) {
+            .meta-grid { gap: 8px; }
+            .doc-title { font-size: 17px; }
+            .activity-row .r-label { min-width: 66px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .glow-orb { animation: none; }
+            .stage-card { animation: none !important; opacity: 1 !important; transform: none !important; }
+        }
+    </style>
 </head>
 <body>
-<div class="glow-orb"></div>
-<div class="page-outer">
-<div class="page" id="page">
 
-  <div class="head">
-    <div class="cube c1"></div><div class="cube c2"></div>
-    <div class="head-title">تقويم تشخيصي — مذكرة الدرس (1)</div>
-    <div class="head-grid">
-      <div class="head-cell"><b>المستوى</b>سنة أولى ثانوي — جذع مشترك علمي وأدبي</div>
-      <div class="head-cell"><b>المجال التعلمي 1</b>بيئة التعامل مع الحاسوب</div>
-      <div class="head-cell"><b>المادة</b>المعلوماتية</div>
-      <div class="head-cell"><b>الأستاذة</b>منصوري كلثوم</div>
-      <div class="head-cell"><b>المدة الزمنية</b>1 سا</div>
-      <div class="head-cell"><b>الوسائل التعليمية</b>أجهزة كمبيوتر / السبورة / أقلام / جهاز العرض</div>
-      <div class="head-cell" style="grid-column:1/-1"><b>الكفاءة المستهدفة</b>أن يتمكن التلميذ من استرجاع معارفه المكتسبة.</div>
+    <!-- شريط مثبت: تحميل التطبيق -->
+    <a href="/Computer-Science/application/index.html" class="app-bar" id="appBar" aria-label="يمكنك تحميل التطبيق الخاص بنا من على Play Store">
+        <span class="app-bar__inner">
+            <svg class="app-bar__icon" viewBox="0 0 512 512" aria-hidden="true">
+                <polygon fill="#00c8ff" points="60,20 285,256 60,492"/>
+                <polygon fill="#00e676" points="60,20 372,204 285,256"/>
+                <polygon fill="#ffd400" points="372,204 460,256 372,308 285,256"/>
+                <polygon fill="#ff3d47" points="60,492 372,308 285,256"/>
+            </svg>
+            <span class="app-bar__text">يمكنك تحميل التطبيق الخاص بنا من على <bdi>Play Store</bdi></span>
+        </span>
+    </a>
+
+    <div class="glow-orb"></div>
+
+    <div class="page-wrap">
+        <!-- ==BODY_MARKER== -->
+
+        <!-- شريط الإجراءات: العودة (يمين) + تحميل PDF (يسار) -->
+        <div class="top-actions">
+            <a href="/Computer-Science/1st-literary/field-1/index.html" class="back-btn" aria-label="العودة إلى صفحة المجال">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14"></path>
+                    <path d="M13 6l6 6-6 6"></path>
+                </svg>
+            </a>
+            <a href="lesson-plan-field1.pdf" class="download-btn" download aria-label="تحميل المذكرة التطبيقية PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v11"></path>
+                    <path d="M7.5 10.5L12 15l4.5-4.5"></path>
+                    <path d="M5 20h14"></path>
+                </svg>
+                <span>تحميل المذكرة PDF</span>
+            </a>
+        </div>
+
+        <!-- بطاقة رأس المذكرة -->
+        <div class="doc-card">
+            <span class="doc-badge">تقويم تشخيصي</span>
+            <div class="doc-title">المجال التعلّمي 1: بيئة التعامل مع الحاسوب</div>
+            <div class="doc-subtitle">مذكرة تطبيقية — مادة المعلوماتية</div>
+
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <span class="meta-label">المستوى</span>
+                    <span class="meta-value">سنة أولى ثانوي</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">المادة</span>
+                    <span class="meta-value">المعلوماتية</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">المدة الزمنية</span>
+                    <span class="meta-value">1 سا</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">الأستاذ</span>
+                    <span class="meta-value">بلوطي عمر</span>
+                </div>
+                <div class="meta-item full">
+                    <span class="meta-label">الأقسام</span>
+                    <span class="meta-value">جذع مشترك علمي وأدبي</span>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <div class="hl-label">🎯 الكفاءة المستهدفة</div>
+                <div class="hl-text">أن يتمكّن التلميذ من استرجاع معارفه المكتسبة.</div>
+            </div>
+
+            <div class="highlight-box">
+                <div class="hl-label">🧰 الوسائل التعليمية</div>
+                <ul>
+                    <li>أجهزة كمبيوتر</li>
+                    <li>السبورة</li>
+                    <li>أقلام</li>
+                    <li>جهاز العرض</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- مراحل سير الدرس -->
+        <div class="section-title"><span class="title-icon">📔</span>مراحل سير الدرس</div>
+        <!-- ==STAGES_MARKER== -->
+
+        <!-- المرحلة 1: تمهيد -->
+        <div class="stage-card" style="--d:0.05s">
+            <div class="stage-head">
+                <span class="stage-name"><span class="num">01</span> تمهيــد</span>
+                <span class="duration-badge">05 د</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-lead">تذكير التلاميذ بالمعارف المقدَّمة في مرحلة المتوسطة.</div>
+                <div class="field">
+                    <div class="field-label">الهدف الإجرائي</div>
+                    <div class="field-text">أن يسترجع التلميذ معارفه الخاصة بالدروس السابقة.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">إستراتيجية التدريس</div>
+                    <div class="chips"><span class="chip">الطريقة الحوارية</span></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">التوصيات</div>
+                    <div class="field-text">ضرورة مراجعة الدروس التي قُدّمت له في المتوسطة.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">معايير النجاح</div>
+                    <div class="field-text">أجوبة مختلفة.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المرحلة 2: مراحل الإنجاز -->
+        <div class="stage-card" style="--d:0.15s">
+            <div class="stage-head">
+                <span class="stage-name"><span class="num">02</span> مراحل الإنجاز</span>
+                <span class="duration-badge">25 د</span>
+            </div>
+            <div class="stage-body">
+                <div class="field">
+                    <div class="field-label">إستراتيجية التدريس</div>
+                    <div class="chips">
+                        <span class="chip">التعلّم بالمجموعات</span>
+                        <span class="chip">التطبيق الموجَّه</span>
+                    </div>
+                </div>
+                <!-- ==ACTIVITIES_MARKER== -->
+                <div class="activity">
+                    <div class="activity-title"><span class="step-num">1</span> فتح بعض البرامج</div>
+                    <div class="activity-row"><span class="r-label">الهدف:</span><span class="r-val">أن يتمكّن التلميذ من فتح برنامج WordPad.</span></div>
+                    <div class="activity-row"><span class="r-label">التوصية:</span><span class="r-val">ضرورة البحث عن البرنامج في Accessoires.</span></div>
+                    <div class="activity-row"><span class="r-label">معيار النجاح:</span><span class="r-val">فتح برنامج WordPad.</span></div>
+                </div>
+                <div class="activity">
+                    <div class="activity-title"><span class="step-num">2</span> الكتابة في برنامج WordPad</div>
+                    <div class="activity-row"><span class="r-label">الهدف:</span><span class="r-val">أن يقوم التلميذ بكتابة نص في برنامج WordPad.</span></div>
+                    <div class="activity-row"><span class="r-label">التوصية:</span><span class="r-val">ضرورة تغيير اللغة بين العربية والفرنسية عند الكتابة من لوحة المفاتيح.</span></div>
+                    <div class="activity-row"><span class="r-label">معيار النجاح:</span><span class="r-val">كتابة نص.</span></div>
+                </div>
+                <div class="activity">
+                    <div class="activity-title"><span class="step-num">3</span> حفظ النص</div>
+                    <div class="activity-row"><span class="r-label">الهدف:</span><span class="r-val">أن يتمكّن التلميذ من حفظ النص.</span></div>
+                    <div class="activity-row"><span class="r-label">التوصية:</span><span class="r-val">ضرورة عدم الحفظ بطريقة غلق البرنامج، إنما باستعمال أداة الحفظ.</span></div>
+                    <div class="activity-row"><span class="r-label">معيار النجاح:</span><span class="r-val">حفظ النص.</span></div>
+                </div>
+                <div class="activity">
+                    <div class="activity-title"><span class="step-num">4</span> إنشاء مجلدات</div>
+                    <div class="activity-row"><span class="r-label">الهدف:</span><span class="r-val">أن يتمكّن التلميذ من إنشاء مجلد وحفظه باسمه.</span></div>
+                    <div class="activity-row"><span class="r-label">التوصية:</span><span class="r-val">ضرورة النقر بالزر الأيمن.</span></div>
+                    <div class="activity-row"><span class="r-label">معيار النجاح:</span><span class="r-val">إنشاء مجلد.</span></div>
+                </div>
+                <div class="activity">
+                    <div class="activity-title"><span class="step-num">5</span> النسخ واللصق</div>
+                    <div class="activity-row"><span class="r-label">الهدف:</span><span class="r-val">أن يتمكّن التلميذ من نسخ ولصق جزء من نص بطريقتين مختلفتين.</span></div>
+                    <div class="activity-row"><span class="r-label">التوصية:</span><span class="r-val">ضرورة استعمال الزر الأيمن للفأرة أو لوحة المفاتيح.</span></div>
+                    <div class="activity-row"><span class="r-label">معيار النجاح:</span><span class="r-val">نسخ جزء من نص.</span></div>
+                </div>
+            </div>
+        </div>
+        <!-- ==STAGE3_MARKER== -->
+
+        <!-- المرحلة 3: التقييم -->
+        <div class="stage-card" style="--d:0.25s">
+            <div class="stage-head">
+                <span class="stage-name"><span class="num">03</span> التقييــم</span>
+                <span class="duration-badge">15 د</span>
+            </div>
+            <div class="stage-body">
+                <div class="field">
+                    <div class="field-label">الهدف الإجرائي</div>
+                    <div class="field-text">أن يقوم التلميذ بمراجعة المكتسبات القبلية.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">التوصيات</div>
+                    <div class="field-text">حثّ التلاميذ على التذكّر لإنجاز العمل المطلوب.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">معايير النجاح</div>
+                    <div class="field-text">فتح برنامج وكتابة نص ونسخ ولصق وحفظه بنجاح.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="footer-code">&lt;/&gt;</span>
+            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        </div>
     </div>
-  </div>
 
-  <div class="stage">
-    <div class="stage-head"><span class="stage-badge">05 د</span><h3>تمهيد — تذكير التلاميذ بالمعارف المقدمة في مرحلة المتوسطة</h3></div>
-    <div class="field-grid">
-      <div class="field"><b>الأهداف الإجرائية</b><p>أن يسترجع التلميذ معارفه الخاصة بالدروس السابقة.</p></div>
-      <div class="field"><b>إستراتيجية التدريس</b><p>الطريقة الحوارية.</p></div>
-      <div class="field"><b>التوصيات</b><p>ضرورة مراجعة الدروس التي قدمت له في المتوسطة.</p></div>
-      <div class="field"><b>معايير النجاح</b><p>أجوبة مختلفة.</p></div>
-    </div>
-  </div>
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="/Computer-Science/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="/Computer-Science/courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="/Computer-Science/articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
+                الوثائق الإدارية
+            </a>
+        </div>
+    </nav>
 
-  <div class="stage">
-    <div class="stage-head"><span class="stage-badge">25 د</span><h3>مراحل الإنجاز — فتح البرامج، الكتابة في WordPad، الحفظ، النسخ واللصق</h3></div>
-    <div class="field-grid">
-      <div class="field">
-        <b>الأهداف الإجرائية</b>
-        <ul>
-          <li>أن يتمكن التلميذ من فتح برنامج WordPad.</li>
-          <li>أن يقوم التلميذ بكتابة نص في برنامج WordPad.</li>
-          <li>أن يتمكن التلميذ من حفظ النص.</li>
-          <li>أن يتمكن التلميذ من إنشاء مجلد وحفظه باسمه.</li>
-          <li>أن يتمكن التلميذ من نسخ ولصق جزء من نص بطريقتين مختلفتين.</li>
-        </ul>
-      </div>
-      <div class="field">
-        <b>إستراتيجية التدريس</b>
-        <ul>
-          <li>إستراتيجية التعلم بالمجموعات.</li>
-          <li>إستراتيجية التطبيق الموجه.</li>
-        </ul>
-      </div>
-      <div class="field">
-        <b>التوصيات</b>
-        <ul>
-          <li>ضرورة البحث عن البرنامج في Accessoires.</li>
-          <li>ضرورة عند الكتابة من لوحة المفاتيح تغيير اللغة بين العربية والفرنسية.</li>
-          <li>ضرورة عدم الحفظ بطريقة غلق البرنامج، إنما استعمال أداة الحفظ.</li>
-          <li>ضرورة النقر بالزر الأيمن.</li>
-          <li>ضرورة استعمال الزر الأيمن للفأرة أو لوحة المفاتيح.</li>
-        </ul>
-      </div>
-      <div class="field">
-        <b>معايير النجاح</b>
-        <ul>
-          <li>فتح برنامج WordPad.</li>
-          <li>كتابة نص.</li>
-          <li>حفظ النص.</li>
-          <li>إنشاء مجلد.</li>
-          <li>نسخ جزء من نص.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="stage">
-    <div class="stage-head"><span class="stage-badge">15 د</span><h3>التقييم</h3></div>
-    <div class="field-grid">
-      <div class="field"><b>الأهداف الإجرائية</b><p>أن يقوم التلميذ بمراجعة المكتسبات القبلية.</p></div>
-      <div class="field"><b>إستراتيجية التدريس</b><p>—</p></div>
-      <div class="field"><b>التوصيات</b><p>حث التلاميذ على التذكر لإنجاز العمل المطلوب.</p></div>
-      <div class="field"><b>معايير النجاح</b><p>فتح برنامج، وكتابة نص، ونسخ ولصق، وحفظه بنجاح.</p></div>
-    </div>
-  </div>
-
-</div>
-</div>
-
-<script>
-(function(){
-  function fit(){
-    var page = document.getElementById('page');
-    var outer = document.querySelector('.page-outer');
-    var w = window.innerWidth;
-    var scale = Math.min(1, (w - 16) / 794);
-    page.style.transform = 'scale(' + scale + ')';
-    outer.style.height = (page.offsetHeight * scale) + 'px';
-  }
-  window.addEventListener('resize', fit);
-  window.addEventListener('load', fit);
-  fit();
-
-  var stages = document.querySelectorAll('.stage');
-  stages.forEach(function(s, i){
-    setTimeout(function(){ s.classList.add('in'); }, 500 + i * 180);
-  });
-})();
-</script>
+    <script>
+        (function () {
+            function initAppBar() {
+                var bar = document.getElementById('appBar');
+                if (!bar) return;
+                function sync() { document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px'); }
+                sync();
+                window.addEventListener('resize', sync);
+                window.addEventListener('load', sync);
+                if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initAppBar);
+            } else { initAppBar(); }
+        })();
+    </script>
 </body>
 </html>
