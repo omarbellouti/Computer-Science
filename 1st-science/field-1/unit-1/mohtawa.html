@@ -3,663 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بيئة التعامل مع الحاسوب | الأستاذ بلوطي عمر</title>
-    <!-- Google Fonts: Noto Kufi Arabic -->
+    <title>مفاهيم حول تقنية المعلومات — درس (10) | الأستاذ بلوطي عمر</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-page: #e9edf4;
-            --card-bg: #ffffff;
-            --lesson-bg: #f5f7fb;
-            --primary-blue: #2563eb;
-            --primary-blue-soft: #4f8ef7;
-            --sky: #38bdf8;
-            --text-main: #1c2534;
-            --text-muted: #6b7686;
-            --border-soft: #e3e8f0;
-
-            --domain-1a: #2563eb;
-            --domain-1b: #38bdf8;
+            --bg-page: #e8f0fc; --card-bg: #ffffff; --lesson-bg: #f2f7fe;
+            --primary-blue: #2563eb; --primary-blue-soft: #4f8ef7; --primary-deep: #1e3a8a; --sky: #38bdf8;
+            --text-main: #14254a; --text-muted: #5f7092; --border-soft: #d9e5f6;
+            --shadow-tint: 20, 37, 74; --topbar-h: 46px;
+            --plans-1: #0e7490; --plans-2: #06b6d4;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Noto Kufi Arabic', sans-serif;
-            font-weight: 600;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Kufi Arabic', sans-serif; font-weight: 600; }
         html { scroll-behavior: smooth; }
-
         body {
             background-color: var(--bg-page);
             background-image:
-                radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.07) 0%, transparent 40%),
-                radial-gradient(circle at 90% 75%, rgba(56, 189, 248, 0.09) 0%, transparent 40%),
-                linear-gradient(rgba(28, 37, 52, 0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(28, 37, 52, 0.035) 1px, transparent 1px);
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.20) 0%, transparent 45%),
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
-            min-height: 100vh;
-            color: var(--text-main);
-            overflow-x: hidden;
-            position: relative;
-            padding: 22px 16px calc(60px + env(safe-area-inset-bottom));
+            min-height: 100vh; color: var(--text-main); overflow-x: hidden; position: relative;
+            padding: calc(var(--topbar-h) + 22px) 16px calc(100px + env(safe-area-inset-bottom));
         }
-
-        .glow-orb {
-            position: fixed;
-            width: 380px;
-            height: 380px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, rgba(255,255,255,0) 70%);
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            pointer-events: none;
-            animation: pulse 6s infinite alternate ease-in-out;
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
-            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
-        }
-
-        .page-wrap {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 640px;
-            margin: 0 auto;
-        }
-
-        /* ---------- Breadcrumb / back link ---------- */
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            transition: color 0.2s ease;
-        }
-
-        .back-link:hover { color: var(--primary-blue); }
-        .back-link svg { width: 16px; height: 16px; }
-
-        /* ---------- Domain hero ---------- */
-        .hero-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: linear-gradient(135deg, var(--domain-1a), var(--domain-1b));
-            padding: 24px;
-            border-radius: 24px;
-            color: #ffffff;
-            box-shadow: 0 16px 34px rgba(37, 99, 235, 0.28);
-            margin-bottom: 26px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-card::after {
-            content: "";
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.14);
-            top: -55px;
-            inset-inline-end: -55px;
-        }
-
-        .hero-card .hero-icon {
-            flex-shrink: 0;
-            width: 58px;
-            height: 58px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.18);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-card .hero-text { position: relative; z-index: 1; }
-
-        .hero-card .hero-tag {
-            font-size: 12px;
-            font-weight: 700;
-            opacity: 0.9;
-            margin-bottom: 3px;
-            letter-spacing: 0.3px;
-        }
-
-        .hero-card h1 {
-            font-size: 19px;
-            font-weight: 800;
-        }
-
-        /* ---------- Section title ---------- */
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 0 4px 14px;
-            color: var(--text-muted);
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .section-title::before,
-        .section-title::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(37,99,235,0.25), transparent);
-        }
-
-        /* ---------- Units accordion ---------- */
-        .units-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .unit-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-soft);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(28, 37, 52, 0.06);
-            transition: box-shadow 0.25s ease;
-        }
-
-        .unit-card.open {
-            box-shadow: 0 14px 30px rgba(28, 37, 52, 0.12);
-        }
-
-        .unit-header {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 18px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-align: right;
-            font-family: inherit;
-        }
-
-        .unit-header .unit-num {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 13px;
-            background: linear-gradient(135deg, var(--domain-1a), var(--domain-1b));
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            font-weight: 800;
-        }
-
-        .unit-header .unit-title {
-            flex: 1;
-            font-size: 14.5px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .unit-header .chevron {
-            flex-shrink: 0;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: var(--lesson-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .unit-header .chevron svg { width: 13px; height: 13px; color: var(--text-muted); }
-
-        .unit-card.open .chevron {
-            transform: rotate(180deg);
-            background: rgba(37, 99, 235, 0.10);
-        }
-
-        .unit-card.open .chevron svg { color: var(--primary-blue); }
-
-        .unit-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease;
-        }
-
-        .unit-content-inner {
-            padding: 14px 14px 16px;
-            margin: 0 14px 14px;
-            border-radius: 16px;
-            background: linear-gradient(180deg, rgba(37, 99, 235, 0.05), rgba(37, 99, 235, 0.015));
-            border: 1px dashed rgba(37, 99, 235, 0.18);
-            display: flex;
-            flex-direction: column;
-            gap: 9px;
-        }
-
-        .unit-content-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--primary-blue);
-            opacity: 0.75;
-            margin: 0 2px 2px;
-            letter-spacing: 0.3px;
-        }
-
-        .unit-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 14px;
-            background: var(--lesson-bg);
-            border: 1px solid var(--border-soft);
-            text-decoration: none;
-            color: var(--text-main);
-            transition: transform 0.2s ease, background 0.2s ease;
-        }
-
-        .unit-link:hover {
-            transform: translateX(-2px);
-            background: #eef2f9;
-        }
-
-        .unit-link .link-icon {
-            flex-shrink: 0;
-            width: 36px;
-            height: 36px;
-            border-radius: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 17px;
-            color: #fff;
-            animation: link-wiggle 3.6s ease-in-out infinite;
-        }
-
-        .unit-link:nth-child(3) .link-icon { animation-delay: 0.3s; }
-        .unit-link:nth-child(4) .link-icon { animation-delay: 0.6s; }
-        .unit-link:nth-child(5) .link-icon { animation-delay: 0.9s; }
-        .unit-link:nth-child(6) .link-icon { animation-delay: 1.2s; }
-
-        .unit-link:hover .link-icon {
-            animation: link-wiggle-hover 0.5s ease-in-out;
-        }
-
-        @keyframes link-wiggle {
-            0%, 92%, 100% { transform: rotate(0deg); }
-            94% { transform: rotate(-9deg); }
-            96% { transform: rotate(9deg); }
-            98% { transform: rotate(-5deg); }
-        }
-
-        @keyframes link-wiggle-hover {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-12deg) scale(1.1); }
-            50% { transform: rotate(12deg) scale(1.1); }
-            75% { transform: rotate(-6deg) scale(1.05); }
-        }
-
-        .unit-link.lesson .link-icon { background: linear-gradient(135deg, #2563eb, #38bdf8); }
-        .unit-link.slides .link-icon { background: linear-gradient(135deg, #d97706, #fbbf24); }
-        .unit-link.theory .link-icon { background: linear-gradient(135deg, #7c3aed, #c084fc); }
-        .unit-link.practical .link-icon { background: linear-gradient(135deg, #0891b2, #22d3ee); }
-        .unit-link.quiz .link-icon { background: linear-gradient(135deg, #e11d48, #fb7185); }
-
-        .unit-link .link-label {
-            flex: 1;
-            font-size: 13.5px;
-            font-weight: 700;
-        }
-
-        .unit-link .link-arrow svg { width: 14px; height: 14px; color: var(--text-muted); }
-
-        /* ---------- Footer ---------- */
-        .footer {
-            font-size: 13px;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .footer-code {
-            font-family: monospace;
-            color: var(--primary-blue);
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .glow-orb { animation: none; }
-            .unit-card, .unit-header .chevron, .unit-content, .unit-link, .unit-link .link-icon { transition: none; animation: none; }
-        }
+        .glow-orb { position: fixed; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle, rgba(56,189,248,0.16) 0%, rgba(255,255,255,0) 70%); top: 30%; left: 50%; transform: translate(-50%,-50%); z-index: 0; pointer-events: none; animation: pulse 6s infinite alternate ease-in-out; }
+        @keyframes pulse { 0% { transform: translate(-50%,-50%) scale(0.9); opacity:.4; } 100% { transform: translate(-50%,-50%) scale(1.2); opacity:.8; } }
+        .page-wrap { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; }
+        .app-bar { position: fixed; top: 0; inset-inline: 0; z-index: 20; display: block; text-decoration: none; color: #fff; background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%); border-bottom: 1px solid rgba(255,255,255,0.28); box-shadow: 0 6px 18px rgba(var(--shadow-tint),0.22); padding: env(safe-area-inset-top, 0px) 14px 0; -webkit-tap-highlight-color: transparent; transition: filter .25s ease; }
+        .app-bar:hover { filter: brightness(1.08); } .app-bar:active { filter: brightness(0.94); }
+        .app-bar__inner { max-width: 640px; margin: 0 auto; min-height: 44px; padding: 6px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .app-bar__icon { width: 22px; height: 22px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+        .app-bar__text { color: #fff; font-size: 12.5px; font-weight: 700; line-height: 1.65; text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+        @media (max-width: 480px) { .app-bar__text { font-size: 11.5px; } }
+        .top-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+        .back-btn { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%); color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(var(--shadow-tint),0.22); -webkit-tap-highlight-color: transparent; transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease; }
+        .back-btn:hover { transform: translateY(-2px) scale(1.06); filter: brightness(1.08); } .back-btn:active { transform: scale(0.95); }
+        .back-btn svg { width: 22px; height: 22px; }
+        .download-btn { display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 999px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); color: #fff; text-decoration: none; font-size: 13px; font-weight: 800; border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(6,182,212,0.30); -webkit-tap-highlight-color: transparent; white-space: nowrap; transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease; }
+        .download-btn:hover { transform: translateY(-2px) scale(1.04); filter: brightness(1.06); } .download-btn:active { transform: scale(0.97); }
+        .download-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+        @media (max-width: 380px) { .download-btn { font-size: 12px; padding: 0 13px; } }
+        .section-title { display: flex; align-items: center; gap: 10px; margin: 0 2px 16px; color: var(--text-main); font-size: 15px; font-weight: 800; }
+        .section-title .title-icon { flex-shrink: 0; width: 30px; height: 30px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-blue), var(--sky)); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 6px 14px rgba(37,99,235,0.28); }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(37,99,235,0.25), transparent); }
+        .doc-card { background: var(--card-bg); padding: 22px 20px 24px; border-radius: 26px; border: 1px solid var(--border-soft); box-shadow: 0 20px 50px rgba(var(--shadow-tint),0.10), inset 0 1px 1px rgba(255,255,255,0.6); margin-bottom: 22px; position: relative; overflow: hidden; }
+        .doc-badge { display: inline-block; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); color: #fff; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 999px; margin-bottom: 12px; box-shadow: 0 6px 14px rgba(6,182,212,0.30); }
+        .doc-title { color: var(--primary-deep); font-size: 20px; font-weight: 900; line-height: 1.5; margin-bottom: 4px; }
+        .doc-subtitle { color: var(--text-muted); font-size: 13px; font-weight: 700; }
+        /* بطاقة مفهوم */
+        .concept-card { background: var(--card-bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 12px 26px rgba(var(--shadow-tint),0.12); opacity: 0; transform: perspective(700px) translateY(24px) translateZ(-60px) rotateX(-12deg); animation: cardIn3d 0.9s cubic-bezier(0.16,1,0.3,1) var(--d,0s) forwards; }
+        @keyframes cardIn3d { to { opacity: 1; transform: perspective(700px) translateY(0) translateZ(0) rotateX(0deg); } }
+        .concept-head { position: relative; display: flex; align-items: center; gap: 10px; padding: 13px 15px; color: #fff; overflow: hidden; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); }
+        .concept-head::after { content: ""; position: absolute; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.14); top: -42px; inset-inline-end: -30px; pointer-events: none; }
+        .c-num { position: relative; z-index: 1; flex-shrink: 0; width: 30px; height: 30px; border-radius: 9px; background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; }
+        .c-term { position: relative; z-index: 1; flex: 1; font-size: 15.5px; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.18); }
+        .c-fr { position: relative; z-index: 1; flex-shrink: 0; background: rgba(255,255,255,0.20); border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 4px 11px; font-size: 11.5px; font-weight: 700; font-family: 'Noto Kufi Arabic', sans-serif; direction: ltr; white-space: nowrap; }
+        .concept-body { padding: 14px 16px 16px; }
+        .def { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.85; }
+        .field { margin-top: 14px; }
+        .field-label { display: inline-flex; align-items: center; gap: 6px; color: var(--primary-blue); font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .field-label::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); }
+        .list { margin: 4px 6px 0; padding-inline-start: 18px; }
+        .list li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.95; }
+        .example-box { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-right: 4px solid var(--primary-blue); border-radius: 14px; padding: 11px 14px; margin-top: 10px; }
+        .example-box .ex-label { color: var(--primary-blue); font-size: 11.5px; font-weight: 800; margin-bottom: 3px; }
+        .example-box .ex-text { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.8; }
+        .subpart { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 11px 13px; margin-top: 10px; }
+        .subpart .sp-title { color: var(--primary-deep); font-size: 13.5px; font-weight: 800; margin-bottom: 4px; }
+        .subpart .sp-title .sp-fr { color: var(--plans-1); font-size: 11.5px; font-weight: 700; direction: ltr; margin-inline-start: 6px; }
+        .subpart .sp-text { color: #2b3d63; font-size: 12.5px; font-weight: 600; line-height: 1.8; }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+        .chip { background: var(--lesson-bg); border: 1px solid var(--border-soft); color: var(--primary-deep); font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; }
+        .note-box { display: flex; gap: 10px; align-items: flex-start; background: #fff8ec; border: 1px solid #f5e0b8; border-right: 4px solid #e0a13a; border-radius: 14px; padding: 11px 14px; margin-top: 10px; }
+        .note-box .n-icon { flex-shrink: 0; font-size: 16px; line-height: 1.4; }
+        .note-box .n-text { color: #7a5410; font-size: 13px; font-weight: 700; line-height: 1.75; }
+        .timeline { margin: 10px 4px 0; padding-inline-start: 20px; border-inline-start: 2px dashed var(--border-soft); }
+        .tl-item { position: relative; padding-bottom: 12px; }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-item::before { content: ""; position: absolute; inset-inline-start: -27px; top: 3px; width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); border: 2px solid #fff; box-shadow: 0 0 0 2px var(--border-soft); }
+        .tl-year { display: inline-block; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); color: #fff; font-size: 12px; font-weight: 800; padding: 3px 11px; border-radius: 999px; direction: ltr; margin-bottom: 4px; }
+        .tl-text { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.8; }
+        .os-item { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
+        .os-name { flex-shrink: 0; color: var(--primary-blue); font-size: 12.5px; font-weight: 800; direction: ltr; }
+        .os-desc { color: #2b3d63; font-size: 12.5px; font-weight: 600; line-height: 1.7; }
+        .footer { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; margin-top: 26px; }
+        .footer-code { font-family: monospace; color: var(--primary-blue); font-size: 12px; opacity: 0.8; }
+        .bottom-nav { position: fixed; bottom: 0; inset-inline: 0; z-index: 5; display: flex; justify-content: center; gap: 4px; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); border-top: 1px solid var(--border-soft); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px rgba(var(--shadow-tint),0.10); }
+        .bottom-nav .nav-inner { width: 100%; max-width: 640px; display: flex; justify-content: space-around; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: var(--text-muted); font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px; transition: color 0.2s ease; }
+        .nav-item svg { width: 21px; height: 21px; } .nav-item.active { color: var(--primary-blue); }
+        @media (max-width: 460px) { .doc-title { font-size: 18px; } .c-fr { display: none; } }
+        @media (prefers-reduced-motion: reduce) { .glow-orb { animation: none; } .concept-card { animation: none !important; opacity: 1 !important; transform: none !important; } }
     </style>
 </head>
-
 <body>
-
+    <a href="/Computer-Science/application/index.html" class="app-bar" id="appBar" aria-label="تحميل التطبيق من Play Store">
+        <span class="app-bar__inner">
+            <svg class="app-bar__icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="#00E676" d="M47 24 289 256 47 488c-9-5-15-15-15-27V51c0-12 6-22 15-27z"/>
+                <path fill="#00B0FF" d="M361 184 289 256l72 72 84-48c17-10 17-38 0-48z"/>
+                <path fill="#FF3D00" d="M289 256 47 24c3-2 7-3 11-3 6 0 12 2 17 5l286 158z"/>
+                <path fill="#FFC400" d="M289 256 361 328 75 486c-5 3-11 5-17 5-4 0-8-1-11-3z"/>
+            </svg>
+            <span class="app-bar__text">يمكنك تحميل التطبيق الخاص بنا من على <bdi>Play Store</bdi></span>
+        </span>
+    </a>
     <div class="glow-orb"></div>
-
     <div class="page-wrap">
-
-        <a href="../index.html" class="back-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
-            الرجوع إلى المجالات
-        </a>
-
-        <!-- بطاقة المجال -->
-        <div class="hero-card">
-            <span class="hero-icon">🖥️</span>
-            <div class="hero-text">
-                <div class="hero-tag">المجال الأول</div>
-                <h1>بيئة التعامل مع الحاسوب</h1>
-            </div>
-        </div>
-
-        <!-- الوحدات التعليمية -->
-        <div class="section-title">الوحدات التعليمية</div>
-
-        <div class="units-list" id="unitsList">
-
-            <div class="unit-card">
-                <button class="unit-header" type="button">
-                    <span class="unit-num">1</span>
-                    <span class="unit-title">تقنية المعلومات</span>
-                    <span class="chevron">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
-                    </span>
-                </button>
-                <div class="unit-content">
-                    <div class="unit-content-inner">
-                        <div class="unit-content-label">الوسائل التعليمية</div>
-                        <a href="unit-1/mohtawa.html" class="unit-link lesson">
-                            <span class="link-icon">📄</span>
-                            <span class="link-label">محتوى الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-1/presentation.pdf" class="unit-link slides">
-                            <span class="link-icon">🖥️</span>
-                            <span class="link-label">العرض التقديمي</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-1/theory-memo.pdf" class="unit-link theory">
-                            <span class="link-icon">📘</span>
-                            <span class="link-label">المذكرة النظرية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-1/practical-memo.pdf" class="unit-link practical">
-                            <span class="link-icon">🧪</span>
-                            <span class="link-label">المذكرة التطبيقية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-1/quiz.html" class="unit-link quiz">
-                            <span class="link-icon">🎯</span>
-                            <span class="link-label">Quiz الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="unit-card">
-                <button class="unit-header" type="button">
-                    <span class="unit-num">2</span>
-                    <span class="unit-title">تجميع الحاسوب</span>
-                    <span class="chevron">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
-                    </span>
-                </button>
-                <div class="unit-content">
-                    <div class="unit-content-inner">
-                        <div class="unit-content-label">الوسائل التعليمية</div>
-                        <a href="unit-2/lesson.html" class="unit-link lesson">
-                            <span class="link-icon">📄</span>
-                            <span class="link-label">محتوى الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-2/presentation.pdf" class="unit-link slides">
-                            <span class="link-icon">🖥️</span>
-                            <span class="link-label">العرض التقديمي</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-2/theory-memo.pdf" class="unit-link theory">
-                            <span class="link-icon">📘</span>
-                            <span class="link-label">المذكرة النظرية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-2/practical-memo.pdf" class="unit-link practical">
-                            <span class="link-icon">🧪</span>
-                            <span class="link-label">المذكرة التطبيقية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-2/quiz.html" class="unit-link quiz">
-                            <span class="link-icon">🎯</span>
-                            <span class="link-label">Quiz الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="unit-card">
-                <button class="unit-header" type="button">
-                    <span class="unit-num">3</span>
-                    <span class="unit-title">نظام التشغيل</span>
-                    <span class="chevron">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
-                    </span>
-                </button>
-                <div class="unit-content">
-                    <div class="unit-content-inner">
-                        <div class="unit-content-label">الوسائل التعليمية</div>
-                        <a href="unit-3/lesson.html" class="unit-link lesson">
-                            <span class="link-icon">📄</span>
-                            <span class="link-label">محتوى الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-3/presentation.pdf" class="unit-link slides">
-                            <span class="link-icon">🖥️</span>
-                            <span class="link-label">العرض التقديمي</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-3/theory-memo.pdf" class="unit-link theory">
-                            <span class="link-icon">📘</span>
-                            <span class="link-label">المذكرة النظرية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-3/practical-memo.pdf" class="unit-link practical">
-                            <span class="link-icon">🧪</span>
-                            <span class="link-label">المذكرة التطبيقية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-3/quiz.html" class="unit-link quiz">
-                            <span class="link-icon">🎯</span>
-                            <span class="link-label">Quiz الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="unit-card">
-                <button class="unit-header" type="button">
-                    <span class="unit-num">4</span>
-                    <span class="unit-title">لوحة التحكم</span>
-                    <span class="chevron">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
-                    </span>
-                </button>
-                <div class="unit-content">
-                    <div class="unit-content-inner">
-                        <div class="unit-content-label">الوسائل التعليمية</div>
-                        <a href="unit-4/lesson.html" class="unit-link lesson">
-                            <span class="link-icon">📄</span>
-                            <span class="link-label">محتوى الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-4/presentation.pdf" class="unit-link slides">
-                            <span class="link-icon">🖥️</span>
-                            <span class="link-label">العرض التقديمي</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-4/theory-memo.pdf" class="unit-link theory">
-                            <span class="link-icon">📘</span>
-                            <span class="link-label">المذكرة النظرية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-4/practical-memo.pdf" class="unit-link practical">
-                            <span class="link-icon">🧪</span>
-                            <span class="link-label">المذكرة التطبيقية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-4/quiz.html" class="unit-link quiz">
-                            <span class="link-icon">🎯</span>
-                            <span class="link-label">Quiz الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="unit-card">
-                <button class="unit-header" type="button">
-                    <span class="unit-num">5</span>
-                    <span class="unit-title">حماية الحاسوب</span>
-                    <span class="chevron">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
-                    </span>
-                </button>
-                <div class="unit-content">
-                    <div class="unit-content-inner">
-                        <div class="unit-content-label">الوسائل التعليمية</div>
-                        <a href="unit-5/lesson.html" class="unit-link lesson">
-                            <span class="link-icon">📄</span>
-                            <span class="link-label">محتوى الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-5/presentation.pdf" class="unit-link slides">
-                            <span class="link-icon">🖥️</span>
-                            <span class="link-label">العرض التقديمي</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-5/theory-memo.pdf" class="unit-link theory">
-                            <span class="link-icon">📘</span>
-                            <span class="link-label">المذكرة النظرية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-5/practical-memo.pdf" class="unit-link practical">
-                            <span class="link-icon">🧪</span>
-                            <span class="link-label">المذكرة التطبيقية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-5/quiz.html" class="unit-link quiz">
-                            <span class="link-icon">🎯</span>
-                            <span class="link-label">Quiz الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="unit-card">
-                <button class="unit-header" type="button">
-                    <span class="unit-num">6</span>
-                    <span class="unit-title">الشبكة المحلية</span>
-                    <span class="chevron">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
-                    </span>
-                </button>
-                <div class="unit-content">
-                    <div class="unit-content-inner">
-                        <div class="unit-content-label">الوسائل التعليمية</div>
-                        <a href="unit-6/lesson.html" class="unit-link lesson">
-                            <span class="link-icon">📄</span>
-                            <span class="link-label">محتوى الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-6/presentation.pdf" class="unit-link slides">
-                            <span class="link-icon">🖥️</span>
-                            <span class="link-label">العرض التقديمي</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-6/theory-memo.pdf" class="unit-link theory">
-                            <span class="link-icon">📘</span>
-                            <span class="link-label">المذكرة النظرية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-6/practical-memo.pdf" class="unit-link practical">
-                            <span class="link-icon">🧪</span>
-                            <span class="link-label">المذكرة التطبيقية</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                        <a href="unit-6/quiz.html" class="unit-link quiz">
-                            <span class="link-icon">🎯</span>
-                            <span class="link-label">Quiz الدرس</span>
-                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="top-actions">
+            <a href="/Computer-Science/1st-science/field-1/index.html" class="back-btn" aria-label="العودة إلى صفحة المجال">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+            </a>
 
         </div>
 
-        <div class="footer">
-            <span class="footer-code">&lt;/&gt;</span>
-            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        <div class="doc-card">
+            <span class="doc-badge">الدرس النظري - ما يُكتب على الكرّاس</span>
+            <h1 class="doc-title">مفاهيم حول تقنية المعلومات</h1>
+            <p class="doc-subtitle">المجال: بيئة التعامل مع الحاسوب • الوحدة: تقنية المعلومات • السنة الأولى ثانوي</p>
         </div>
 
+        <div class="section-title"><span class="title-icon">📔</span> ملخّص المفاهيم على الكرّاس</div>
+        <!-- 1 -->
+        <div class="concept-card" style="--d:.05s">
+            <div class="concept-head"><span class="c-num">1</span><span class="c-term">البيانات</span><span class="c-fr">Données / Data</span></div>
+            <div class="concept-body">
+                <p class="def">مجموعة الحقائق أو القيم الأوّلية المتكوّنة من حروف أو كلمات أو أرقام أو رموز أو صور، في شكلها الخام والمتعلّقة بموضوع معيّن.</p>
+                <div class="example-box">
+                    <div class="ex-label">مثال</div>
+                    <div class="ex-text">بيانات التلميذ: الاسم، رقم التسجيل، سنة الميلاد، مكان الميلاد، الفوج التربوي، المؤسسة...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="concept-card" style="--d:.12s">
+            <div class="concept-head"><span class="c-num">2</span><span class="c-term">المعلومات</span><span class="c-fr">Information</span></div>
+            <div class="concept-body">
+                <p class="def">هي البيانات التي تمّت معالجتها بحيث أصبحت ذات معنى ومرتبطة بسياق معيّن.</p>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="concept-card" style="--d:.19s">
+            <div class="concept-head"><span class="c-num">3</span><span class="c-term">التقنية</span><span class="c-fr">Technique</span></div>
+            <div class="concept-body">
+                <p class="def">معرفة الشخص وقدرته على إنجاز الأعمال والنشاطات بمهارة فنّية وعلى أساس علمي.</p>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="concept-card" style="--d:.26s">
+            <div class="concept-head"><span class="c-num">4</span><span class="c-term">المعلوماتية</span><span class="c-fr">Informatique</span></div>
+            <div class="concept-body">
+                <p class="def">علم يسمح بمعالجة المعلومات بطريقة آلية باستعمال الحاسوب وبرنامج مخزَّن مسبقاً. وتعتمد على جزأين:</p>
+                <div class="subpart">
+                    <div class="sp-title">العتاد <span class="sp-fr">Hardware</span></div>
+                    <div class="sp-text">جهاز الحاسوب وملحقاته المادية.</div>
+                </div>
+                <div class="subpart">
+                    <div class="sp-title">البرمجيات <span class="sp-fr">Software</span></div>
+                    <div class="sp-text">البرامج التي تسمح باستغلال الحاسوب وملحقاته.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="concept-card" style="--d:.33s">
+            <div class="concept-head"><span class="c-num">5</span><span class="c-term">مجالات تقنية المعلومات</span></div>
+            <div class="concept-body">
+                <p class="def">أصبح استعمال تقنية المعلومات حاضراً في جميع مجالات الحياة، ومنها:</p>
+                <div class="chips">
+                    <span class="chip">الصناعة</span>
+                    <span class="chip">التجارة</span>
+                    <span class="chip">التعليم</span>
+                    <span class="chip">وغيرها...</span>
+                </div>
+            </div>
+        </div>
+        <!-- 6 -->
+        <div class="concept-card" style="--d:.40s">
+            <div class="concept-head"><span class="c-num">6</span><span class="c-term">تكنولوجيا الإعلام والاتصال</span><span class="c-fr">TIC</span></div>
+            <div class="concept-body">
+                <p class="def">تتكوّن هذه العبارة من ثلاثة أجزاء: تكنولوجيا – إعلام – اتصال.</p>
+                <div class="subpart">
+                    <div class="sp-title">أ – التكنولوجيا <span class="sp-fr">Technologie</span></div>
+                    <div class="sp-text">كلمة ذات أصل يوناني، مكوّنة من: <b>techno</b> (المهارة الفنّية) + <b>logos</b> (العلم).</div>
+                </div>
+                <div class="subpart">
+                    <div class="sp-title">ب – الإعلام</div>
+                    <div class="sp-text">الإخبار وتقديم المعلومات؛ أي رسالة تنتقل من مُرسِل إلى مستقبِل.</div>
+                </div>
+                <div class="subpart">
+                    <div class="sp-title">ت – الاتصال</div>
+                    <div class="sp-text">التفاعل بين مُرسِل ومستقبِل ورسالة، مثل: اللقاءات العلمية، المحاضرات، الندوات، المؤتمرات، والدروس في القسم.</div>
+                </div>
+                <div class="field">
+                    <span class="field-label">تكنولوجيا الإعلام والاتصال (TIC) هي:</span>
+                    <ul class="list">
+                        <li>مجموعة التقنيات.</li>
+                        <li>الأدوات والأجهزة السمعية البصرية.</li>
+                        <li>مختلف الوسائط المتعددة (Multimédia).</li>
+                        <li>الإنترنت والاتصالات.</li>
+                    </ul>
+                </div>
+                <div class="example-box">
+                    <div class="ex-label">باختصار</div>
+                    <div class="ex-text">هي التلاقي والتكامل والتمازج بين عتاد الحاسوب والبرمجيات وشبكات الاتصالات.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="concept-card" style="--d:.47s">
+            <div class="concept-head"><span class="c-num">7</span><span class="c-term">مراحل تطوّر تقنية المعلومات</span></div>
+            <div class="concept-body">
+                <p class="def">مرّت تقنية المعلومات بتطوّر متسارع عبر الزمن وصولاً إلى شكلها الحالي، ويُصنَّف هذا التطوّر التاريخي لأجهزة معالجة المعلومات في عدّة مراحل، من أبرزها:</p>
+                <div class="timeline">
+                    <div class="tl-item">
+                        <span class="tl-year">1951 م</span>
+                        <div class="tl-text">بدأ تشغيل الكمبيوتر المعروف باسم <bdi>EDVAC</bdi> لمعالجة المعلومات.</div>
+                    </div>
+                    <div class="tl-item">
+                        <span class="tl-year">1981 م</span>
+                        <div class="tl-text">ظهور أوّل حاسوب محمول يعتمد في تشغيله على المعالج الدقيق.</div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">1 – تطوّر البرامج</span>
+                    <p class="def">لا يمكن الاستفادة من العتاد بدون برامج، وهي بدورها تتطوّر بتطوّر الأجهزة، ويمكن تصنيفها إلى صنفين:</p>
+                </div>
+
+                <div class="subpart">
+                    <div class="sp-title">نظام التشغيل <span class="sp-fr">ص 9</span></div>
+                    <div class="sp-text" style="margin-bottom:8px;">أنظمة التشغيل الخاصة بالحواسيب:</div>
+                    <div class="os-item"><span class="os-name">Windows</span><span class="os-desc">من شركة Microsoft.</span></div>
+                    <div class="os-item"><span class="os-name">macOS</span><span class="os-desc">من شركة Apple.</span></div>
+                    <div class="os-item"><span class="os-name">Linux</span><span class="os-desc">نظام مفتوح المصدر ومجّاني.</span></div>
+                </div>
+
+                <div class="subpart">
+                    <div class="sp-title">أنظمة تشغيل الهواتف الذكية واللوحات الرقمية</div>
+                    <div class="os-item"><span class="os-name">Android</span><span class="os-desc">من شركة Google، نجده في: Samsung، Oppo، Vivo، Xiaomi.</span></div>
+                    <div class="os-item"><span class="os-name">iOS</span><span class="os-desc">من شركة Apple، نجده فقط في iPhone.</span></div>
+                    <div class="os-item"><span class="os-name">HarmonyOS</span><span class="os-desc">من شركة Huawei.</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer"><span class="footer-code">&lt;/&gt;</span><span>نتمنّى لكم توفيقاً ونجاحاً باهراً</span></div>
     </div>
-
+    <nav class="bottom-nav">
+        <div class="nav-inner">
+            <a href="/Computer-Science/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>
+                <span>الرئيسية</span>
+            </a>
+            <a href="/Computer-Science/courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h11a3 3 0 0 1 3 3v11a2.5 2.5 0 0 0-2.5-2.5H4z"></path><path d="M20 5H9a3 3 0 0 0-3 3v11"></path></svg>
+                <span>الدورات</span>
+            </a>
+            <a href="/Computer-Science/articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"></path><path d="M9 8h6M9 12h6M9 16h4"></path></svg>
+                <span>الوثائق الإدارية</span>
+            </a>
+        </div>
+    </nav>
     <script>
-        (function () {
-            var cards = document.querySelectorAll('.unit-card');
-
-            cards.forEach(function (card) {
-                var header = card.querySelector('.unit-header');
-                var content = card.querySelector('.unit-content');
-                var inner = card.querySelector('.unit-content-inner');
-
-                header.addEventListener('click', function () {
-                    var isOpen = card.classList.contains('open');
-
-                    if (isOpen) {
-                        card.classList.remove('open');
-                        content.style.maxHeight = null;
-                    } else {
-                        card.classList.add('open');
-                        content.style.maxHeight = content.scrollHeight + 'px';
-                    }
-                });
-            });
+        (function(){
+            function initAppBar(){
+                var bar = document.getElementById('appBar');
+                if(!bar) return;
+                function sync(){ document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px'); }
+                sync();
+                window.addEventListener('resize', sync);
+                window.addEventListener('load', sync);
+                if(document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+            }
+            if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', initAppBar); } else { initAppBar(); }
         })();
     </script>
-
 </body>
 </html>
