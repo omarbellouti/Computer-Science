@@ -1,1 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقة تقنية — حصة تطبيقية: حماية الحاسوب | الأستاذ بلوطي عمر</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e8f0fc;
+            --card-bg: #ffffff;
+            --lesson-bg: #f2f7fe;
+            --primary-blue: #2563eb;
+            --primary-blue-soft: #4f8ef7;
+            --primary-deep: #1e3a8a;
+            --sky: #38bdf8;
+            --text-main: #14254a;
+            --text-muted: #5f7092;
+            --border-soft: #d9e5f6;
+            --shadow-tint: 20, 37, 74;
+            --topbar-h: 46px;
+            --plans-1: #0e7490;
+            --plans-2: #06b6d4;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Kufi Arabic', sans-serif; font-weight: 600; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.20) 0%, transparent 45%),
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            min-height: 100vh; color: var(--text-main); overflow-x: hidden; position: relative;
+            padding: calc(var(--topbar-h) + 22px) 16px calc(100px + env(safe-area-inset-bottom));
+        }
+        .glow-orb {
+            position: fixed; width: 380px; height: 380px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(56,189,248,0.16) 0%, rgba(255,255,255,0) 70%);
+            top: 30%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+        @keyframes pulse { 0% { transform: translate(-50%,-50%) scale(0.9); opacity:.4; } 100% { transform: translate(-50%,-50%) scale(1.2); opacity:.8; } }
+        .page-wrap { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; }
+        /* شريط علوي مثبت */
+        .app-bar {
+            position: fixed; top: 0; inset-inline: 0; z-index: 20; display: block; text-decoration: none; color: #fff;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.28); box-shadow: 0 6px 18px rgba(var(--shadow-tint),0.22);
+            padding: env(safe-area-inset-top, 0px) 14px 0; -webkit-tap-highlight-color: transparent; transition: filter .25s ease;
+        }
+        .app-bar:hover { filter: brightness(1.08); } .app-bar:active { filter: brightness(0.94); }
+        .app-bar__inner { max-width: 640px; margin: 0 auto; min-height: 44px; padding: 6px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .app-bar__icon { width: 22px; height: 22px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+        .app-bar__text { color: #fff; font-size: 12.5px; font-weight: 700; line-height: 1.65; text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+        @media (max-width: 480px) { .app-bar__text { font-size: 11.5px; } }
 
+        /* شريط الإجراءات: العودة + تحميل PDF */
+        .top-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+        .back-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(var(--shadow-tint),0.22);
+            -webkit-tap-highlight-color: transparent; transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease;
+        }
+        .back-btn:hover { transform: translateY(-2px) scale(1.06); filter: brightness(1.08); } .back-btn:active { transform: scale(0.95); }
+        .back-btn svg { width: 22px; height: 22px; }
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 999px;
+            background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); color: #fff; text-decoration: none; font-size: 13px; font-weight: 800;
+            border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(6,182,212,0.30); -webkit-tap-highlight-color: transparent; white-space: nowrap;
+            transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease;
+        }
+        .download-btn:hover { transform: translateY(-2px) scale(1.04); filter: brightness(1.06); } .download-btn:active { transform: scale(0.97); }
+        .download-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+        @media (max-width: 380px) { .download-btn { font-size: 12px; padding: 0 13px; } }
+        /* عنوان قسم */
+        .section-title { display: flex; align-items: center; gap: 10px; margin: 0 2px 16px; color: var(--text-main); font-size: 15px; font-weight: 800; }
+        .section-title .title-icon { flex-shrink: 0; width: 30px; height: 30px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-blue), var(--sky)); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 6px 14px rgba(37,99,235,0.28); }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(37,99,235,0.25), transparent); }
+
+        /* بطاقة رأس المذكرة */
+        .doc-card { background: var(--card-bg); padding: 22px 20px 24px; border-radius: 26px; border: 1px solid var(--border-soft); box-shadow: 0 20px 50px rgba(var(--shadow-tint),0.10), inset 0 1px 1px rgba(255,255,255,0.6); margin-bottom: 22px; position: relative; overflow: hidden; }
+        .doc-badge { display: inline-block; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); color: #fff; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 999px; margin-bottom: 12px; box-shadow: 0 6px 14px rgba(6,182,212,0.30); }
+        .doc-title { color: var(--primary-deep); font-size: 19px; font-weight: 900; line-height: 1.5; margin-bottom: 4px; }
+        .doc-subtitle { color: var(--text-muted); font-size: 13px; font-weight: 700; margin-bottom: 16px; }
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .meta-item { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 10px 12px; }
+        .meta-item.full { grid-column: 1 / -1; }
+        .meta-label { display: block; color: var(--primary-blue); font-size: 11px; font-weight: 800; margin-bottom: 3px; }
+        .meta-value { display: block; color: var(--text-main); font-size: 13.5px; font-weight: 700; line-height: 1.55; }
+        .highlight-box { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-right: 4px solid var(--primary-blue); border-radius: 14px; padding: 12px 14px; margin-top: 12px; }
+        .highlight-box .hl-label { color: var(--primary-blue); font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+        .highlight-box .hl-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.7; }
+        .highlight-box ul { margin: 4px 8px 0; padding-inline-start: 18px; }
+        .highlight-box li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.9; }
+
+        /* بطاقة مرحلة */
+        .stage-card { background: var(--card-bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 12px 26px rgba(var(--shadow-tint),0.12); opacity: 0; transform: perspective(700px) translateY(24px) translateZ(-60px) rotateX(-12deg); animation: cardIn3d 0.9s cubic-bezier(0.16,1,0.3,1) var(--d,0s) forwards; }
+        @keyframes cardIn3d { to { opacity: 1; transform: perspective(700px) translateY(0) translateZ(0) rotateX(0deg); } }
+        .stage-head { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; color: #fff; overflow: hidden; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); }
+        .stage-head::after { content: ""; position: absolute; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.14); top: -42px; inset-inline-end: -30px; pointer-events: none; }
+        .stage-head .stage-name { position: relative; z-index: 1; font-size: 15.5px; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.18); }
+        .stage-head .stage-name .num { opacity: 0.85; font-size: 13px; margin-inline-start: 4px; }
+        .duration-badge { position: relative; z-index: 1; flex-shrink: 0; background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 5px 12px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+        .stage-body { padding: 14px 16px 16px; }
+        .field { margin-top: 14px; } .field:first-child { margin-top: 0; }
+        .field-label { display: inline-flex; align-items: center; gap: 6px; color: var(--primary-blue); font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .field-label::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); }
+        .field-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.75; }
+        .field ul { margin: 4px 6px 0; padding-inline-start: 18px; }
+        .field li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.9; }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip { background: var(--lesson-bg); border: 1px solid var(--border-soft); color: var(--primary-deep); font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; }
+        /* صندوق معايير النجاح */
+        .eval-box { background: #eefaf3; border: 1px solid #bfe8d1; border-right: 4px solid #16a34a; border-radius: 14px; padding: 12px 14px; margin-top: 8px; }
+        .eval-box .e-label { color: #157347; font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .eval-box ul { margin: 2px 6px 0; padding-inline-start: 18px; }
+        .eval-box li { color: #285e45; font-size: 13px; font-weight: 600; line-height: 1.9; margin-bottom: 2px; }
+        /* فوتر ونظام تنقل */
+        .footer { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; margin-top: 26px; }
+        .footer-code { font-family: monospace; color: var(--primary-blue); font-size: 12px; opacity: 0.8; }
+        .bottom-nav { position: fixed; bottom: 0; inset-inline: 0; z-index: 5; display: flex; justify-content: center; gap: 4px; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); border-top: 1px solid var(--border-soft); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px rgba(var(--shadow-tint),0.10); }
+        .bottom-nav .nav-inner { width: 100%; max-width: 640px; display: flex; justify-content: space-around; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: var(--text-muted); font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px; transition: color 0.2s ease; }
+        .nav-item svg { width: 21px; height: 21px; } .nav-item.active { color: var(--primary-blue); }
+        @media (max-width: 460px) { .meta-grid { gap: 8px; } .doc-title { font-size: 17px; } }
+        @media (prefers-reduced-motion: reduce) { .glow-orb { animation: none; } .stage-card { animation: none !important; opacity: 1 !important; transform: none !important; } }
+    </style>
+</head>
+<body>
+
+    <a href="/Computer-Science/application/index.html" class="app-bar" id="appBar" aria-label="يمكنك تحميل التطبيق الخاص بنا من على Play Store">
+        <span class="app-bar__inner">
+            <svg class="app-bar__icon" viewBox="0 0 512 512" aria-hidden="true">
+                <polygon fill="#00c8ff" points="60,20 285,256 60,492"/>
+                <polygon fill="#00e676" points="60,20 372,204 285,256"/>
+                <polygon fill="#ffd400" points="372,204 460,256 372,308 285,256"/>
+                <polygon fill="#ff3d47" points="60,492 372,308 285,256"/>
+            </svg>
+            <span class="app-bar__text">يمكنك تحميل التطبيق الخاص بنا من على <bdi>Play Store</bdi></span>
+        </span>
+    </a>
+
+    <div class="glow-orb"></div>
+
+    <div class="page-wrap">
+
+        <!-- شريط الإجراءات: العودة (يمين) + تحميل PDF (يسار) -->
+        <div class="top-actions">
+            <a href="/Computer-Science/1st-literary/field-1/index.html" class="back-btn" aria-label="العودة إلى صفحة المجال">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+                </svg>
+            </a>
+            <a href="tp5.pdf" class="download-btn" download aria-label="تحميل بطاقة الحصة التطبيقية PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v11"></path><path d="M7.5 10.5L12 15l4.5-4.5"></path><path d="M5 20h14"></path>
+                </svg>
+                <span>تحميل البطاقة PDF</span>
+            </a>
+        </div>
+
+        <!-- بطاقة رأس المذكرة -->
+        <div class="doc-card">
+            <span class="doc-badge">بطاقة تقنية — حصة تطبيقية</span>
+            <div class="doc-title">حماية الحاسوب</div>
+            <div class="doc-subtitle">المجال التعلّمي 1: بيئة التعامل مع الحاسوب — الوحدة التعليمية 5: حماية الحاسوب</div>
+
+            <div class="meta-grid">
+                <div class="meta-item"><span class="meta-label">المستوى</span><span class="meta-value">السنة الأولى ثانوي</span></div>
+                <div class="meta-item"><span class="meta-label">المادة</span><span class="meta-value">المعلوماتية</span></div>
+                <div class="meta-item"><span class="meta-label">الوحدة التعليمية</span><span class="meta-value">حماية الحاسوب</span></div>
+                <div class="meta-item"><span class="meta-label">نوع النشاط</span><span class="meta-value">حصة تطبيقية</span></div>
+                <div class="meta-item full"><span class="meta-label">الأستاذ</span><span class="meta-value">بلوطي عمر</span></div>
+                <div class="meta-item full"><span class="meta-label">الأقسام</span><span class="meta-value">جذع مشترك علمي وأدبي</span></div>
+            </div>
+
+            <div class="highlight-box">
+                <div class="hl-label">🎯 الكفاءة المستهدفة</div>
+                <div class="hl-text">أن يتعرّف التلميذ على تثبيت مضاد الفيروسات وكيفية استعماله.</div>
+            </div>
+            <div class="highlight-box">
+                <div class="hl-label">🧰 الوسائل المستعملة</div>
+                <div class="field-text">وسائل التواصل الاجتماعي</div>
+            </div>
+        </div>
+
+        <!-- مراحل التعلم -->
+        <div class="section-title"><span class="title-icon">📔</span>مراحل التعلم</div>
+
+        <!-- المرحلة 1: تمهيد -->
+        <div class="stage-card" style="--d:0.05s">
+            <div class="stage-head">
+                <span class="stage-name"><span class="num">01</span> تمهيد</span>
+                <span class="duration-badge">5 د</span>
+            </div>
+            <div class="stage-body">
+                <div class="field">
+                    <div class="field-label">نشاط المرحلة</div>
+                    <div class="field-text">تذكير التلاميذ بالمعارف المقدَّمة في الدرس.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">الأهداف الإجرائية</div>
+                    <div class="field-text">أن يسترجع التلميذ معارفه الخاصة بالدرس.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">طريقة التدريس</div>
+                    <div class="chips"><span class="chip">الطريقة الحوارية</span></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">التوصيات</div>
+                    <div class="field-text">ضرورة مراجعة الدرس.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">معايير النجاح</div>
+                    <div class="eval-box"><div class="field-text" style="color:#285e45">أجوبة مختلفة.</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المرحلة 2: مراحل الإنجاز -->
+        <div class="stage-card" style="--d:0.15s">
+            <div class="stage-head">
+                <span class="stage-name"><span class="num">02</span> مراحل الإنجاز</span>
+                <span class="duration-badge">40 د</span>
+            </div>
+            <div class="stage-body">
+                <div class="field">
+                    <div class="field-label">نشاط المرحلة (التطبيقات)</div>
+                    <ul>
+                        <li>تفعيل الجدار الناري.</li>
+                        <li>تثبيت برنامج مضاد الفيروس.</li>
+                        <li>فحص القرص الصلب.</li>
+                        <li>فحص قرص الفلاش.</li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <div class="field-label">الأهداف الإجرائية</div>
+                    <ul>
+                        <li>أن يتمكّن التلميذ من تفعيل الجدار الناري.</li>
+                        <li>أن يتمكّن التلميذ من تثبيت برنامج Smadav.</li>
+                        <li>أن يتمكّن التلميذ من فحص القرص C وD.</li>
+                        <li>أن يتمكّن التلميذ من فحص قرص الفلاش.</li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <div class="field-label">طريقة التدريس</div>
+                    <div class="chips">
+                        <span class="chip">إستراتيجية التعلم بالمجموعات</span>
+                        <span class="chip">إستراتيجية التطبيق الموجّه</span>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="field-label">التوصيات</div>
+                    <ul>
+                        <li>ضرورة اتباع مراحل التفعيل.</li>
+                        <li>ضرورة تحذير التلميذ لمدة صلاحية مضاد الفيروس.</li>
+                        <li>ضرورة اختيار القرص المراد فحصه.</li>
+                        <li>ضرورة اختيار القرص المراد فحصه.</li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <div class="field-label">معايير النجاح</div>
+                    <div class="eval-box">
+                        <ul>
+                            <li>تفعيل الجدار الناري.</li>
+                            <li>تثبيت البرنامج.</li>
+                            <li>فحص القرص C.</li>
+                            <li>فحص قرص الفلاش.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المرحلة 3: التقييم -->
+        <div class="stage-card" style="--d:0.25s">
+            <div class="stage-head">
+                <span class="stage-name"><span class="num">03</span> التقييم</span>
+                <span class="duration-badge">15 د</span>
+            </div>
+            <div class="stage-body">
+                <div class="field">
+                    <div class="field-label">الأهداف الإجرائية</div>
+                    <div class="field-text">أن يقوم التلميذ بتثبيت مضاد الفيروس وفحص الأقراص.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">التوصيات</div>
+                    <div class="field-text">حثّ التلاميذ على التذكّر لإنجاز العمل المطلوب.</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">معايير النجاح</div>
+                    <div class="eval-box"><div class="field-text" style="color:#285e45">تثبيت برنامج وفحص الأقراص.</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="footer-code">&lt;/&gt;</span>
+            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        </div>
+
+    </div>
+
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="/Computer-Science/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="/Computer-Science/courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="/Computer-Science/articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
+                الوثائق الإدارية
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        (function () {
+            function initAppBar() {
+                var bar = document.getElementById('appBar'); if (!bar) return;
+                function sync() { document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px'); }
+                sync(); window.addEventListener('resize', sync); window.addEventListener('load', sync);
+                if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+            }
+            if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initAppBar); } else { initAppBar(); }
+        })();
+    </script>
+</body>
+</html>
