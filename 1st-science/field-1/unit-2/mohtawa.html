@@ -55,8 +55,9 @@
         .app-bar:hover { filter: brightness(1.08); } .app-bar:active { filter: brightness(0.94); }
         .app-bar__inner { max-width: 640px; margin: 0 auto; min-height: 44px; padding: 6px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .app-bar__icon { width: 22px; height: 22px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
-        .app-bar__text { color: #fff; font-size: 12.5px; font-weight: 700; line-height: 1.65; text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
-        @media (max-width: 480px) { .app-bar__text { font-size: 11.5px; } }
+        .app-bar__text { color: #fff; font-size: 12.5px; font-weight: 700; line-height: 1.65; text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1 1 auto; }
+        @media (max-width: 480px) { .app-bar__text { font-size: 11px; } }
+        @media (max-width: 360px) { .app-bar__text { font-size: 10px; } }
 
         /* شريط الإجراءات: العودة + تحميل PDF */
         .top-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
@@ -177,7 +178,7 @@
 
         <!-- شريط الإجراءات: العودة (يمين) + تحميل PDF (يسار) -->
         <div class="top-actions">
-            <a href="/Computer-Science/1st-science/field-1/index.html" class="back-btn" aria-label="العودة إلى صفحة المجال">
+            <a href="/Computer-Science/1st-literary/field-1/index.html" class="back-btn" aria-label="العودة إلى صفحة المجال">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
                 </svg>
@@ -338,13 +339,16 @@
 
     <script>
         (function () {
-            function initAppBar() {
-                var bar = document.getElementById('appBar'); if (!bar) return;
-                function sync() { document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px'); }
-                sync(); window.addEventListener('resize', sync); window.addEventListener('load', sync);
-                if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+            // الشريط العلوي الآن مضبوط على سطر واحد ثابت الارتفاع (لا يلتف أبداً)،
+            // لذلك نقيس ارتفاعه فور ظهوره فقط، بدل الانتظار لتحميل الخط أو الصفحة كاملة،
+            // وهو ما كان يسبب هبوط المحتوى فجأة بعد اكتمال تحميل الخط العربي.
+            var bar = document.getElementById('appBar');
+            if (bar) {
+                document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
+                window.addEventListener('resize', function () {
+                    document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
+                });
             }
-            if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initAppBar); } else { initAppBar(); }
         })();
     </script>
 </body>
