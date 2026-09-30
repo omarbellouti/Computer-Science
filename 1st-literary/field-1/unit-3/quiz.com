@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كويز: نظام التشغيل | الأستاذ بلوطي عمر</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e8f0fc;
+            --card-bg: #ffffff;
+            --lesson-bg: #f2f7fe;
+            --primary-blue: #2563eb;
+            --primary-deep: #1e3a8a;
+            --sky: #38bdf8;
+            --text-main: #14254a;
+            --text-muted: #5f7092;
+            --border-soft: #d9e5f6;
+            --shadow-tint: 20, 37, 74;
+            --topbar-h: 46px;
+            --plans-1: #0e7490;
+            --plans-2: #06b6d4;
+            --good: #16a34a;
+            --bad: #dc2626;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Kufi Arabic', sans-serif; font-weight: 600; }
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.20) 0%, transparent 45%);
+            min-height: 100vh; color: var(--text-main); overflow-x: hidden; position: relative;
+            padding: calc(var(--topbar-h) + 22px) 16px calc(100px + env(safe-area-inset-bottom));
+        }
+        .page-wrap { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; }
+        /* شريط علوي */
+        .app-bar { position: fixed; top: 0; inset-inline: 0; z-index: 20; display: block; text-decoration: none; color: #fff;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.28); box-shadow: 0 6px 18px rgba(var(--shadow-tint),0.22);
+            padding: env(safe-area-inset-top, 0px) 14px 0; }
+        .app-bar__inner { max-width: 640px; margin: 0 auto; min-height: 44px; padding: 6px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .app-bar__icon { width: 22px; height: 22px; flex-shrink: 0; }
+        .app-bar__text { color: #fff; font-size: 12.5px; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1 1 auto; }
+        @media (max-width: 480px) { .app-bar__text { font-size: 11px; } }
+        @media (max-width: 360px) { .app-bar__text { font-size: 10px; } }
+
+        .top-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+        .back-btn { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(var(--shadow-tint),0.22);
+            transition: transform .25s cubic-bezier(0.16,1,0.3,1); }
+        .back-btn:hover { transform: translateY(-2px) scale(1.06); } .back-btn:active { transform: scale(0.95); }
+        .back-btn svg { width: 22px; height: 22px; }
+        .quiz-badge { background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); color: #fff; font-size: 12.5px; font-weight: 800; padding: 8px 16px; border-radius: 999px; box-shadow: 0 6px 14px rgba(6,182,212,0.30); }
+
+        .doc-title { color: var(--primary-deep); font-size: 19px; font-weight: 900; text-align: center; margin-bottom: 4px; }
+        .doc-subtitle { color: var(--text-muted); font-size: 13px; font-weight: 700; text-align: center; margin-bottom: 20px; }
+
+        /* شريط التقدم والنقاط */
+        .stats-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        .progress-track { flex: 1; height: 10px; background: var(--border-soft); border-radius: 999px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--plans-2), var(--primary-blue)); border-radius: 999px; transition: width 0.4s cubic-bezier(0.16,1,0.3,1); }
+        .score-chip { flex-shrink: 0; background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 999px; padding: 5px 12px; font-size: 12.5px; font-weight: 800; color: var(--primary-deep); white-space: nowrap; transition: transform 0.25s ease; }
+        .score-chip.pop { transform: scale(1.25); }
+
+        /* مسرح الكويز - بيئة ثلاثية الأبعاد */
+        .quiz-stage { perspective: 1200px; }
+        .quiz-card { background: var(--card-bg); border: 1px solid var(--border-soft); border-radius: 24px; padding: 22px 18px; box-shadow: 0 20px 50px rgba(var(--shadow-tint),0.14), inset 0 1px 1px rgba(255,255,255,0.6);
+            transition: transform 0.38s cubic-bezier(0.4,0.0,0.2,1), opacity 0.32s ease; transform-style: preserve-3d; }
+        .quiz-card.flipping { transform: rotateY(90deg) scale(0.92); opacity: 0.25; }
+        .q-counter { color: var(--primary-blue); font-size: 12.5px; font-weight: 800; margin-bottom: 10px; }
+        .q-text { color: var(--text-main); font-size: 16px; font-weight: 800; line-height: 1.7; margin-bottom: 18px; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .opt { display: flex; align-items: center; gap: 12px; background: var(--lesson-bg); border: 1.5px solid var(--border-soft); border-radius: 16px; padding: 12px 14px; cursor: pointer; text-align: right; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; -webkit-tap-highlight-color: transparent; }
+        .opt:active { transform: scale(0.97); }
+        .opt:not(.locked):hover { border-color: var(--primary-blue); box-shadow: 0 6px 16px rgba(37,99,235,0.14); }
+        .opt .letter { flex-shrink: 0; width: 30px; height: 30px; border-radius: 10px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; }
+        .opt .otext { flex: 1; font-size: 13.5px; font-weight: 700; color: var(--text-main); line-height: 1.6; }
+        .opt.correct { background: #eafbf1; border-color: var(--good); }
+        .opt.correct .letter { background: var(--good); }
+        .opt.wrong { background: #fdecec; border-color: var(--bad); }
+        .opt.wrong .letter { background: var(--bad); }
+        .opt.locked { cursor: default; }
+        .opt.locked:not(.correct):not(.wrong) { opacity: 0.5; }
+
+        /* شاشة النتيجة */
+        .result-wrap { display: none; text-align: center; position: relative; overflow: hidden; }
+        .result-icon { width: 92px; height: 92px; margin: 6px auto 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 42px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); box-shadow: 0 14px 30px rgba(6,182,212,0.34); animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+        @keyframes popIn { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .result-title { color: var(--primary-deep); font-size: 19px; font-weight: 900; margin-bottom: 6px; }
+        .result-sub { color: var(--text-muted); font-size: 13.5px; font-weight: 700; margin-bottom: 16px; }
+        .result-bar-track { height: 14px; background: var(--border-soft); border-radius: 999px; overflow: hidden; margin-bottom: 20px; }
+        .result-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--good), var(--plans-2)); border-radius: 999px; transition: width 1s cubic-bezier(0.16,1,0.3,1) 0.2s; }
+        .retry-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); color: #fff; border: none; border-radius: 999px; padding: 12px 22px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 22px rgba(6,182,212,0.30); transition: transform 0.2s ease; font-family: inherit; }
+        .retry-btn:hover { transform: translateY(-2px) scale(1.03); }
+        .retry-btn:active { transform: scale(0.96); }
+        .confetti { position: absolute; top: -10px; border-radius: 2px; opacity: 0.9; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(260px) rotate(360deg); opacity: 0; } }
+
+        .footer { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; margin-top: 24px; }
+        .footer-code { font-family: monospace; color: var(--primary-blue); font-size: 12px; opacity: 0.8; }
+        .bottom-nav { position: fixed; bottom: 0; inset-inline: 0; z-index: 5; display: flex; justify-content: center; gap: 4px; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); border-top: 1px solid var(--border-soft); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px rgba(var(--shadow-tint),0.10); }
+        .bottom-nav .nav-inner { width: 100%; max-width: 640px; display: flex; justify-content: space-around; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: var(--text-muted); font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px; }
+        .nav-item svg { width: 21px; height: 21px; } .nav-item.active { color: var(--primary-blue); }
+        @media (prefers-reduced-motion: reduce) { .quiz-card, .opt, .result-icon, .confetti { animation: none !important; transition: none !important; } }
+    </style>
+</head>
+<body>
+
+    <a href="/Computer-Science/application/index.html" class="app-bar" id="appBar" aria-label="يمكنك تحميل التطبيق الخاص بنا من على Play Store">
+        <span class="app-bar__inner">
+            <svg class="app-bar__icon" viewBox="0 0 512 512" aria-hidden="true">
+                <polygon fill="#00c8ff" points="60,20 285,256 60,492"/>
+                <polygon fill="#00e676" points="60,20 372,204 285,256"/>
+                <polygon fill="#ffd400" points="372,204 460,256 372,308 285,256"/>
+                <polygon fill="#ff3d47" points="60,492 372,308 285,256"/>
+            </svg>
+            <span class="app-bar__text">يمكنك تحميل التطبيق الخاص بنا من على <bdi>Play Store</bdi></span>
+        </span>
+    </a>
+
+    <div class="page-wrap">
+
+        <div class="top-actions">
+            <a href="/Computer-Science/1st-literary/field-1/index.html" class="back-btn" aria-label="العودة إلى الصفحة السابقة">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+            </a>
+            <span class="quiz-badge">🎮 كويز تفاعلي</span>
+        </div>
+
+        <div class="doc-title">نظام التشغيل</div>
+        <div class="doc-subtitle">اختبر معلوماتك في 10 أسئلة</div>
+
+        <div id="quizView">
+            <div class="stats-row">
+                <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="score-chip" id="scoreChip">⭐ 0</div>
+            </div>
+
+            <div class="quiz-stage">
+                <div class="quiz-card" id="quizCard">
+                    <div class="q-counter" id="qCounter">السؤال 1 من 10</div>
+                    <div class="q-text" id="qText">...</div>
+                    <div class="options" id="optionsBox"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultView" class="result-wrap">
+            <div class="quiz-card" style="position:relative; overflow:hidden;">
+                <div id="confettiHost"></div>
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-title" id="resultTitle">ممتاز!</div>
+                <div class="result-sub" id="resultSub">أجبت بشكل صحيح على 0 من 10 أسئلة</div>
+                <div class="result-bar-track"><div class="result-bar-fill" id="resultBarFill"></div></div>
+                <button class="retry-btn" id="retryBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 4v5h-5"></path></svg>
+                    إعادة المحاولة
+                </button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="footer-code">&lt;/&gt;</span>
+            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        </div>
+    </div>
+
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="/Computer-Science/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="/Computer-Science/courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="/Computer-Science/articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
+                الوثائق الإدارية
+            </a>
+        </div>
+    </nav>
+
+    <script>
+    (function () {
+        var bar = document.getElementById('appBar');
+        if (bar) {
+            document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
+            window.addEventListener('resize', function () { document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px'); });
+        }
+
+        var QUESTIONS = [
+            { q: "ما هو نظام التشغيل (Système d'exploitation)؟", opts: ["جهاز لتخزين البيانات فقط", "بطاقة داخلية في الحاسوب", "مجموعة من الملفات والبرامج المتكاملة التي تسمح بإعداد الحاسوب للتشغيل وتنظيم الملفات", "نوع من أنواع الطابعات"], correct: 2 },
+            { q: "مفهوم «التثبيت» (Installation) يعني:", opts: ["حذف الملفات من القرص الصلب", "نسخ ملفات وبرامج النظام وجعلها متوفرة بصفة دائمة على القرص الصلب", "توصيل الحاسوب بالإنترنت", "تهيئة الشاشة فقط"], correct: 1 },
+            { q: "ما هو «تقسيم القرص الصلب» (Partitionnement)؟", opts: ["تجزئة القرص الصلب افتراضياً إلى أقسام (مثل C، D، E)", "حذف البيانات القديمة نهائياً", "تركيب قرص صلب جديد", "توصيل طابعة جديدة بالحاسوب"], correct: 0 },
+            { q: "من فوائد تقسيم القرص الصلب:", opts: ["تسريع المعالج", "زيادة الذاكرة الحية", "تثبيت أكثر من نظام تشغيل على نفس الحاسوب", "تكبير حجم الشاشة"], correct: 2 },
+            { q: "ما معنى «تهيئة القرص» (Formatage)؟", opts: ["حذف نظام التشغيل نهائياً", "إعداد القرص وتحضيره ليصبح جاهزاً لتخزين نظام التشغيل والمعلومات", "تكبير سعة القرص التخزينية", "توصيل القرص بشبكة الإنترنت"], correct: 1 },
+            { q: "التهيئة الفيزيائية (Physical Formatting) تتم عادة:", opts: ["بعد تثبيت نظام التشغيل مباشرة", "عن طريق الإنترنت فقط", "من طرف المستخدم في المنزل", "عند مصنع الأقراص الصلبة قبل بيعها"], correct: 3 },
+            { q: "في التهيئة المنطقية (Logical Formatting)، يتم وضع:", opts: ["بطاقة الشبكة", "نظام الملفات، مثل FAT أو NTFS", "الذاكرة الحية", "المعالج"], correct: 1 },
+            { q: "عند بدء تشغيل الجهاز، أيّ زر يُستخدم عادة للدخول إلى شاشة BIOS؟", opts: ["Ctrl", "Enter", "Supp أو F2", "Esc فقط"], correct: 2 },
+            { q: "لتثبيت Windows 7، يجب أولاً تغيير الإقلاع من القرص الصلب إلى:", opts: ["الذاكرة الحية", "بطاقة الشبكة", "الطابعة", "CD-ROM"], correct: 3 },
+            { q: "أيّ من الإعدادات التالية تُعتبر اختيارية أثناء تثبيت Windows 7؟", opts: ["اسم الحاسوب", "المنطقة الزمنية", "كلمة المرور", "الوقت والساعة"], correct: 2 }
+        ];
+
+        var current = 0, score = 0, answered = false;
+        var quizView = document.getElementById('quizView');
+        var resultView = document.getElementById('resultView');
+        var quizCard = document.getElementById('quizCard');
+        var qCounter = document.getElementById('qCounter');
+        var qText = document.getElementById('qText');
+        var optionsBox = document.getElementById('optionsBox');
+        var progressFill = document.getElementById('progressFill');
+        var scoreChip = document.getElementById('scoreChip');
+        var letters = ["أ", "ب", "ج", "د"];
+
+        function renderQuestion() {
+            var item = QUESTIONS[current];
+            qCounter.textContent = "السؤال " + (current + 1) + " من " + QUESTIONS.length;
+            qText.textContent = item.q;
+            progressFill.style.width = ((current) / QUESTIONS.length * 100) + "%";
+            optionsBox.innerHTML = "";
+            answered = false;
+            item.opts.forEach(function (opt, i) {
+                var div = document.createElement('div');
+                div.className = 'opt';
+                div.innerHTML = '<span class="letter">' + letters[i] + '</span><span class="otext"></span>';
+                div.querySelector('.otext').textContent = opt;
+                div.addEventListener('click', function () { selectOption(i, div); });
+                optionsBox.appendChild(div);
+            });
+        }
+
+        function selectOption(i, el) {
+            if (answered) return;
+            answered = true;
+            var item = QUESTIONS[current];
+            var opts = optionsBox.querySelectorAll('.opt');
+            opts.forEach(function (o) { o.classList.add('locked'); });
+            if (i === item.correct) {
+                el.classList.add('correct');
+                score++;
+                scoreChip.textContent = "⭐ " + score;
+                scoreChip.classList.add('pop');
+                setTimeout(function () { scoreChip.classList.remove('pop'); }, 260);
+            } else {
+                el.classList.add('wrong');
+                opts[item.correct].classList.add('correct');
+            }
+            setTimeout(nextQuestion, 1100);
+        }
+
+        function nextQuestion() {
+            quizCard.classList.add('flipping');
+            setTimeout(function () {
+                current++;
+                if (current >= QUESTIONS.length) {
+                    showResult();
+                } else {
+                    renderQuestion();
+                    quizCard.classList.remove('flipping');
+                }
+            }, 320);
+        }
+
+        function showResult() {
+            progressFill.style.width = "100%";
+            quizView.style.display = 'none';
+            resultView.style.display = 'block';
+            var pct = Math.round((score / QUESTIONS.length) * 100);
+            var icon = document.getElementById('resultIcon');
+            var title = document.getElementById('resultTitle');
+            var sub = document.getElementById('resultSub');
+            sub.textContent = "أجبت بشكل صحيح على " + score + " من " + QUESTIONS.length + " أسئلة";
+            if (pct >= 80) { icon.textContent = "🏆"; title.textContent = "ممتاز! مستواك رائع"; }
+            else if (pct >= 50) { icon.textContent = "👍"; title.textContent = "جيد جداً، واصل التقدّم"; }
+            else { icon.textContent = "💪"; title.textContent = "حاول مرة أخرى، أنت تقترب"; }
+            setTimeout(function () { document.getElementById('resultBarFill').style.width = pct + "%"; }, 50);
+            spawnConfetti();
+        }
+
+        function spawnConfetti() {
+            var host = document.getElementById('confettiHost');
+            host.innerHTML = "";
+            var colors = ["#2563eb", "#38bdf8", "#16a34a", "#f59e0b", "#e0a13a"];
+            for (var i = 0; i < 24; i++) {
+                var c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = (Math.random() * 100) + "%";
+                c.style.width = (5 + Math.random() * 5) + "px";
+                c.style.height = (5 + Math.random() * 5) + "px";
+                c.style.background = colors[i % colors.length];
+                c.style.animationDuration = (1.4 + Math.random() * 1.2) + "s";
+                c.style.animationDelay = (Math.random() * 0.4) + "s";
+                host.appendChild(c);
+            }
+        }
+
+        document.getElementById('retryBtn').addEventListener('click', function () {
+            current = 0; score = 0;
+            scoreChip.textContent = "⭐ 0";
+            resultView.style.display = 'none';
+            quizView.style.display = 'block';
+            renderQuestion();
+        });
+
+        renderQuestion();
+    })();
+    </script>
+</body>
+</html>
