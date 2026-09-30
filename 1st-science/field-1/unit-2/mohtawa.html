@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحاسوب: تعريفه ومكوناته | الأستاذ بلوطي عمر</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e8f0fc;
+            --card-bg: #ffffff;
+            --lesson-bg: #f2f7fe;
+            --primary-blue: #2563eb;
+            --primary-blue-soft: #4f8ef7;
+            --primary-deep: #1e3a8a;
+            --sky: #38bdf8;
+            --text-main: #14254a;
+            --text-muted: #5f7092;
+            --border-soft: #d9e5f6;
+            --shadow-tint: 20, 37, 74;
+            --topbar-h: 46px;
+            --plans-1: #0e7490;
+            --plans-2: #06b6d4;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Kufi Arabic', sans-serif; font-weight: 600; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.20) 0%, transparent 45%),
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            min-height: 100vh; color: var(--text-main); overflow-x: hidden; position: relative;
+            padding: calc(var(--topbar-h) + 22px) 16px calc(100px + env(safe-area-inset-bottom));
+        }
+        .glow-orb {
+            position: fixed; width: 380px; height: 380px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(56,189,248,0.16) 0%, rgba(255,255,255,0) 70%);
+            top: 30%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+        @keyframes pulse { 0% { transform: translate(-50%,-50%) scale(0.9); opacity:.4; } 100% { transform: translate(-50%,-50%) scale(1.2); opacity:.8; } }
+        .page-wrap { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; }
+        /* شريط علوي مثبت */
+        .app-bar {
+            position: fixed; top: 0; inset-inline: 0; z-index: 20; display: block; text-decoration: none; color: #fff;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.28); box-shadow: 0 6px 18px rgba(var(--shadow-tint),0.22);
+            padding: env(safe-area-inset-top, 0px) 14px 0; -webkit-tap-highlight-color: transparent; transition: filter .25s ease;
+        }
+        .app-bar:hover { filter: brightness(1.08); } .app-bar:active { filter: brightness(0.94); }
+        .app-bar__inner { max-width: 640px; margin: 0 auto; min-height: 44px; padding: 6px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .app-bar__icon { width: 22px; height: 22px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+        .app-bar__text { color: #fff; font-size: 12.5px; font-weight: 700; line-height: 1.65; text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+        @media (max-width: 480px) { .app-bar__text { font-size: 11.5px; } }
+
+        /* شريط الإجراءات: العودة + تحميل PDF */
+        .top-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+        .back-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(var(--shadow-tint),0.22);
+            -webkit-tap-highlight-color: transparent; transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease;
+        }
+        .back-btn:hover { transform: translateY(-2px) scale(1.06); filter: brightness(1.08); } .back-btn:active { transform: scale(0.95); }
+        .back-btn svg { width: 22px; height: 22px; }
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 999px;
+            background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); color: #fff; text-decoration: none; font-size: 13px; font-weight: 800;
+            border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(6,182,212,0.30); -webkit-tap-highlight-color: transparent; white-space: nowrap;
+            transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease;
+        }
+        .download-btn:hover { transform: translateY(-2px) scale(1.04); filter: brightness(1.06); } .download-btn:active { transform: scale(0.97); }
+        .download-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+        @media (max-width: 380px) { .download-btn { font-size: 12px; padding: 0 13px; } }
+        /* عنوان قسم */
+        .section-title { display: flex; align-items: center; gap: 10px; margin: 0 2px 16px; color: var(--text-main); font-size: 15px; font-weight: 800; }
+        .section-title .title-icon { flex-shrink: 0; width: 30px; height: 30px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-blue), var(--sky)); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 6px 14px rgba(37,99,235,0.28); }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(37,99,235,0.25), transparent); }
+
+        /* بطاقة رأس المذكرة */
+        .doc-card { background: var(--card-bg); padding: 22px 20px 24px; border-radius: 26px; border: 1px solid var(--border-soft); box-shadow: 0 20px 50px rgba(var(--shadow-tint),0.10), inset 0 1px 1px rgba(255,255,255,0.6); margin-bottom: 22px; position: relative; overflow: hidden; }
+        .doc-badge { display: inline-block; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); color: #fff; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 999px; margin-bottom: 12px; box-shadow: 0 6px 14px rgba(6,182,212,0.30); }
+        .doc-title { color: var(--primary-deep); font-size: 19px; font-weight: 900; line-height: 1.5; margin-bottom: 4px; }
+        .doc-subtitle { color: var(--text-muted); font-size: 13px; font-weight: 700; margin-bottom: 16px; }
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .meta-item { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 10px 12px; }
+        .meta-item.full { grid-column: 1 / -1; }
+        .meta-label { display: block; color: var(--primary-blue); font-size: 11px; font-weight: 800; margin-bottom: 3px; }
+        .meta-value { display: block; color: var(--text-main); font-size: 13.5px; font-weight: 700; line-height: 1.55; }
+        .highlight-box { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-right: 4px solid var(--primary-blue); border-radius: 14px; padding: 12px 14px; margin-top: 12px; }
+        .highlight-box .hl-label { color: var(--primary-blue); font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+        .highlight-box .hl-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.7; }
+
+        /* بطاقة محتوى (قسم من الدرس) */
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 12px 26px rgba(var(--shadow-tint),0.12); opacity: 0; transform: perspective(700px) translateY(24px) translateZ(-60px) rotateX(-12deg); animation: cardIn3d 0.9s cubic-bezier(0.16,1,0.3,1) var(--d,0s) forwards; }
+        @keyframes cardIn3d { to { opacity: 1; transform: perspective(700px) translateY(0) translateZ(0) rotateX(0deg); } }
+        .content-head { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 16px; color: #fff; overflow: hidden; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); }
+        .content-head::after { content: ""; position: absolute; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.14); top: -42px; inset-inline-end: -30px; pointer-events: none; }
+        .content-head .c-name { position: relative; z-index: 1; font-size: 15.5px; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.18); }
+        .content-head .num { opacity: 0.85; font-size: 13px; margin-inline-start: 4px; }
+        .content-body { padding: 14px 16px 16px; }
+        .field { margin-top: 14px; } .field:first-child { margin-top: 0; }
+        .field-label { display: inline-flex; align-items: center; gap: 6px; color: var(--primary-blue); font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .field-label::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); }
+        .field-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.8; }
+        .field ul { margin: 4px 6px 0; padding-inline-start: 18px; }
+        .field li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.9; }
+        .sub-title { color: var(--primary-deep); font-size: 14px; font-weight: 800; margin: 16px 0 8px; padding-right: 10px; border-right: 3px solid var(--primary-blue); }
+        .sub-title:first-child { margin-top: 0; }
+        /* عنصر جهاز/مصطلح */
+        .term-item { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 12px; padding: 9px 12px; margin-bottom: 8px; }
+        .term-item .t-name { color: var(--primary-deep); font-weight: 800; font-size: 13.5px; }
+        .term-item .t-langs { display: flex; gap: 6px; flex-wrap: wrap; }
+        .term-item .t-lang { font-weight: 700; font-size: 11.5px; direction: ltr; padding: 2px 8px; border-radius: 999px; }
+        .term-item .t-lang.fr { color: #1d4ed8; background: #e4ecfd; border: 1px solid #c7d7fb; }
+        .term-item .t-lang.en { color: #0e7490; background: #e2f6f9; border: 1px solid #c3ecf1; }
+        .term-item .t-desc { color: #2b3d63; font-weight: 600; font-size: 12.5px; line-height: 1.7; flex-basis: 100%; }
+        /* زر تحميل المخطط - بارز */
+        .diagram-download { display: flex; align-items: center; gap: 14px; background: linear-gradient(120deg, #fff8ec, #fff3d9); border: 1.5px dashed #e0a13a; border-radius: 18px; padding: 16px; margin-top: 10px; text-decoration: none; position: relative; overflow: hidden; animation: dlPulse 2.4s ease-in-out infinite; }
+        .diagram-download:hover { filter: brightness(1.03); }
+        .diagram-download .dl-icon { flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #e0a13a); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 18px rgba(224,161,58,0.38); }
+        .diagram-download .dl-icon svg { width: 26px; height: 26px; stroke: #fff; }
+        .diagram-download .dl-text { flex: 1; }
+        .diagram-download .dl-title { color: #8a5a12; font-size: 14.5px; font-weight: 900; margin-bottom: 3px; }
+        .diagram-download .dl-sub { color: #a1721f; font-size: 12px; font-weight: 700; }
+        .diagram-download .dl-arrow { flex-shrink: 0; color: #e0a13a; }
+        .diagram-download .dl-arrow svg { width: 20px; height: 20px; }
+        @keyframes dlPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(224,161,58,0.28); } 50% { box-shadow: 0 0 0 10px rgba(224,161,58,0); } }
+        /* صورة المخطط */
+        .diagram-box { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 16px; padding: 12px; margin-top: 10px; text-align: center; }
+        .diagram-box img { max-width: 100%; height: auto; border-radius: 8px; }
+        .diagram-caption { color: var(--text-muted); font-size: 11.5px; font-weight: 700; margin-top: 8px; }
+        /* صندوق ملاحظة */
+        .note-box { background: #fff8ec; border: 1px solid #f5e0b8; border-right: 4px solid #e0a13a; border-radius: 14px; padding: 12px 14px; margin-top: 10px; }
+        .note-box .n-label { color: #8a5a12; font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .note-box ul { margin: 4px 6px 0; padding-inline-start: 18px; }
+        .note-box li { color: #5c4a2a; font-size: 12.5px; font-weight: 600; line-height: 1.85; margin-bottom: 4px; }
+        /* جدول مضاعفات البايت */
+        .byte-table { width: 100%; border-collapse: collapse; margin-top: 10px; overflow: hidden; border-radius: 12px; font-size: 12.5px; }
+        .byte-table th, .byte-table td { padding: 8px 10px; text-align: center; border: 1px solid var(--border-soft); }
+        .byte-table th { background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); color: #fff; font-weight: 800; }
+        .byte-table td { background: var(--lesson-bg); color: #2b3d63; font-weight: 700; direction: ltr; }
+        .byte-table td:first-child { direction: rtl; }
+        /* فوتر ونظام تنقل */
+        .footer { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; margin-top: 26px; }
+        .footer-code { font-family: monospace; color: var(--primary-blue); font-size: 12px; opacity: 0.8; }
+        .bottom-nav { position: fixed; bottom: 0; inset-inline: 0; z-index: 5; display: flex; justify-content: center; gap: 4px; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); border-top: 1px solid var(--border-soft); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px rgba(var(--shadow-tint),0.10); }
+        .bottom-nav .nav-inner { width: 100%; max-width: 640px; display: flex; justify-content: space-around; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: var(--text-muted); font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px; transition: color 0.2s ease; }
+        .nav-item svg { width: 21px; height: 21px; } .nav-item.active { color: var(--primary-blue); }
+        @media (max-width: 460px) { .meta-grid { gap: 8px; } .doc-title { font-size: 17px; } }
+        @media (prefers-reduced-motion: reduce) { .glow-orb { animation: none; } .content-card { animation: none !important; opacity: 1 !important; transform: none !important; } }
+    </style>
+</head>
+<body>
+
+    <a href="/Computer-Science/application/index.html" class="app-bar" id="appBar" aria-label="يمكنك تحميل التطبيق الخاص بنا من على Play Store">
+        <span class="app-bar__inner">
+            <svg class="app-bar__icon" viewBox="0 0 512 512" aria-hidden="true">
+                <polygon fill="#00c8ff" points="60,20 285,256 60,492"/>
+                <polygon fill="#00e676" points="60,20 372,204 285,256"/>
+                <polygon fill="#ffd400" points="372,204 460,256 372,308 285,256"/>
+                <polygon fill="#ff3d47" points="60,492 372,308 285,256"/>
+            </svg>
+            <span class="app-bar__text">يمكنك تحميل التطبيق الخاص بنا من على <bdi>Play Store</bdi></span>
+        </span>
+    </a>
+
+    <div class="glow-orb"></div>
+
+    <div class="page-wrap">
+
+        <!-- شريط الإجراءات: العودة (يمين) + تحميل PDF (يسار) -->
+        <div class="top-actions">
+            <a href="/Computer-Science/1st-science/field-1/index.html" class="back-btn" aria-label="العودة إلى صفحة المجال">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+                </svg>
+            </a>
+             <!--<a href="tarif-alhasoub.pdf" class="download-btn" download aria-label="تحميل الدرس PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v11"></path><path d="M7.5 10.5L12 15l4.5-4.5"></path><path d="M5 20h14"></path>
+                </svg>
+                <span>تحميل الدرس PDF</span> 
+            </a> -->
+        </div>
+
+        <!-- بطاقة رأس الدرس -->
+        <div class="doc-card">
+            <span class="doc-badge">محتوى الدرس النظري</span>
+            <div class="doc-title">الحاسوب: تعريفه ومكوناته</div>
+            <div class="doc-subtitle">المجال التعلّمي 1: بيئة التعامل مع الحاسوب — الوحدة التعليمية 2: تجميع الحاسوب</div>
+
+            <div class="meta-grid">
+                <div class="meta-item"><span class="meta-label">المستوى</span><span class="meta-value">أولى ثانوي</span></div>
+                <div class="meta-item"><span class="meta-label">المادة</span><span class="meta-value">المعلوماتية</span></div>
+                <div class="meta-item"><span class="meta-label">الوحدة التعليمية</span><span class="meta-value">تجميع الحاسوب</span></div>
+                <div class="meta-item"><span class="meta-label">المدة الزمنية</span><span class="meta-value">2 ساعة</span></div>
+            </div>
+        </div>
+
+        <!-- محتوى الدرس -->
+        <div class="section-title"><span class="title-icon">📖</span>محتوى الدرس</div>
+
+        <!-- 1. تعريف الكمبيوتر -->
+        <div class="content-card" style="--d:0.05s">
+            <div class="content-head">
+                <span class="c-name"><span class="num">1</span> تعريف الكمبيوتر</span>
+            </div>
+            <div class="content-body">
+                <div class="field">
+                    <div class="field-text">هو جهاز يسمح باستقبال المعلومات وتخزينها ومعالجتها وإخراج النتائج.</div>
+                </div>
+                <div class="diagram-box">
+                    <img src="data:image/png;base64,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" alt="مخطط: معطيات ← إدخال ← تخزين ومعالجة ← إخراج ← نتائج">
+                    <div class="diagram-caption">معطيات ← إدخال ← (تخزين / معالجة) ← إخراج ← نتائج</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. مكونات الحاسوب -->
+        <div class="content-card" style="--d:0.12s">
+            <div class="content-head">
+                <span class="c-name"><span class="num">2</span> مكونات الحاسوب</span>
+            </div>
+            <div class="content-body">
+                <div class="field-text" style="margin-bottom:6px">يمكن تصنيف مكوناته إلى:</div>
+
+                <div class="sub-title">أ. وحدات الإدخال</div>
+                <div class="field-text" style="margin-bottom:10px">تُستخدم لإدخال البيانات إلى جهاز الحاسوب، ومن وحدات الإدخال المعروفة ما يلي:</div>
+
+                <div class="term-item"><span class="t-name">1) لوحة المفاتيح</span><span class="t-langs"><span class="t-lang fr">FR: Clavier</span><span class="t-lang en">EN: Keyboard</span></span><span class="t-desc">تُستخدم لإدخال النصوص والأرقام والرموز.</span></div>
+                <div class="term-item"><span class="t-name">2) الفأرة</span><span class="t-langs"><span class="t-lang fr">FR: Souris</span><span class="t-lang en">EN: Mouse</span></span><span class="t-desc">تُستخدم للتأشير على الواجهة.</span></div>
+                <div class="term-item"><span class="t-name">3) الماسح الضوئي</span><span class="t-langs"><span class="t-lang fr">FR: Scanneur</span><span class="t-lang en">EN: Scanner</span></span><span class="t-desc">يُستعمل لإدخال الصور والنصوص إلى الحاسوب، وقد يكون مكتبياً أو يدوياً.</span></div>
+                <div class="term-item"><span class="t-name">4) كاميرا رقمية</span><span class="t-langs"><span class="t-lang fr">FR: Caméra numérique</span><span class="t-lang en">EN: Digital Camera</span></span><span class="t-desc">تُستعمل لالتقاط الصور والفيديوهات وحفظها بذاكرتها.</span></div>
+                <div class="term-item"><span class="t-name">5) كاميرا ويب</span><span class="t-langs"><span class="t-lang fr">FR: Webcam</span><span class="t-lang en">EN: Webcam</span></span><span class="t-desc">تُستخدم من أجل التحدث بين فردين على الإنترنت.</span></div>
+                <div class="term-item"><span class="t-name">6) شاشة لمسية</span><span class="t-langs"><span class="t-lang fr">FR: Écran tactile</span><span class="t-lang en">EN: Touch Screen</span></span><span class="t-desc">تُستخدم في جهاز الصرف الآلي بالمصارف (البنوك) لإدخال بيانات الأشخاص.</span></div>
+                <div class="term-item"><span class="t-name">7) القلم الضوئي</span><span class="t-langs"><span class="t-lang fr">FR: Crayon optique</span><span class="t-lang en">EN: Light Pen</span></span><span class="t-desc">يمكن استعماله كبديل عن الإصبع في شاشة اللمس.</span></div>
+                <div class="term-item"><span class="t-name">8) اللوحة اللمسية</span><span class="t-langs"><span class="t-lang fr">FR: Panneau tactile</span><span class="t-lang en">EN: Touchpad</span></span><span class="t-desc">تُستخدم بديلاً عن الفأرة.</span></div>
+
+                <div class="sub-title">ب. وحدات الإخراج</div>
+                <div class="field-text" style="margin-bottom:10px">تُستخدم لإخراج النتائج من جهاز الحاسوب، ومنها ما يلي:</div>
+
+                <div class="term-item"><span class="t-name">الشاشة</span><span class="t-langs"><span class="t-lang fr">FR: Écran</span><span class="t-lang en">EN: Screen / Monitor</span></span><span class="t-desc">وحدة إخراج الصور والنصوص والفيديوهات.</span></div>
+                <div class="term-item"><span class="t-name">مكبر الصوت</span><span class="t-langs"><span class="t-lang fr">FR: Haut-parleur</span><span class="t-lang en">EN: Speaker</span></span><span class="t-desc">بواسطتها تُسمَع الملفات الصوتية.</span></div>
+                <div class="term-item"><span class="t-name">الطابعة</span><span class="t-langs"><span class="t-lang fr">FR: Imprimante</span><span class="t-lang en">EN: Printer</span></span><span class="t-desc">وحدة إخراج الصور والنصوص.</span></div>
+
+                <div class="sub-title">ج. الوحدة المركزية</div>
+                <div class="field-text" style="margin-bottom:10px">تتكوّن من:</div>
+
+                <div class="term-item"><span class="t-name">1) علبة التغذية</span><span class="t-langs"><span class="t-lang fr">FR: Boîte d'alimentation</span><span class="t-lang en">EN: Power Supply Unit</span></span><span class="t-desc">وحدة إمداد وتحويل التيار الكهربائي إلى مكونات الوحدة المركزية.</span></div>
+                <div class="term-item"><span class="t-name">2) البطاقة الأم</span><span class="t-langs"><span class="t-lang fr">FR: Carte mère</span><span class="t-lang en">EN: Motherboard</span></span><span class="t-desc">وحدة تتصل بها جميع مكونات الكمبيوتر.</span></div>
+                <div class="term-item"><span class="t-name">3) المعالج</span><span class="t-langs"><span class="t-lang fr">FR: Processeur</span><span class="t-lang en">EN: Processor / CPU</span></span><span class="t-desc">يمثّل عقل الكمبيوتر، تُقاس سرعته بـ GHz وMhz.</span></div>
+
+                <div class="field-text" style="margin:10px 0 6px">4) وحدات التخزين:</div>
+                <div class="term-item"><span class="t-name">القرص الصلب</span><span class="t-langs"><span class="t-lang fr">FR: Disque Dur</span><span class="t-lang en">EN: Hard Disk</span></span><span class="t-desc">وحدة التخزين الأساسية في الحاسوب.</span></div>
+                <div class="term-item"><span class="t-name">الذاكرة المركزية</span><span class="t-langs"><span class="t-lang fr">FR: Mémoire centrale</span><span class="t-lang en">EN: Central Memory</span></span><span class="t-desc">تحتوي على قسمين:</span></div>
+                <ul style="margin:-2px 0 8px 22px; padding-inline-start:16px">
+                    <li style="color:#2b3d63; font-size:12.5px; font-weight:600; line-height:1.8"><strong>أ. الذاكرة الحية (RAM):</strong> ذاكرة للقراءة والكتابة، تُخزَّن فيها المعلومات أثناء المعالجة، ويُمحى محتواها بمجرد انقطاع التيار الكهربائي.</li>
+                    <li style="color:#2b3d63; font-size:12.5px; font-weight:600; line-height:1.8; margin-top:6px"><strong>ب. الذاكرة الميتة (ROM):</strong> ذاكرة للقراءة فقط، تحتوي على معلومات ضرورية لتشغيل الكمبيوتر وبرنامج التعرّف على الأجهزة، ولا يمكن تغيير محتواها ولا يُمحى عند انقطاع التيار الكهربائي.</li>
+                </ul>
+                <div class="term-item"><span class="t-name">القرص المضغوط</span><span class="t-langs"><span class="t-lang fr">FR/EN: Cd-Rom</span></span></div>
+                <div class="term-item"><span class="t-name">ذاكرة الفلاش</span><span class="t-langs"><span class="t-lang fr">FR: Flash Disque</span><span class="t-lang en">EN: Flash Disk</span></span></div>
+                <div class="term-item"><span class="t-name">بطاقة الذاكرة</span><span class="t-langs"><span class="t-lang fr">FR: Carte mémoire</span><span class="t-lang en">EN: Memory Card</span></span></div>
+
+                <div class="note-box">
+                    <div class="n-label">📌 ملاحظة</div>
+                    <ul>
+                        <li>تتكوّن الذاكرات من خلايا، كل خلية تمثّل 1bit، وهو أصغر وحدة لقياس الذاكرة، يحتوي قيمتين: 0 أو 1.</li>
+                        <li>كل 8 bits هي 1 أوكتي (1 بايت)، وهي المساحة الكافية لتخزين قيمة حرف واحد أو رقم واحد أو رمز واحد.</li>
+                    </ul>
+                    <table class="byte-table">
+                        <tr><th>الوحدة</th><th>المعادلة</th></tr>
+                        <tr><td>1 Byte</td><td>1 o = 8 bit</td></tr>
+                        <tr><td>1 KB</td><td>1024 B = 2¹⁰ B</td></tr>
+                        <tr><td>1 MB</td><td>1024 KB = 2²⁰ B</td></tr>
+                        <tr><td>1 Go</td><td>1024 MB = 2³⁰ B</td></tr>
+                        <tr><td>1 TB</td><td>1024 GB = 2⁴⁰ B</td></tr>
+                    </table>
+                </div>
+
+                <div class="field-text" style="margin:14px 0 6px">6) البطاقات الداخلية: يمكن أيضاً إضافة عناصر أخرى تزيد من كفاءة الجهاز، من بينها:</div>
+                <div class="term-item"><span class="t-name">البطاقة البيانية</span><span class="t-langs"><span class="t-lang fr">FR: Carte Graphique</span><span class="t-lang en">EN: Graphics Card</span></span></div>
+                <div class="term-item"><span class="t-name">بطاقة الصوت</span><span class="t-langs"><span class="t-lang fr">FR: Carte Son</span><span class="t-lang en">EN: Sound Card</span></span></div>
+                <div class="term-item"><span class="t-name">بطاقة الشبكة</span><span class="t-langs"><span class="t-lang fr">FR: Carte Réseau</span><span class="t-lang en">EN: Network Card</span></span></div>
+            </div>
+        </div>
+
+        <!-- 3. مخطط تركيب الحاسوب -->
+        <div class="content-card" style="--d:0.2s">
+            <div class="content-head">
+                <span class="c-name"><span class="num">3</span> مخطط تركيب الحاسوب</span>
+            </div>
+            <div class="content-body">
+                <a href="mokhatat.pdf" download class="diagram-download" aria-label="اضغط هنا لتحميل مخطط تركيب الحاسوب">
+                    <span class="dl-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"></path><path d="M7 10l5 5 5-5"></path><path d="M5 20h14"></path></svg>
+                    </span>
+                    <span class="dl-text">
+                        <span class="dl-title">📎 اضغط هنا لتحميل المخطط</span>
+                        <span class="dl-sub">مخطط تركيب الحاسوب — صورة توضيحية كاملة</span>
+                    </span>
+                    <span class="dl-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l-7 7 7 7"></path></svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="footer-code">&lt;/&gt;</span>
+            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        </div>
+
+    </div>
+
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="/Computer-Science/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="/Computer-Science/courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="/Computer-Science/articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
+                الوثائق الإدارية
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        (function () {
+            function initAppBar() {
+                var bar = document.getElementById('appBar'); if (!bar) return;
+                function sync() { document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px'); }
+                sync(); window.addEventListener('resize', sync); window.addEventListener('load', sync);
+                if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+            }
+            if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initAppBar); } else { initAppBar(); }
+        })();
+    </script>
+</body>
+</html>
