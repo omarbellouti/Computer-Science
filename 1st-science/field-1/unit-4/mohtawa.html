@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | الأستاذ بلوطي عمر</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e8f0fc;
+            --card-bg: #ffffff;
+            --lesson-bg: #f2f7fe;
+            --primary-blue: #2563eb;
+            --primary-blue-soft: #4f8ef7;
+            --primary-deep: #1e3a8a;
+            --sky: #38bdf8;
+            --text-main: #14254a;
+            --text-muted: #5f7092;
+            --border-soft: #d9e5f6;
+            --shadow-tint: 20, 37, 74;
+            --topbar-h: 46px;
+            --plans-1: #0e7490;
+            --plans-2: #06b6d4;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Kufi Arabic', sans-serif; font-weight: 600; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.20) 0%, transparent 45%),
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            min-height: 100vh; color: var(--text-main); overflow-x: hidden; position: relative;
+            padding: calc(var(--topbar-h) + 22px) 16px calc(100px + env(safe-area-inset-bottom));
+        }
+        .glow-orb {
+            position: fixed; width: 380px; height: 380px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(56,189,248,0.16) 0%, rgba(255,255,255,0) 70%);
+            top: 30%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+        @keyframes pulse { 0% { transform: translate(-50%,-50%) scale(0.9); opacity:.4; } 100% { transform: translate(-50%,-50%) scale(1.2); opacity:.8; } }
+        .page-wrap { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; }
+        /* شريط علوي مثبت */
+        .app-bar {
+            position: fixed; top: 0; inset-inline: 0; z-index: 20; display: block; text-decoration: none; color: #fff;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.28); box-shadow: 0 6px 18px rgba(var(--shadow-tint),0.22);
+            padding: env(safe-area-inset-top, 0px) 14px 0; -webkit-tap-highlight-color: transparent; transition: filter .25s ease;
+        }
+        .app-bar:hover { filter: brightness(1.08); } .app-bar:active { filter: brightness(0.94); }
+        .app-bar__inner { max-width: 640px; margin: 0 auto; min-height: 44px; padding: 6px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .app-bar__icon { width: 22px; height: 22px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+        .app-bar__text { color: #fff; font-size: 12.5px; font-weight: 700; line-height: 1.65; text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1 1 auto; }
+        @media (max-width: 480px) { .app-bar__text { font-size: 11px; } }
+        @media (max-width: 360px) { .app-bar__text { font-size: 10px; } }
+
+        /* شريط الإجراءات: العودة + تحميل PDF */
+        .top-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+        .back-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(var(--shadow-tint),0.22);
+            -webkit-tap-highlight-color: transparent; transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease;
+        }
+        .back-btn:hover { transform: translateY(-2px) scale(1.06); filter: brightness(1.08); } .back-btn:active { transform: scale(0.95); }
+        .back-btn svg { width: 22px; height: 22px; }
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 999px;
+            background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); color: #fff; text-decoration: none; font-size: 13px; font-weight: 800;
+            border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(6,182,212,0.30); -webkit-tap-highlight-color: transparent; white-space: nowrap;
+            transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease;
+        }
+        .download-btn:hover { transform: translateY(-2px) scale(1.04); filter: brightness(1.06); } .download-btn:active { transform: scale(0.97); }
+        .download-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+        @media (max-width: 380px) { .download-btn { font-size: 12px; padding: 0 13px; } }
+        /* عنوان قسم */
+        .section-title { display: flex; align-items: center; gap: 10px; margin: 0 2px 16px; color: var(--text-main); font-size: 15px; font-weight: 800; }
+        .section-title .title-icon { flex-shrink: 0; width: 30px; height: 30px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-blue), var(--sky)); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 6px 14px rgba(37,99,235,0.28); }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(37,99,235,0.25), transparent); }
+
+        /* بطاقة رأس الدرس */
+        .doc-card { background: var(--card-bg); padding: 22px 20px 24px; border-radius: 26px; border: 1px solid var(--border-soft); box-shadow: 0 20px 50px rgba(var(--shadow-tint),0.10), inset 0 1px 1px rgba(255,255,255,0.6); margin-bottom: 22px; position: relative; overflow: hidden; }
+        .doc-badge { display: inline-block; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); color: #fff; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 999px; margin-bottom: 12px; box-shadow: 0 6px 14px rgba(6,182,212,0.30); }
+        .doc-title { color: var(--primary-deep); font-size: 19px; font-weight: 900; line-height: 1.5; margin-bottom: 4px; }
+        .doc-subtitle { color: var(--text-muted); font-size: 13px; font-weight: 700; margin-bottom: 16px; }
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .meta-item { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 10px 12px; }
+        .meta-item.full { grid-column: 1 / -1; }
+        .meta-label { display: block; color: var(--primary-blue); font-size: 11px; font-weight: 800; margin-bottom: 3px; }
+        .meta-value { display: block; color: var(--text-main); font-size: 13.5px; font-weight: 700; line-height: 1.55; }
+        .highlight-box { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-right: 4px solid var(--primary-blue); border-radius: 14px; padding: 12px 14px; margin-top: 12px; }
+        .highlight-box .hl-label { color: var(--primary-blue); font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+        .highlight-box .hl-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.7; }
+
+        /* بطاقة محتوى (قسم من الدرس) */
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 12px 26px rgba(var(--shadow-tint),0.12); opacity: 0; transform: translateY(8px); animation: cardIn 0.45s ease-out var(--d,0s) forwards; }
+        @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+        .content-head { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 16px; color: #fff; overflow: hidden; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); }
+        .content-head::after { content: ""; position: absolute; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.14); top: -42px; inset-inline-end: -30px; pointer-events: none; }
+        .content-head .c-name { position: relative; z-index: 1; font-size: 15.5px; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.18); }
+        .content-head .num { opacity: 0.85; font-size: 13px; margin-inline-start: 4px; }
+        .content-body { padding: 14px 16px 16px; }
+        .field { margin-top: 14px; } .field:first-child { margin-top: 0; }
+        .field-label { display: inline-flex; align-items: center; gap: 6px; color: var(--primary-blue); font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .field-label::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); }
+        .field-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.8; }
+        .field ul, .field ol { margin: 4px 6px 0; padding-inline-start: 18px; }
+        .field li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.9; }
+        .sub-title { color: var(--primary-deep); font-size: 14px; font-weight: 800; margin: 16px 0 8px; padding-right: 10px; border-right: 3px solid var(--primary-blue); }
+        .sub-title:first-child { margin-top: 0; }
+        /* عنصر مصطلح */
+        .term-item { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 12px; padding: 9px 12px; margin-bottom: 10px; }
+        .term-item .t-name { color: var(--primary-deep); font-weight: 800; font-size: 13.5px; }
+        .term-item .t-langs { display: flex; gap: 6px; flex-wrap: wrap; }
+        .term-item .t-lang { font-weight: 700; font-size: 11.5px; direction: ltr; padding: 2px 8px; border-radius: 999px; }
+        .term-item .t-lang.fr { color: #1d4ed8; background: #e4ecfd; border: 1px solid #c7d7fb; }
+        .term-item .t-lang.en { color: #0e7490; background: #e2f6f9; border: 1px solid #c3ecf1; }
+        .term-item .t-desc { color: #2b3d63; font-weight: 600; font-size: 12.5px; line-height: 1.7; flex-basis: 100%; }
+        /* صندوق ملاحظة */
+        .note-box { background: #fff8ec; border: 1px solid #f5e0b8; border-right: 4px solid #e0a13a; border-radius: 14px; padding: 12px 14px; margin-top: 10px; }
+        .note-box .n-label { color: #8a5a12; font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .note-box .n-text { color: #5c4a2a; font-size: 12.5px; font-weight: 600; line-height: 1.85; }
+        
+/* صندوق خطوة */
+        .step-box { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 12px 14px; margin-top: 8px; }
+        .step-box ol { margin: 0; padding-inline-start: 20px; }
+        .step-box li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 2; }
+        /* فوتر ونظام تنقل */
+        .footer { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; margin-top: 26px; }
+        .footer-code { font-family: monospace; color: var(--primary-blue); font-size: 12px; opacity: 0.8; }
+        .bottom-nav { position: fixed; bottom: 0; inset-inline: 0; z-index: 5; display: flex; justify-content: center; gap: 4px; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); border-top: 1px solid var(--border-soft); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px rgba(var(--shadow-tint),0.10); }
+        .bottom-nav .nav-inner { width: 100%; max-width: 640px; display: flex; justify-content: space-around; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: var(--text-muted); font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px; transition: color 0.2s ease; }
+        .nav-item svg { width: 21px; height: 21px; } .nav-item.active { color: var(--primary-blue); }
+        @media (max-width: 460px) { .meta-grid { gap: 8px; } .doc-title { font-size: 17px; } }
+        @media (prefers-reduced-motion: reduce) { .glow-orb { animation: none; } .content-card { animation: none !important; opacity: 1 !important; transform: none !important; } }
+    
+/* ===== بيئة ثلاثية الأبعاد ===== */
+.scene{position:fixed;inset:0;z-index:0;pointer-events:none;perspective:900px;overflow:hidden}
+.cube{position:absolute;width:var(--s);height:var(--s);transform-style:preserve-3d;animation:spin var(--t) linear infinite,bob 7s ease-in-out infinite alternate;opacity:.55}
+.cube i{position:absolute;inset:0;border:1.5px solid rgba(37,99,235,.45);background:rgba(56,189,248,.10);backdrop-filter:blur(1px)}
+.cube i:nth-child(1){transform:translateZ(calc(var(--s)/2))}.cube i:nth-child(2){transform:rotateY(180deg) translateZ(calc(var(--s)/2))}
+.cube i:nth-child(3){transform:rotateY(90deg) translateZ(calc(var(--s)/2))}.cube i:nth-child(4){transform:rotateY(-90deg) translateZ(calc(var(--s)/2))}
+.cube i:nth-child(5){transform:rotateX(90deg) translateZ(calc(var(--s)/2))}.cube i:nth-child(6){transform:rotateX(-90deg) translateZ(calc(var(--s)/2))}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(360deg)}}
+@keyframes bob{to{margin-top:-40px}}
+.page-wrap{perspective:1200px}
+.content-card{transform-style:preserve-3d;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;will-change:transform}
+.content-card.tilt{box-shadow:0 26px 50px rgba(var(--shadow-tint),.20)}
+/* ===== المخططات ===== */
+.flow-title{color:var(--primary-deep);font-size:13.5px;font-weight:800;margin:16px 0 10px;padding-right:10px;border-right:3px solid var(--sky)}
+.flow-title:first-of-type{margin-top:6px}
+.flow{display:flex;flex-wrap:wrap;flex-direction:row;align-items:center;justify-content:flex-start;row-gap:14px;perspective:700px;padding:4px 0 6px}
+.node{position:relative;flex:0 1 auto;text-align:center;padding:8px 11px;border-radius:12px;background:linear-gradient(160deg,#fff,var(--lesson-bg));border:1.5px solid #b9d0f7;color:var(--primary-deep);font-weight:800;font-size:12px;line-height:1.55;
+box-shadow:0 4px 0 #b9d0f7,0 9px 16px rgba(var(--shadow-tint),.12);opacity:0;transform:rotateY(75deg) translateX(18px);transform-origin:right center;transition:opacity .6s ease,transform .7s cubic-bezier(.16,1,.3,1) var(--dl,0s)}
+.node.start{background:linear-gradient(135deg,var(--primary-deep),var(--primary-blue));color:#fff;border-color:transparent;box-shadow:0 4px 0 #14306f,0 9px 18px rgba(37,99,235,.35)}
+.node.end{background:linear-gradient(135deg,var(--plans-1),var(--plans-2));color:#fff;border-color:transparent;box-shadow:0 4px 0 #0a5a70,0 9px 18px rgba(6,182,212,.35)}
+.node b{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--primary-blue);color:#fff;font-size:10px;margin-inline-end:6px;vertical-align:middle}
+.node.start b,.node.end b{background:rgba(255,255,255,.25)}
+.node .fr{display:block;direction:ltr;font-size:11px;color:#1d4ed8;font-weight:700}
+.node.start .fr,.node.end .fr{color:#dff3ff}
+.arrow{position:relative;flex:0 0 auto;width:24px;height:4px;margin:0 8px;border-radius:4px;background:#cfe0fa;opacity:0;transform:scaleX(0);transform-origin:right;transition:opacity .4s ease var(--dl,0s),transform .5s ease var(--dl,0s)}
+.arrow::before{content:"";position:absolute;left:-7px;top:50%;transform:translateY(-50%);border:7px solid transparent;border-right:9px solid var(--primary-blue);border-left:0}
+.arrow::after{content:"";position:absolute;top:0;height:4px;width:10px;border-radius:4px;background:linear-gradient(270deg,var(--sky),var(--primary-blue));animation:flow 1.3s ease-in-out infinite}
+@keyframes flow{0%{right:-10px}100%{right:24px}}
+.flow.in .node{opacity:1;transform:none}.flow.in .arrow{opacity:1;transform:none}
+.acc-grid{display:grid;gap:10px}
+.acc{background:var(--lesson-bg);border:1px solid var(--border-soft);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center;transition:transform .3s}
+.acc:hover{transform:translateZ(20px) scale(1.02)}
+.acc .ic{flex-shrink:0;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;background:linear-gradient(135deg,var(--primary-blue),var(--sky));box-shadow:0 6px 0 rgba(30,58,138,.25)}
+.acc .t{color:var(--primary-deep);font-weight:800;font-size:13.5px}.acc .t span{direction:ltr;display:inline-block;color:#1d4ed8;font-size:12px;margin-inline-start:4px}
+.acc .d{color:#2b3d63;font-size:12.5px;line-height:1.7;margin-top:2px}
+@media (prefers-reduced-motion:reduce){.cube{animation:none}.node,.arrow{opacity:1!important;transform:none!important;transition:none}.arrow::after{animation:none}}
+</style>
+</head>
+<body>
+<div class="scene" id="scene"></div>
+<a href="/Computer-Science/application/index.html" class="app-bar" id="appBar" aria-label="يمكنك تحميل التطبيق الخاص بنا من على Play Store">
+        <span class="app-bar__inner">
+            <svg class="app-bar__icon" viewBox="0 0 512 512" aria-hidden="true">
+                <polygon fill="#00c8ff" points="60,20 285,256 60,492"/>
+                <polygon fill="#00e676" points="60,20 372,204 285,256"/>
+                <polygon fill="#ffd400" points="372,204 460,256 372,308 285,256"/>
+                <polygon fill="#ff3d47" points="60,492 372,308 285,256"/>
+            </svg>
+            <span class="app-bar__text">يمكنك تحميل التطبيق الخاص بنا من على <bdi>Play Store</bdi></span>
+        </span>
+    </a>
+
+    <div class="glow-orb"></div>
+
+    <div class="page-wrap">
+
+        <!-- شريط الإجراءات: العودة (يمين) + تحميل PDF (يسار) -->
+        <div class="top-actions">
+            <a href="/Computer-Science/1st-science/field-1/index.html" class="back-btn" aria-label="العودة إلى صفحة المجال">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+                </svg>
+            </a>
+          <!--  <a href="nizam-tashghil.pdf" download class="download-btn" aria-label="تحميل الدرس PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v11"></path><path d="M7.5 10.5L12 15l4.5-4.5"></path><path d="M5 20h14"></path>
+                </svg>
+                <span>تحميل الدرس PDF</span>
+            </a>-->
+        </div>
+
+        
+        <div class="doc-card">
+            <span class="doc-badge">محتوى الدرس النظري</span>
+            <div class="doc-title">لوحة التحكم</div>
+            <div class="doc-subtitle">المجال التعلّمي 1: بيئة التعامل مع الحاسوب — الوحدة التعليمية 4: لوحة التحكم</div>
+            <div class="meta-grid">
+                <div class="meta-item"><span class="meta-label">المستوى</span><span class="meta-value">أولى ثانوي</span></div>
+                <div class="meta-item"><span class="meta-label">المادة</span><span class="meta-value">المعلوماتية</span></div>
+                <div class="meta-item full"><span class="meta-label">الوحدة التعليمية</span><span class="meta-value">لوحة التحكم</span></div>
+            </div>
+        </div>
+        <div class="section-title"><span class="title-icon">📖</span>محتوى الدرس</div>
+        <div id="lesson"></div>
+        <div class="footer"><span class="footer-code">&lt;/&gt;</span><span>نتمنى لكم توفيقاً ونجاحاً باهراً</span></div>
+    </div>
+<nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="/Computer-Science/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="/Computer-Science/courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="/Computer-Science/articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
+                الوثائق الإدارية
+            </a>
+        </div>
+    </nav>
+
+    <script>
+
+const P=[['ابدأ','Démarrer'],['لوحة التحكم','Panneau de configuration']];
+const S=[
+{n:'مفهوم لوحة التحكم',t:['لوحة التحكم','Panneau de configuration'],d:'هو برنامج مثبت مع نظام التشغيل ذو واجهة بيانية، يعتبر مركز إعدادات الحاسوب.',f:[['طريقة تنفيذ لوحة التحكم',[P[0],[ 'النقر على لوحة التحكم','Panneau de configuration']]]]},
+{n:'العرض وخصائصه',d:'للدخول إلى خصائص العرض مثل خلفية الشاشة وشاشة التوقف:',f:[['تغيير خصائص العرض',[...P,['النقر على التخصيص','Personnalisation'],['تغيير الخصائص التي تريد'],['النقر على موافق','OK']]]]},
+{n:'الفأرة',d:'لتحديد سرعة المؤشر وشكله، وكذلك سرعة النقر المزدوج:',f:[['تغيير خصائص الفأرة',[...P,['النقر على الفأرة','Souris'],['تغيير خصائص الفأرة'],['النقر على موافق','OK']]]]},
+{n:'الخيارات الإقليمية وخيارات اللغة',f:[['إضافة لغة',[P[0],P[1],['الساعة واللغة والمنطقة','Horloge, langue et région'],['النقر على اللغة','Langue']]],['تغيير الوقت والتاريخ',[['النقر على التاريخ والوقت','Date et heure'],['تغيير الوقت والتاريخ'],['النقر على موافق','OK']]]]},
+{n:'إزالة البرامج',d:'لإزالة برنامج ما:',f:[['إزالة برنامج',[...P,['النقر على البرنامج الذي نريد إزالته'],['النقر على إزالة التثبيت','Désinstaller']]]]},
+{n:'حسابات المستخدمين',a:[['👑','حساب مسؤول الكمبيوتر','Administrateur','حساب خاص بمالك الحاسوب.'],['👤','حساب مستخدم قياسي','Standard','ويسمى بالمحدود، يتميز بمحدودية تغيير الإعدادات.'],['🌐','حساب الضيف','Invité','مصمم للمستخدمين الذين يحتاجون إلى استخدام الحاسوب مؤقتاً مثل تصفح الإنترنت، ويكون بدون كلمة مرور.']],
+f:[['إنشاء حساب',[...P,['إدارة حساب آخر','Gérer un autre compte'],['إنشاء حساب جديد','Créer un nouveau compte']]],
+['الحماية بكلمة مرور',[...P,['إدارة حساب آخر','Gérer un autre compte'],['إنشاء كلمة مرور','Créer un mot de passe'],['إدخال كلمة المرور وتأكيدها'],['النقر على موافق','OK']]],
+['تغيير اسم الحساب',[...P,['إدارة حساب آخر','Gérer un autre compte'],['تغيير اسم الحساب','Modifier le nom de compte']]],
+['تغيير صورة الحساب',[...P,['حسابات المستخدمين','Comptes d\u2019utilisateurs'],['النقر على الحساب'],['تغيير الصورة','Modifier l\u2019image'],['اختيار الصورة'],['النقر على موافق','OK']]]]}];
+const root=document.getElementById('lesson');
+S.forEach((s,i)=>{
+ let h=`<div class="content-card" style="--d:${.05*i}s"><div class="content-head"><span class="c-name"><span class="num">${i+1}</span> ${s.n}</span></div><div class="content-body">`;
+ if(s.t)h+=`<div class="term-item"><span class="t-name">${s.t[0]}</span><span class="t-langs"><span class="t-lang fr">FR: ${s.t[1]}</span></span></div>`;
+ if(s.d)h+=`<div class="field-text">${s.d}</div>`;
+ if(s.a)h+=`<div class="sub-title">أنواع الحسابات</div><div class="acc-grid">`+s.a.map(a=>`<div class="acc"><div class="ic">${a[0]}</div><div><div class="t">${a[1]} <span>(${a[2]})</span></div><div class="d">${a[3]}</div></div></div>`).join('')+`</div><div class="sub-title">عمليات على الحسابات</div>`;
+ (s.f||[]).forEach(([ft,steps])=>{
+  h+=`<div class="flow-title">${ft}</div><div class="flow">`;
+  steps.forEach((st,k)=>{
+   const c=k==0?' start':k==steps.length-1?' end':'';const dl=(k*.22).toFixed(2);
+   h+=`<div class="node${c}" style="--dl:${dl}s"><b>${k+1}</b>${st[0]}${st[1]?`<span class="fr">${st[1]}</span>`:''}</div>`;
+   if(k<steps.length-1)h+=`<div class="arrow" style="--dl:${(k*.22+.15).toFixed(2)}s"></div>`;
+  });
+  h+='</div>';
+ });
+ root.insertAdjacentHTML('beforeend',h+'</div></div>');
+});
+// ظهور المخططات عند التمرير
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.25});
+document.querySelectorAll('.flow').forEach(f=>io.observe(f));
+// إمالة ثلاثية الأبعاد
+if(matchMedia('(hover:hover)').matches)document.querySelectorAll('.content-card').forEach(c=>{
+ c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.classList.add('tilt');c.style.transform=`rotateY(${x*5}deg) rotateX(${-y*3}deg)`});
+ c.addEventListener('pointerleave',()=>{c.classList.remove('tilt');c.style.transform=''});
+});
+// مكعبات الخلفية
+const sc=document.getElementById('scene');
+[[8,10,46,22],[82,18,30,17],[70,60,58,28],[12,68,36,19],[45,85,26,15],[90,88,40,24]].forEach(([l,t,s,d])=>{
+ sc.insertAdjacentHTML('beforeend',`<div class="cube" style="left:${l}%;top:${t}%;--s:${s}px;--t:${d}s"><i></i><i></i><i></i><i></i><i></i><i></i></div>`)});
+addEventListener('scroll',()=>{sc.style.transform=`translateY(${-scrollY*.08}px)`},{passive:true});
+
+(function(){var bar=document.getElementById('appBar');if(bar){var f=function(){document.documentElement.style.setProperty('--topbar-h',bar.offsetHeight+'px')};f();addEventListener('resize',f)}})();
+</script>
+</body>
+</html>
