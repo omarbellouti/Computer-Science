@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام التشغيل: مفاهيمه وتثبيته | الأستاذ بلوطي عمر</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #e8f0fc;
+            --card-bg: #ffffff;
+            --lesson-bg: #f2f7fe;
+            --primary-blue: #2563eb;
+            --primary-blue-soft: #4f8ef7;
+            --primary-deep: #1e3a8a;
+            --sky: #38bdf8;
+            --text-main: #14254a;
+            --text-muted: #5f7092;
+            --border-soft: #d9e5f6;
+            --shadow-tint: 20, 37, 74;
+            --topbar-h: 46px;
+            --plans-1: #0e7490;
+            --plans-2: #06b6d4;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Kufi Arabic', sans-serif; font-weight: 600; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 8%, rgba(37, 99, 235, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(56, 189, 248, 0.20) 0%, transparent 45%),
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            min-height: 100vh; color: var(--text-main); overflow-x: hidden; position: relative;
+            padding: calc(var(--topbar-h) + 22px) 16px calc(100px + env(safe-area-inset-bottom));
+        }
+        .glow-orb {
+            position: fixed; width: 380px; height: 380px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(56,189,248,0.16) 0%, rgba(255,255,255,0) 70%);
+            top: 30%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+        @keyframes pulse { 0% { transform: translate(-50%,-50%) scale(0.9); opacity:.4; } 100% { transform: translate(-50%,-50%) scale(1.2); opacity:.8; } }
+        .page-wrap { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; }
+        /* شريط علوي مثبت */
+        .app-bar {
+            position: fixed; top: 0; inset-inline: 0; z-index: 20; display: block; text-decoration: none; color: #fff;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.28); box-shadow: 0 6px 18px rgba(var(--shadow-tint),0.22);
+            padding: env(safe-area-inset-top, 0px) 14px 0; -webkit-tap-highlight-color: transparent; transition: filter .25s ease;
+        }
+        .app-bar:hover { filter: brightness(1.08); } .app-bar:active { filter: brightness(0.94); }
+        .app-bar__inner { max-width: 640px; margin: 0 auto; min-height: 44px; padding: 6px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .app-bar__icon { width: 22px; height: 22px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+        .app-bar__text { color: #fff; font-size: 12.5px; font-weight: 700; line-height: 1.65; text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1 1 auto; }
+        @media (max-width: 480px) { .app-bar__text { font-size: 11px; } }
+        @media (max-width: 360px) { .app-bar__text { font-size: 10px; } }
+
+        /* شريط الإجراءات: العودة + تحميل PDF */
+        .top-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+        .back-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, #1d4ed8 55%, var(--primary-blue) 100%);
+            color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(var(--shadow-tint),0.22);
+            -webkit-tap-highlight-color: transparent; transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease;
+        }
+        .back-btn:hover { transform: translateY(-2px) scale(1.06); filter: brightness(1.08); } .back-btn:active { transform: scale(0.95); }
+        .back-btn svg { width: 22px; height: 22px; }
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 999px;
+            background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); color: #fff; text-decoration: none; font-size: 13px; font-weight: 800;
+            border: 1px solid rgba(255,255,255,0.28); box-shadow: 0 8px 18px rgba(6,182,212,0.30); -webkit-tap-highlight-color: transparent; white-space: nowrap;
+            transition: transform .25s cubic-bezier(0.16,1,0.3,1), filter .25s ease;
+        }
+        .download-btn:hover { transform: translateY(-2px) scale(1.04); filter: brightness(1.06); } .download-btn:active { transform: scale(0.97); }
+        .download-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+        @media (max-width: 380px) { .download-btn { font-size: 12px; padding: 0 13px; } }
+        /* عنوان قسم */
+        .section-title { display: flex; align-items: center; gap: 10px; margin: 0 2px 16px; color: var(--text-main); font-size: 15px; font-weight: 800; }
+        .section-title .title-icon { flex-shrink: 0; width: 30px; height: 30px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-blue), var(--sky)); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 6px 14px rgba(37,99,235,0.28); }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(37,99,235,0.25), transparent); }
+
+        /* بطاقة رأس الدرس */
+        .doc-card { background: var(--card-bg); padding: 22px 20px 24px; border-radius: 26px; border: 1px solid var(--border-soft); box-shadow: 0 20px 50px rgba(var(--shadow-tint),0.10), inset 0 1px 1px rgba(255,255,255,0.6); margin-bottom: 22px; position: relative; overflow: hidden; }
+        .doc-badge { display: inline-block; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); color: #fff; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 999px; margin-bottom: 12px; box-shadow: 0 6px 14px rgba(6,182,212,0.30); }
+        .doc-title { color: var(--primary-deep); font-size: 19px; font-weight: 900; line-height: 1.5; margin-bottom: 4px; }
+        .doc-subtitle { color: var(--text-muted); font-size: 13px; font-weight: 700; margin-bottom: 16px; }
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .meta-item { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 10px 12px; }
+        .meta-item.full { grid-column: 1 / -1; }
+        .meta-label { display: block; color: var(--primary-blue); font-size: 11px; font-weight: 800; margin-bottom: 3px; }
+        .meta-value { display: block; color: var(--text-main); font-size: 13.5px; font-weight: 700; line-height: 1.55; }
+        .highlight-box { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-right: 4px solid var(--primary-blue); border-radius: 14px; padding: 12px 14px; margin-top: 12px; }
+        .highlight-box .hl-label { color: var(--primary-blue); font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+        .highlight-box .hl-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.7; }
+
+        /* بطاقة محتوى (قسم من الدرس) */
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 12px 26px rgba(var(--shadow-tint),0.12); opacity: 0; transform: translateY(8px); animation: cardIn 0.45s ease-out var(--d,0s) forwards; }
+        @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+        .content-head { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 16px; color: #fff; overflow: hidden; background: linear-gradient(315deg, var(--plans-1), var(--plans-2)); }
+        .content-head::after { content: ""; position: absolute; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.14); top: -42px; inset-inline-end: -30px; pointer-events: none; }
+        .content-head .c-name { position: relative; z-index: 1; font-size: 15.5px; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.18); }
+        .content-head .num { opacity: 0.85; font-size: 13px; margin-inline-start: 4px; }
+        .content-body { padding: 14px 16px 16px; }
+        .field { margin-top: 14px; } .field:first-child { margin-top: 0; }
+        .field-label { display: inline-flex; align-items: center; gap: 6px; color: var(--primary-blue); font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .field-label::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: linear-gradient(135deg, var(--plans-1), var(--plans-2)); }
+        .field-text { color: #2b3d63; font-size: 13.5px; font-weight: 600; line-height: 1.8; }
+        .field ul, .field ol { margin: 4px 6px 0; padding-inline-start: 18px; }
+        .field li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 1.9; }
+        .sub-title { color: var(--primary-deep); font-size: 14px; font-weight: 800; margin: 16px 0 8px; padding-right: 10px; border-right: 3px solid var(--primary-blue); }
+        .sub-title:first-child { margin-top: 0; }
+        /* عنصر مصطلح */
+        .term-item { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 12px; padding: 9px 12px; margin-bottom: 10px; }
+        .term-item .t-name { color: var(--primary-deep); font-weight: 800; font-size: 13.5px; }
+        .term-item .t-langs { display: flex; gap: 6px; flex-wrap: wrap; }
+        .term-item .t-lang { font-weight: 700; font-size: 11.5px; direction: ltr; padding: 2px 8px; border-radius: 999px; }
+        .term-item .t-lang.fr { color: #1d4ed8; background: #e4ecfd; border: 1px solid #c7d7fb; }
+        .term-item .t-lang.en { color: #0e7490; background: #e2f6f9; border: 1px solid #c3ecf1; }
+        .term-item .t-desc { color: #2b3d63; font-weight: 600; font-size: 12.5px; line-height: 1.7; flex-basis: 100%; }
+        /* صندوق ملاحظة */
+        .note-box { background: #fff8ec; border: 1px solid #f5e0b8; border-right: 4px solid #e0a13a; border-radius: 14px; padding: 12px 14px; margin-top: 10px; }
+        .note-box .n-label { color: #8a5a12; font-size: 12.5px; font-weight: 800; margin-bottom: 6px; }
+        .note-box .n-text { color: #5c4a2a; font-size: 12.5px; font-weight: 600; line-height: 1.85; }
+        /* صندوق خطوة */
+        .step-box { background: var(--lesson-bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 12px 14px; margin-top: 8px; }
+        .step-box ol { margin: 0; padding-inline-start: 20px; }
+        .step-box li { color: #2b3d63; font-size: 13px; font-weight: 600; line-height: 2; }
+        /* فوتر ونظام تنقل */
+        .footer { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; margin-top: 26px; }
+        .footer-code { font-family: monospace; color: var(--primary-blue); font-size: 12px; opacity: 0.8; }
+        .bottom-nav { position: fixed; bottom: 0; inset-inline: 0; z-index: 5; display: flex; justify-content: center; gap: 4px; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); border-top: 1px solid var(--border-soft); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px rgba(var(--shadow-tint),0.10); }
+        .bottom-nav .nav-inner { width: 100%; max-width: 640px; display: flex; justify-content: space-around; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: var(--text-muted); font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px; transition: color 0.2s ease; }
+        .nav-item svg { width: 21px; height: 21px; } .nav-item.active { color: var(--primary-blue); }
+        @media (max-width: 460px) { .meta-grid { gap: 8px; } .doc-title { font-size: 17px; } }
+        @media (prefers-reduced-motion: reduce) { .glow-orb { animation: none; } .content-card { animation: none !important; opacity: 1 !important; transform: none !important; } }
+    </style>
+</head>
+<body>
+
+    <a href="/Computer-Science/application/index.html" class="app-bar" id="appBar" aria-label="يمكنك تحميل التطبيق الخاص بنا من على Play Store">
+        <span class="app-bar__inner">
+            <svg class="app-bar__icon" viewBox="0 0 512 512" aria-hidden="true">
+                <polygon fill="#00c8ff" points="60,20 285,256 60,492"/>
+                <polygon fill="#00e676" points="60,20 372,204 285,256"/>
+                <polygon fill="#ffd400" points="372,204 460,256 372,308 285,256"/>
+                <polygon fill="#ff3d47" points="60,492 372,308 285,256"/>
+            </svg>
+            <span class="app-bar__text">يمكنك تحميل التطبيق الخاص بنا من على <bdi>Play Store</bdi></span>
+        </span>
+    </a>
+
+    <div class="glow-orb"></div>
+
+    <div class="page-wrap">
+
+        <!-- شريط الإجراءات: العودة (يمين) + تحميل PDF (يسار) -->
+        <div class="top-actions">
+            <a href="/Computer-Science/1st-literary/field-1/index.html" class="back-btn" aria-label="العودة إلى صفحة المجال">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path>
+                </svg>
+            </a>
+          <!--  <a href="nizam-tashghil.pdf" download class="download-btn" aria-label="تحميل الدرس PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v11"></path><path d="M7.5 10.5L12 15l4.5-4.5"></path><path d="M5 20h14"></path>
+                </svg>
+                <span>تحميل الدرس PDF</span>
+            </a>-->
+        </div>
+
+        <!-- بطاقة رأس الدرس -->
+        <div class="doc-card">
+            <span class="doc-badge">محتوى الدرس النظري</span>
+            <div class="doc-title">نظام التشغيل: مفاهيمه وتثبيته</div>
+            <div class="doc-subtitle">المجال التعلّمي 1: بيئة التعامل مع الحاسوب — الوحدة التعليمية 3: نظام التشغيل</div>
+
+            <div class="meta-grid">
+                <div class="meta-item"><span class="meta-label">المستوى</span><span class="meta-value">أولى ثانوي</span></div>
+                <div class="meta-item"><span class="meta-label">المادة</span><span class="meta-value">المعلوماتية</span></div>
+                <div class="meta-item full"><span class="meta-label">الوحدة التعليمية</span><span class="meta-value">نظام التشغيل</span></div>
+            </div>
+        </div>
+
+        <!-- محتوى الدرس -->
+        <div class="section-title"><span class="title-icon">📖</span>محتوى الدرس</div>
+
+        <!-- 1. نظام التشغيل -->
+        <div class="content-card" style="--d:0.05s">
+            <div class="content-head">
+                <span class="c-name"><span class="num">1</span> نظام التشغيل</span>
+            </div>
+            <div class="content-body">
+                <div class="term-item">
+                    <span class="t-name">نظام التشغيل</span>
+                    <span class="t-langs"><span class="t-lang fr">FR: Système d'exploitation</span><span class="t-lang en">EN: Operating System</span></span>
+                </div>
+                <div class="field-text">هو مجموعة من الملفات والبرامج المتكاملة، والتي تسمح بـ:</div>
+                <ul>
+                    <li>إعداد الحاسوب لبدء التشغيل.</li>
+                    <li>تنظيم وإدارة الملفات...</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2. مفهوم تثبيت نظام التشغيل -->
+        <div class="content-card" style="--d:0.1s">
+            <div class="content-head">
+                <span class="c-name"><span class="num">2</span> مفهوم تثبيت نظام التشغيل</span>
+            </div>
+            <div class="content-body">
+                <div class="term-item">
+                    <span class="t-name">التثبيت</span>
+                    <span class="t-langs"><span class="t-lang fr">FR: Installation</span><span class="t-lang en">EN: Installation</span></span>
+                </div>
+                <div class="field-text">هو عملية نسخ الملفات والبرامج الخاصة بالنظام وجعلها متوفرة بصفة دائمة على القرص الصلب، لتمكين الحاسوب من القيام بجميع مهامه.</div>
+            </div>
+        </div>
+
+        <!-- 3. مفهوم تقسيم القرص الصلب -->
+        <div class="content-card" style="--d:0.15s">
+            <div class="content-head">
+                <span class="c-name"><span class="num">3</span> مفهوم تقسيم القرص الصلب</span>
+            </div>
+            <div class="content-body">
+                <div class="term-item">
+                    <span class="t-name">تقسيم القرص الصلب</span>
+                    <span class="t-langs"><span class="t-lang fr">FR: Partitionnement</span><span class="t-lang en">EN: Partitioning</span></span>
+                </div>
+                <div class="field-text">تقسيم القرص الصلب هو تجزئته افتراضياً إلى أقسام، وإعطاء كل قسم حرفاً خاصاً (مثلاً C، D، E)، بحيث تتعامل مع القرص الصلب على أنّه أكثر من قرص واحد. تساعد هذه العملية على:</div>
+                <ul>
+                    <li>تنظيم وحماية الملفات والمجلدات.</li>
+                    <li>تسمح بتثبيت أكثر من نظام تشغيل على نفس الحاسوب.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. مفهوم تهيئة القرص -->
+        <div class="content-card" style="--d:0.2s">
+            <div class="content-head">
+                <span class="c-name"><span class="num">4</span> مفهوم تهيئة القرص</span>
+            </div>
+            <div class="content-body">
+                <div class="term-item">
+                    <span class="t-name">تهيئة القرص</span>
+                    <span class="t-langs"><span class="t-lang fr">FR: Formatage</span><span class="t-lang en">EN: Formatting</span></span>
+                </div>
+                <div class="field-text" style="margin-bottom:10px">هي إعداده وتحضيره ليصبح جاهزاً لتخزين نظام التشغيل والمعلومات، حيث يوجد نوعان من التهيئة:</div>
+
+                <div class="term-item">
+                    <span class="t-name">التهيئة الفيزيائية</span>
+                    <span class="t-langs"><span class="t-lang en">EN: Physical (Low-level) Formatting</span></span>
+                    <span class="t-desc">يتم فيها تقسيم القرص الصلب إلى عناصر أساسية: أسطوانات، مسارات وقطاعات، وتتم هذه العملية عند مصنع الأقراص الصلبة قبل بيعها.</span>
+                </div>
+                <div class="term-item">
+                    <span class="t-name">التهيئة المنطقية</span>
+                    <span class="t-langs"><span class="t-lang en">EN: Logical (High-level) Formatting</span></span>
+                    <span class="t-desc">يتم فيها وضع نظام الملفات (مثل FAT، FAT32، NTFS) على القرص الصلب، مما يتيح له استخدام القرص الصلب.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. الإعدادات أثناء التثبيت -->
+        <div class="content-card" style="--d:0.25s">
+            <div class="content-head">
+                <span class="c-name"><span class="num">5</span> الإعدادات أثناء التثبيت</span>
+            </div>
+            <div class="content-body">
+                <div class="sub-title">أ. إعدادات قبل التثبيت</div>
+                <div class="field-text">عند بدء تشغيل الجهاز، اضغط زر <strong>Supp</strong> أو <strong>F2</strong> من لوحة المفاتيح حتى تظهر لك شاشة الإعداد الخاصة بـ <strong>BIOS</strong>. ومن هنا نقوم بتغيير الإقلاع من القرص الصلب إلى <strong>CD-ROM</strong>، ثم نحفظ ونغادر البرنامج.</div>
+
+                <div class="sub-title">ب. التثبيت</div>
+                <div class="field-text" style="margin-bottom:8px">بعد تغيير الإقلاع الأوّلي، نتبع ما يلي (في Windows 7):</div>
+                <div class="step-box">
+                    <ol>
+                        <li>نضع قرص النظام المضغوط في قارئ الأقراص المضغوطة، ثم نشغّل الجهاز.</li>
+                        <li>نختار لغة التثبيت، ثم نصادق على شروط استعمال البرنامج، ونختار موضع التثبيت.</li>
+                        <li>إدخال اسم المستعمل وكلمة المرور.</li>
+                        <li>اختيار المنطقة الزمنية وضبط الوقت والساعة وإعداد الشبكة.</li>
+                    </ol>
+                </div>
+
+                <div class="note-box">
+                    <div class="n-label">📌 ملاحظة</div>
+                    <div class="n-text">اسم الحاسوب والمنطقة والوقت هي إعدادات إجبارية، أمّا كلمة المرور فهي اختيارية.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="footer-code">&lt;/&gt;</span>
+            <span>نتمنى لكم توفيقاً ونجاحاً باهراً</span>
+        </div>
+
+    </div>
+
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <div class="nav-inner">
+            <a href="/Computer-Science/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+                الرئيسية
+            </a>
+            <a href="/Computer-Science/courses/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
+                الدورات
+            </a>
+            <a href="/Computer-Science/articles/index.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
+                الوثائق الإدارية
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        (function () {
+            var bar = document.getElementById('appBar');
+            if (bar) {
+                document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
+                window.addEventListener('resize', function () {
+                    document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
