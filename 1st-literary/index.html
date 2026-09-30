@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أولى ثانوي - آداب | الأستاذ بلوطي عمر</title>
+    <title>بيئة التعامل مع الحاسوب | الأستاذ بلوطي عمر</title>
     <!-- Google Fonts: Noto Kufi Arabic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,16 +19,9 @@
             --text-main: #1c2534;
             --text-muted: #6b7686;
             --border-soft: #e3e8f0;
-            --whatsapp: #25d366;
-            --facebook: #1877f2;
 
-            /* Domain accent colors */
             --domain-1a: #2563eb;
             --domain-1b: #38bdf8;
-            --domain-2a: #d97706;
-            --domain-2b: #fbbf24;
-            --domain-3a: #059669;
-            --domain-3b: #34d399;
         }
 
         * {
@@ -53,7 +46,7 @@
             color: var(--text-main);
             overflow-x: hidden;
             position: relative;
-            padding: 22px 16px calc(100px + env(safe-area-inset-bottom));
+            padding: 22px 16px calc(60px + env(safe-area-inset-bottom));
         }
 
         .glow-orb {
@@ -99,105 +92,59 @@
         .back-link:hover { color: var(--primary-blue); }
         .back-link svg { width: 16px; height: 16px; }
 
-        /* ---------- Welcome hero ---------- */
+        /* ---------- Domain hero ---------- */
         .hero-card {
-            background: var(--card-bg);
-            padding: 32px 26px;
-            border-radius: 26px;
-            text-align: center;
-            border: 1px solid var(--border-soft);
-            box-shadow:
-                0 20px 50px rgba(28, 37, 52, 0.10),
-                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(135deg, var(--domain-1a), var(--domain-1b));
+            padding: 24px;
+            border-radius: 24px;
+            color: #ffffff;
+            box-shadow: 0 16px 34px rgba(37, 99, 235, 0.28);
             margin-bottom: 26px;
             position: relative;
             overflow: hidden;
-            perspective: 800px;
-            opacity: 0;
-            transform: translateY(18px) scale(0.97);
-            animation: hero-in 0.7s cubic-bezier(.2,.9,.3,1) forwards;
         }
 
-        @keyframes hero-in {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .hero-card > * { position: relative; z-index: 1; }
-
-        /* مكعبات ثلاثية الأبعاد طافية في خلفية البطاقة */
-        .hero-cube-wrap {
+        .hero-card::after {
+            content: "";
             position: absolute;
-            z-index: 0;
-            animation: hero-cube-float 6s ease-in-out infinite;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            top: -55px;
+            inset-inline-end: -55px;
         }
 
-        .hero-cube-wrap.hc1 { width: 20px; height: 20px; top: 12%; inset-inline-start: 8%; animation-duration: 5.5s; }
-        .hero-cube-wrap.hc2 { width: 15px; height: 15px; top: 20%; inset-inline-end: 10%; animation-duration: 7.2s; animation-delay: 0.7s; }
-        .hero-cube-wrap.hc3 { width: 14px; height: 14px; bottom: 14%; inset-inline-start: 16%; animation-duration: 6.4s; animation-delay: 1.3s; }
-        .hero-cube-wrap.hc4 { width: 12px; height: 12px; bottom: 20%; inset-inline-end: 14%; animation-duration: 8s; animation-delay: 0.4s; }
-
-        .hero-cube {
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            animation: hero-cube-spin 10s linear infinite;
+        .hero-card .hero-icon {
+            flex-shrink: 0;
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            position: relative;
+            z-index: 1;
         }
 
-        .hero-cube-wrap.hc2 .hero-cube { animation-duration: 14s; }
-        .hero-cube-wrap.hc3 .hero-cube { animation-duration: 8s; }
-        .hero-cube-wrap.hc4 .hero-cube { animation-duration: 17s; }
+        .hero-card .hero-text { position: relative; z-index: 1; }
 
-        .hero-cube .hface {
-            position: absolute;
-            inset: 0;
-            border: 1px solid rgba(37, 99, 235, 0.28);
-            background: rgba(56, 189, 248, 0.08);
-        }
-
-        .hero-cube .hface.front  { transform: translateZ(8px); }
-        .hero-cube .hface.back   { transform: translateZ(-8px) rotateY(180deg); }
-        .hero-cube .hface.right  { transform: rotateY(90deg) translateZ(8px); }
-        .hero-cube .hface.left   { transform: rotateY(-90deg) translateZ(8px); }
-        .hero-cube .hface.top    { transform: rotateX(90deg) translateZ(8px); }
-        .hero-cube .hface.bottom { transform: rotateX(-90deg) translateZ(8px); }
-
-        @keyframes hero-cube-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes hero-cube-spin {
-            from { transform: rotateX(0deg) rotateY(0deg); }
-            to { transform: rotateX(360deg) rotateY(360deg); }
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(37, 99, 235, 0.08);
-            color: var(--primary-blue);
-            font-size: 12.5px;
+        .hero-card .hero-tag {
+            font-size: 12px;
             font-weight: 700;
-            padding: 4px 14px;
-            border-radius: 50px;
-            border: 1px solid rgba(37, 99, 235, 0.18);
-            margin-bottom: 14px;
-            letter-spacing: 0.5px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
         }
 
-        h1 {
-            font-size: 22px;
+        .hero-card h1 {
+            font-size: 19px;
             font-weight: 800;
-            margin-bottom: 10px;
-            color: var(--text-main);
-            letter-spacing: -0.3px;
-        }
-
-        .hero-sub {
-            color: var(--text-muted);
-            font-size: 13.5px;
-            line-height: 1.8;
-            max-width: 420px;
-            margin: 0 auto;
         }
 
         /* ---------- Section title ---------- */
@@ -210,14 +157,6 @@
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 0.5px;
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fade-up 0.6s ease forwards;
-            animation-delay: 0.2s;
-        }
-
-        @keyframes fade-up {
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title::before,
@@ -228,126 +167,175 @@
             background: linear-gradient(90deg, transparent, rgba(37,99,235,0.25), transparent);
         }
 
-        /* ---------- Domain cards (stacked) ---------- */
-        .domains-list {
+        /* ---------- Units accordion ---------- */
+        .units-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-bottom: 30px;
-            perspective: 1000px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        .domain-card {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 18px;
-            border-radius: 22px;
-            text-decoration: none;
-            color: #ffffff;
+        .unit-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 12px 26px rgba(28, 37, 52, 0.14);
-            opacity: 0;
-            transform: translateY(22px) scale(0.95);
-            animation: card-in 0.6s cubic-bezier(.2,.9,.3,1) forwards;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(28, 37, 52, 0.06);
+            transition: box-shadow 0.25s ease;
         }
 
-        .domains-list .domain-card:nth-child(1) { animation-delay: 0.3s; }
-        .domains-list .domain-card:nth-child(2) { animation-delay: 0.42s; }
-        .domains-list .domain-card:nth-child(3) { animation-delay: 0.54s; }
-
-        @keyframes card-in {
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        .unit-card.open {
+            box-shadow: 0 14px 30px rgba(28, 37, 52, 0.12);
         }
 
-        .domain-card:hover {
-            transform: translateY(-4px) rotateX(3deg);
-            box-shadow: 0 18px 36px rgba(28, 37, 52, 0.22);
+        .unit-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: right;
+            font-family: inherit;
         }
 
-        .domain-card::after {
-            content: "";
-            position: absolute;
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.12);
-            top: -50px;
-            inset-inline-end: -50px;
-        }
-
-        .domain-card .icon-wrap {
+        .unit-header .unit-num {
             flex-shrink: 0;
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.18);
+            width: 40px;
+            height: 40px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, var(--domain-1a), var(--domain-1b));
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
-            position: relative;
-            z-index: 1;
-            animation: icon-float 3.6s ease-in-out infinite;
-        }
-
-        @keyframes icon-float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-3px) rotate(-3deg); }
-        }
-
-        .domains-list .domain-card:nth-child(1) .icon-wrap { animation-delay: 0.2s; }
-        .domains-list .domain-card:nth-child(2) .icon-wrap { animation-delay: 0.7s; }
-        .domains-list .domain-card:nth-child(3) .icon-wrap { animation-delay: 1.2s; }
-
-        .domain-card .domain-body {
-            position: relative;
-            z-index: 1;
-            flex: 1;
-        }
-
-        .domain-card .domain-tag {
-            font-size: 11.5px;
-            font-weight: 700;
-            opacity: 0.85;
-            letter-spacing: 0.3px;
-            margin-bottom: 3px;
-        }
-
-        .domain-card .domain-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
-            line-height: 1.4;
         }
 
-        .domain-card .domain-sub {
-            font-size: 12.5px;
-            font-weight: 600;
-            opacity: 0.9;
-            margin-top: 5px;
-            line-height: 1.6;
+        .unit-header .unit-title {
+            flex: 1;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--text-main);
         }
 
-        .domain-card .arrow {
+        .unit-header .chevron {
             flex-shrink: 0;
-            width: 30px;
-            height: 30px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.18);
+            background: var(--lesson-bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            z-index: 1;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
-        .domain-card .arrow svg { width: 15px; height: 15px; }
+        .unit-header .chevron svg { width: 13px; height: 13px; color: var(--text-muted); }
 
-        .domain-1 { background: linear-gradient(135deg, var(--domain-1a), var(--domain-1b)); }
-        .domain-2 { background: linear-gradient(135deg, var(--domain-2a), var(--domain-2b)); }
-        .domain-3 { background: linear-gradient(135deg, var(--domain-3a), var(--domain-3b)); }
+        .unit-card.open .chevron {
+            transform: rotate(180deg);
+            background: rgba(37, 99, 235, 0.10);
+        }
+
+        .unit-card.open .chevron svg { color: var(--primary-blue); }
+
+        .unit-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .unit-content-inner {
+            padding: 14px 14px 16px;
+            margin: 0 14px 14px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.05), rgba(37, 99, 235, 0.015));
+            border: 1px dashed rgba(37, 99, 235, 0.18);
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .unit-content-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            opacity: 0.75;
+            margin: 0 2px 2px;
+            letter-spacing: 0.3px;
+        }
+
+        .unit-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: var(--lesson-bg);
+            border: 1px solid var(--border-soft);
+            text-decoration: none;
+            color: var(--text-main);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .unit-link:hover {
+            transform: translateX(-2px);
+            background: #eef2f9;
+        }
+
+        .unit-link .link-icon {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            color: #fff;
+            animation: link-wiggle 3.6s ease-in-out infinite;
+        }
+
+        .unit-link:nth-child(3) .link-icon { animation-delay: 0.3s; }
+        .unit-link:nth-child(4) .link-icon { animation-delay: 0.6s; }
+        .unit-link:nth-child(5) .link-icon { animation-delay: 0.9s; }
+        .unit-link:nth-child(6) .link-icon { animation-delay: 1.2s; }
+
+        .unit-link:hover .link-icon {
+            animation: link-wiggle-hover 0.5s ease-in-out;
+        }
+
+        @keyframes link-wiggle {
+            0%, 92%, 100% { transform: rotate(0deg); }
+            94% { transform: rotate(-9deg); }
+            96% { transform: rotate(9deg); }
+            98% { transform: rotate(-5deg); }
+        }
+
+        @keyframes link-wiggle-hover {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-12deg) scale(1.1); }
+            50% { transform: rotate(12deg) scale(1.1); }
+            75% { transform: rotate(-6deg) scale(1.05); }
+        }
+
+        .unit-link.lesson .link-icon { background: linear-gradient(135deg, #2563eb, #38bdf8); }
+        .unit-link.slides .link-icon { background: linear-gradient(135deg, #d97706, #fbbf24); }
+        .unit-link.theory .link-icon { background: linear-gradient(135deg, #7c3aed, #c084fc); }
+        .unit-link.practical .link-icon { background: linear-gradient(135deg, #0891b2, #22d3ee); }
+        .unit-link.quiz .link-icon { background: linear-gradient(135deg, #e11d48, #fb7185); }
+
+        .unit-link .link-label {
+            flex: 1;
+            font-size: 13.5px;
+            font-weight: 700;
+        }
+
+        .unit-link .link-arrow svg { width: 14px; height: 14px; color: var(--text-muted); }
 
         /* ---------- Footer ---------- */
         .footer {
@@ -358,6 +346,7 @@
             justify-content: center;
             gap: 8px;
             text-align: center;
+            margin-top: 10px;
         }
 
         .footer-code {
@@ -367,64 +356,9 @@
             opacity: 0.8;
         }
 
-        /* ---------- Bottom nav ---------- */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            inset-inline: 0;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border-soft);
-            padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
-            box-shadow: 0 -8px 24px rgba(28, 37, 52, 0.08);
-        }
-
-        .bottom-nav .nav-inner {
-            width: 100%;
-            max-width: 640px;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 11.5px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            transition: color 0.2s ease;
-        }
-
-        .nav-item svg { width: 21px; height: 21px; }
-
-        .nav-item.active { color: var(--primary-blue); }
-
-        @media (max-width: 460px) {
-            .hero-card { padding: 26px 18px; }
-            .domain-card { padding: 15px; gap: 12px; }
-            .domain-card .icon-wrap { width: 46px; height: 46px; font-size: 22px; }
-        }
-
         @media (prefers-reduced-motion: reduce) {
             .glow-orb { animation: none; }
-            .domain-card { transition: none; }
-            .hero-card, .section-title, .domain-card {
-                animation: none !important;
-                opacity: 1 !important;
-                transform: none !important;
-            }
-            .hero-cube-wrap, .hero-cube, .icon-wrap {
-                animation: none !important;
-            }
+            .unit-card, .unit-header .chevron, .unit-content, .unit-link, .unit-link .link-icon { transition: none; animation: none; }
         }
     </style>
 </head>
@@ -437,76 +371,262 @@
 
         <a href="../index.html" class="back-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
-            الرجوع إلى الرئيسية
+            الرجوع إلى المجالات
         </a>
 
-        <!-- بطاقة الترحيب -->
+        <!-- بطاقة المجال -->
         <div class="hero-card">
-            <div class="hero-cube-wrap hc1"><div class="hero-cube">
-                <div class="hface front"></div><div class="hface back"></div>
-                <div class="hface right"></div><div class="hface left"></div>
-                <div class="hface top"></div><div class="hface bottom"></div>
-            </div></div>
-            <div class="hero-cube-wrap hc2"><div class="hero-cube">
-                <div class="hface front"></div><div class="hface back"></div>
-                <div class="hface right"></div><div class="hface left"></div>
-                <div class="hface top"></div><div class="hface bottom"></div>
-            </div></div>
-            <div class="hero-cube-wrap hc3"><div class="hero-cube">
-                <div class="hface front"></div><div class="hface back"></div>
-                <div class="hface right"></div><div class="hface left"></div>
-                <div class="hface top"></div><div class="hface bottom"></div>
-            </div></div>
-            <div class="hero-cube-wrap hc4"><div class="hero-cube">
-                <div class="hface front"></div><div class="hface back"></div>
-                <div class="hface right"></div><div class="hface left"></div>
-                <div class="hface top"></div><div class="hface bottom"></div>
-            </div></div>
-            <span class="badge">أولى ثانوي - آداب</span>
-            <h1>مرحبًا بك في قسم السنة الأولى ثانوي آداب</h1>
-            <p class="hero-sub">اختر أحد المجالات أدناه للانطلاق في دروس ومحتوى مادة الإعلام الآلي.</p>
+            <span class="hero-icon">🖥️</span>
+            <div class="hero-text">
+                <div class="hero-tag">المجال الأول</div>
+                <h1>بيئة التعامل مع الحاسوب</h1>
+            </div>
         </div>
 
-        <!-- المجالات -->
-        <div class="section-title">مجالات التعلّم</div>
+        <!-- الوحدات التعليمية -->
+        <div class="section-title">الوحدات التعليمية</div>
 
-        <div class="domains-list">
+        <div class="units-list" id="unitsList">
 
-            <a href="field-1/index.html" class="domain-card domain-1">
-                <span class="icon-wrap">🖥️</span>
-                <div class="domain-body">
-                    <div class="domain-tag">المجال الأول</div>
-                    <div class="domain-title">بيئة التعامل مع الحاسوب</div>
-                    <div class="domain-sub">التعرّف على مكوّنات الحاسوب ونظام التشغيل وأساسيات الاستخدام</div>
+            <div class="unit-card">
+                <button class="unit-header" type="button">
+                    <span class="unit-num">1</span>
+                    <span class="unit-title">تقنية المعلومات</span>
+                    <span class="chevron">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
+                    </span>
+                </button>
+                <div class="unit-content">
+                    <div class="unit-content-inner">
+                        <div class="unit-content-label">الوسائل التعليمية</div>
+                        <a href="unit-1/mohtawa.html" class="unit-link lesson">
+                            <span class="link-icon">📄</span>
+                            <span class="link-label">محتوى الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-1/theo.html" class="unit-link theory">
+                            <span class="link-icon">📘</span>
+                            <span class="link-label">المذكرة النظرية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-1/tp.html" class="unit-link practical">
+                            <span class="link-icon">🧪</span>
+                            <span class="link-label">المذكرة التطبيقية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-1/presentation.pdf" class="unit-link slides">
+                            <span class="link-icon">🖥️</span>
+                            <span class="link-label">العرض التقديمي</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-1/quiz.html" class="unit-link quiz">
+                            <span class="link-icon">🎯</span>
+                            <span class="link-label">Quiz الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                    </div>
                 </div>
-                <span class="arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
-                </span>
-            </a>
+            </div>
 
-            <a href="field-2/index.html" class="domain-card domain-2">
-                <span class="icon-wrap">🗂️</span>
-                <div class="domain-body">
-                    <div class="domain-tag">المجال الثاني</div>
-                    <div class="domain-title">المكتبية</div>
-                    <div class="domain-sub">معالجة النصوص، الجداول الحسابية، والعروض التقديمية</div>
+            <div class="unit-card">
+                <button class="unit-header" type="button">
+                    <span class="unit-num">2</span>
+                    <span class="unit-title">تجميع الحاسوب</span>
+                    <span class="chevron">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
+                    </span>
+                </button>
+                <div class="unit-content">
+                    <div class="unit-content-inner">
+                        <div class="unit-content-label">الوسائل التعليمية</div>
+                        <a href="unit-2/mohtawa.html" class="unit-link lesson">
+                            <span class="link-icon">📄</span>
+                            <span class="link-label">محتوى الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-2/theo.html" class="unit-link theory">
+                            <span class="link-icon">📘</span>
+                            <span class="link-label">المذكرة النظرية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-2/tp.html" class="unit-link practical">
+                            <span class="link-icon">🧪</span>
+                            <span class="link-label">المذكرة التطبيقية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-2/presentation.pdf" class="unit-link slides">
+                            <span class="link-icon">🖥️</span>
+                            <span class="link-label">العرض التقديمي</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-2/quiz.html" class="unit-link quiz">
+                            <span class="link-icon">🎯</span>
+                            <span class="link-label">Quiz الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                    </div>
                 </div>
-                <span class="arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
-                </span>
-            </a>
+            </div>
 
-            <a href="field-3/index.html" class="domain-card domain-3">
-                <span class="icon-wrap">🌐</span>
-                <div class="domain-body">
-                    <div class="domain-tag">المجال الثالث</div>
-                    <div class="domain-title">تقنيات الويب</div>
-                    <div class="domain-sub">مبادئ الإنترنت وأساسيات تصميم صفحات الويب</div>
+            <div class="unit-card">
+                <button class="unit-header" type="button">
+                    <span class="unit-num">3</span>
+                    <span class="unit-title">نظام التشغيل</span>
+                    <span class="chevron">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
+                    </span>
+                </button>
+                <div class="unit-content">
+                    <div class="unit-content-inner">
+                        <div class="unit-content-label">الوسائل التعليمية</div>
+                        <a href="unit-3/mohtawa.html" class="unit-link lesson">
+                            <span class="link-icon">📄</span>
+                            <span class="link-label">محتوى الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-3/theo.html" class="unit-link theory">
+                            <span class="link-icon">📘</span>
+                            <span class="link-label">المذكرة النظرية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-3/tp.html" class="unit-link practical">
+                            <span class="link-icon">🧪</span>
+                            <span class="link-label">المذكرة التطبيقية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-3/presentation.pdf" class="unit-link slides">
+                            <span class="link-icon">🖥️</span>
+                            <span class="link-label">العرض التقديمي</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-3/quiz.html" class="unit-link quiz">
+                            <span class="link-icon">🎯</span>
+                            <span class="link-label">Quiz الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                    </div>
                 </div>
-                <span class="arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
-                </span>
-            </a>
+            </div>
+
+            <div class="unit-card">
+                <button class="unit-header" type="button">
+                    <span class="unit-num">4</span>
+                    <span class="unit-title">لوحة التحكم</span>
+                    <span class="chevron">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
+                    </span>
+                </button>
+                <div class="unit-content">
+                    <div class="unit-content-inner">
+                        <div class="unit-content-label">الوسائل التعليمية</div>
+                        <a href="unit-4/mohtawa.html" class="unit-link lesson">
+                            <span class="link-icon">📄</span>
+                            <span class="link-label">محتوى الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-4/theo.html" class="unit-link theory">
+                            <span class="link-icon">📘</span>
+                            <span class="link-label">المذكرة النظرية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-4/tp.html" class="unit-link practical">
+                            <span class="link-icon">🧪</span>
+                            <span class="link-label">المذكرة التطبيقية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-4/presentation.pdf" class="unit-link slides">
+                            <span class="link-icon">🖥️</span>
+                            <span class="link-label">العرض التقديمي</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-4/quiz.html" class="unit-link quiz">
+                            <span class="link-icon">🎯</span>
+                            <span class="link-label">Quiz الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unit-card">
+                <button class="unit-header" type="button">
+                    <span class="unit-num">5</span>
+                    <span class="unit-title">حماية الحاسوب</span>
+                    <span class="chevron">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
+                    </span>
+                </button>
+                <div class="unit-content">
+                    <div class="unit-content-inner">
+                        <div class="unit-content-label">الوسائل التعليمية</div>
+                        <a href="unit-5/lesson.html" class="unit-link lesson">
+                            <span class="link-icon">📄</span>
+                            <span class="link-label">محتوى الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-5/theo.html" class="unit-link theory">
+                            <span class="link-icon">📘</span>
+                            <span class="link-label">المذكرة النظرية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-5/tp.html" class="unit-link practical">
+                            <span class="link-icon">🧪</span>
+                            <span class="link-label">المذكرة التطبيقية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-5/presentation.pdf" class="unit-link slides">
+                            <span class="link-icon">🖥️</span>
+                            <span class="link-label">العرض التقديمي</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-5/quiz.html" class="unit-link quiz">
+                            <span class="link-icon">🎯</span>
+                            <span class="link-label">Quiz الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unit-card">
+                <button class="unit-header" type="button">
+                    <span class="unit-num">6</span>
+                    <span class="unit-title">الشبكة المحلية</span>
+                    <span class="chevron">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg>
+                    </span>
+                </button>
+                <div class="unit-content">
+                    <div class="unit-content-inner">
+                        <div class="unit-content-label">الوسائل التعليمية</div>
+                        <a href="unit-6/lesson.html" class="unit-link lesson">
+                            <span class="link-icon">📄</span>
+                            <span class="link-label">محتوى الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-6/theo.html" class="unit-link theory">
+                            <span class="link-icon">📘</span>
+                            <span class="link-label">المذكرة النظرية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-6/tp.html" class="unit-link practical">
+                            <span class="link-icon">🧪</span>
+                            <span class="link-label">المذكرة التطبيقية</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-6/presentation.pdf" class="unit-link slides">
+                            <span class="link-icon">🖥️</span>
+                            <span class="link-label">العرض التقديمي</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                        <a href="unit-6/quiz.html" class="unit-link quiz">
+                            <span class="link-icon">🎯</span>
+                            <span class="link-label">Quiz الدرس</span>
+                            <span class="link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -517,23 +637,29 @@
 
     </div>
 
-    <!-- شريط التنقل السفلي -->
-    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
-        <div class="nav-inner">
-            <a href="../index.html" class="nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
-                الرئيسية
-            </a>
-            <a href="../courses/index.html" class="nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>
-                الدورات
-            </a>
-            <a href="../articles/index.html" class="nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>
-                الوثائق الإدارية
-            </a>
-        </div>
-    </nav>
+    <script>
+        (function () {
+            var cards = document.querySelectorAll('.unit-card');
+
+            cards.forEach(function (card) {
+                var header = card.querySelector('.unit-header');
+                var content = card.querySelector('.unit-content');
+                var inner = card.querySelector('.unit-content-inner');
+
+                header.addEventListener('click', function () {
+                    var isOpen = card.classList.contains('open');
+
+                    if (isOpen) {
+                        card.classList.remove('open');
+                        content.style.maxHeight = null;
+                    } else {
+                        card.classList.add('open');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            });
+        })();
+    </script>
 
 </body>
 </html>
