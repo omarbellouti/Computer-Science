@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حماية الحاسوب</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050b1a;--cy:#22e4ff;--rd:#ff4d5e;--am:#ffc247;--gr:#3ddc97;--tx:#eaf6ff;--glass:rgba(12,24,52,.62)}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:'Janna LT','Janna LT Bold','Janna',Cairo,Tahoma,sans-serif;font-weight:700}
+#bg{position:fixed;inset:0;z-index:0}
+#deck{position:fixed;inset:0;z-index:1;perspective:1400px;padding-top:env(safe-area-inset-top,0px)}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw 12vh;opacity:0;pointer-events:none;transform:translateZ(-600px) rotateY(40deg);transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .7s;transform-style:preserve-3d}
+.slide.active{opacity:1;pointer-events:auto;transform:none}
+.slide.past{transform:translateZ(-600px) rotateY(-40deg)}
+h1{font-size:clamp(2.6rem,8vw,6rem);font-weight:800;line-height:1.1;color:var(--cy);text-shadow:0 0 30px rgba(34,228,255,.55)}
+h2{font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:800;color:var(--cy);margin-bottom:3vh;text-shadow:0 0 20px rgba(34,228,255,.4)}
+p,li{font-size:clamp(1.05rem,2.3vw,1.7rem);line-height:1.9}
+.panel{background:var(--glass);backdrop-filter:blur(10px);border:1px solid rgba(34,228,255,.28);border-radius:20px;padding:3vh 3vw;box-shadow:0 20px 60px rgba(0,0,0,.45);max-width:min(900px,100%)}
+.info{margin-top:4vh;display:grid;gap:1.2vh;font-size:clamp(1rem,2.2vw,1.5rem)}
+.info b{color:var(--am)}
+.title-wrap{max-width:62%}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2vw}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));max-width:900px}.grid.two .card{padding:5vh 2vw}.grid.two .card p{font-size:clamp(1rem,2vw,1.4rem)}.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:1.4vh}.chip{direction:ltr;font-family:Consolas,monospace;font-size:clamp(.8rem,1.5vw,1.05rem);padding:4px 14px;border-radius:999px;border:1px solid var(--rd);color:#ffd3d8;background:rgba(255,77,94,.12)}.card{background:var(--glass);border:1px solid rgba(34,228,255,.3);border-radius:18px;padding:2.5vh 1.5vw;text-align:center;transition:transform .5s,box-shadow .5s;transform:rotateX(0) rotateY(0)}
+.card:hover{transform:translateZ(40px) rotateX(6deg) rotateY(-8deg);box-shadow:0 0 35px rgba(34,228,255,.45)}
+.card .ic{font-size:clamp(2.2rem,5vw,3.6rem)}
+.card h3{color:var(--am);font-size:clamp(1.1rem,2.3vw,1.6rem);margin:1vh 0}
+.card p{font-size:clamp(.9rem,1.7vw,1.15rem);line-height:1.7}
+ul{list-style:none;display:grid;gap:1.4vh;padding:0}
+li{padding:1.2vh 1.5vw;background:var(--glass);border-right:5px solid var(--rd);border-radius:12px}
+ol{list-style:none;counter-reset:n;display:grid;gap:1.4vh;padding:0}
+ol li{counter-increment:n;border-right-color:var(--gr)}
+ol li::before{content:counter(n);display:inline-block;width:2em;height:2em;line-height:2em;text-align:center;background:var(--gr);color:#04121f;border-radius:50%;margin-left:.8em;font-weight:800}
+.hex{display:grid;grid-template-columns:1fr 1fr;gap:2vw;max-width:640px}
+.hex .card{font-size:clamp(1.2rem,3vw,2rem);font-weight:800;padding:5vh 1vw}
+.q{color:var(--am);font-weight:800}
+#ui{position:fixed;z-index:5;bottom:2.5vh;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:16px;padding-bottom:env(safe-area-inset-bottom,0px)}
+#ui button{width:48px;height:48px;border-radius:50%;border:1px solid var(--cy);background:var(--glass);color:var(--cy);font-size:22px;cursor:pointer;transition:.3s}
+#ui button:hover{background:var(--cy);color:#04121f;box-shadow:0 0 25px var(--cy)}
+#ui button:focus-visible{outline:3px solid var(--am)}
+#count{min-width:70px;text-align:center;color:var(--cy)}
+#home{position:fixed;z-index:7;top:calc(14px + env(safe-area-inset-top,0px));left:14px;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid var(--cy);background:var(--glass);backdrop-filter:blur(8px);color:var(--cy);text-decoration:none;font-size:clamp(.85rem,1.6vw,1.05rem);transition:.3s}#home:hover{background:var(--cy);color:#04121f;box-shadow:0 0 25px var(--cy)}#home:focus-visible{outline:3px solid var(--am)}@media(max-width:700px){#home span{display:none}#home{padding:10px 12px;font-size:1.2rem}}
+#bar{position:fixed;z-index:6;top:0;right:0;height:4px;background:linear-gradient(90deg,var(--rd),var(--cy));width:0;transition:width .6s}
+@media(max-width:700px){.title-wrap{max-width:100%}.slide{padding:5vh 6vw 14vh;overflow:auto}}
+@media(prefers-reduced-motion:reduce){.slide{transition:opacity .2s}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="bar"></div>
+<a id="home" href="https://omarbellouti.github.io/Computer-Science/1st-literary/field-1/index.html" aria-label="العودة إلى وحدات المجال الأول" title="العودة إلى وحدات المجال الأول">🏠 <span>وحدات المجال الأول</span></a>
+<div id="deck">
+
+<section class="slide">
+ <div class="title-wrap">
+  <p style="color:var(--rd);font-weight:600">🦠 الفيروسات والبرامج الضارة</p>
+  <h1>حماية الحاسوب</h1>
+  <div class="panel info">
+   <div><b>المجال التعلمي:</b> بيئة التعامل مع الحاسوب</div>
+   <div><b>الوحدة التعليمية:</b> حماية الحاسوب</div>
+   <div><b>الأستاذ:</b> بلوطي عمر</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide">
+ <h2>الإشكالية</h2>
+ <div class="panel">
+  <p>حمّلت لعبة من الإنترنت على جهازك الذي يحتوي معلومات مهمة، فصار الجهاز بطيئاً جداً واختفت بعض الملفات.</p>
+  <p class="q" style="margin-top:2vh">⚠️ في رأيك، ما السبب؟</p>
+ </div>
+</section>
+
+<section class="slide">
+ <h2>تعريف الفيروسات (les virus)</h2>
+ <div class="panel">
+  <p>هو برنامج ضار صُمّم للتكاثر والانتشار، ويرتبط غالبًا بملف أو برنامج آخر، وقد يسبب تلف الملفات أو تعطيل الحاسوب دون علم المستخدم.</p>
+ </div>
+</section>
+
+<section class="slide">
+ <h2>خصائص الفيروس</h2>
+ <div class="hex">
+  <div class="card" style="border-color:var(--am)">🌐 الانتشار</div>
+  <div class="card" style="border-color:var(--rd)">🫥 التخفي</div>
+  <div class="card" style="border-color:var(--cy)">⚙️ التنفيذ</div>
+  <div class="card" style="border-color:var(--gr)">🧬 التناسخ</div>
+ </div>
+</section>
+
+<section class="slide">
+ <h2>أنواع الفيروسات</h2>
+ <p style="margin:-2vh 0 2.5vh;color:var(--am)">نذكر منها ما يلي:</p>
+ <div class="grid ">
+  <div class="card"><div class="ic">📁</div><h3>فيروسات الملفات (File Infector Virus)</h3><p>تصيب الملفات والبرامج، وتنتشر عند تشغيل الملف المصاب.</p><div class="chips"><span class="chip">CIH</span><span class="chip">Jerusalem</span></div></div>
+  <div class="card"><div class="ic">💽</div><h3>فيروسات الإقلاع (Boot Sector Virus)</h3><p>تصيب منطقة الإقلاع، وقد تمنع الحاسوب من بدء التشغيل بشكل عادي.</p><div class="chips"><span class="chip">Brain</span><span class="chip">Michelangelo</span><span class="chip">Stoned</span></div></div>
+  <div class="card"><div class="ic">🐛</div><h3>الديدان (Worms)</h3><p>تنتشر تلقائياً عبر الشبكات والإنترنت من حاسوب إلى آخر.</p><div class="chips"><span class="chip">ILOVEYOU</span><span class="chip">MyDoom</span></div></div>
+ </div>
+</section>
+
+<section class="slide">
+ <h2>أنواع الفيروسات</h2>
+ <p style="margin:-2vh 0 2.5vh;color:var(--am)">نذكر منها ما يلي:</p>
+ <div class="grid two">
+  <div class="card"><div class="ic">🐴</div><h3>أحصنة طروادة (Trojan)</h3><p>برنامج يبدو عادياً لكنه يخفي وظيفة ضارة دون علم المستخدم.</p><div class="chips"><span class="chip">Zeus</span><span class="chip">DarkComet</span></div></div>
+  <div class="card"><div class="ic">🔒</div><h3>برمجيات الفدية (Ransomware)</h3><p>تقوم بتشفير الملفات أو منع الوصول إليها وتطلب فدية.</p><div class="chips"><span class="chip">WannaCry</span><span class="chip">CryptoLocker</span></div></div>
+ </div>
+</section>
+
+<section class="slide">
+ <h2>أعراض الإصابة بالفيروسات</h2>
+ <ul>
+  <li>تكرار رسائل الخطأ في أكثر من برنامج</li>
+  <li>ظهور رسالة تعذر الحفظ</li>
+  <li>بطء شديد في بدء التشغيل (إقلاع الجهاز)</li>
+  <li>اختفاء بعض الملفات ورفض بعض التطبيقات التنفيذ</li>
+  <li>تحويل الملفات والبرامج إلى اختصارات لا تفتح ولا تنفذ</li>
+ </ul>
+</section>
+
+<section class="slide">
+ <h2>طرق الوقاية من الفيروسات</h2>
+ <ol>
+  <li>تنصيب البرامج المضادة للفيروسات</li>
+  <li>تفعيل الجدار الناري</li>
+  <li>عدم فتح الملفات المرفقة مع البريد الإلكتروني إلا إذا كان المصدر موثوقا</li>
+  <li>عدم دخول المواقع التي يحذرنا منها متصفح الإنترنت</li>
+  <li>نسخ البيانات بشكل دوري على أقراص خارجية</li>
+ </ol>
+</section>
+
+</div>
+
+<div id="ui">
+ <button id="next" aria-label="التالي">❯</button>
+ <span id="count"></span>
+ <button id="prev" aria-label="السابق">❮</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let cur=0;
+function go(n){
+ cur=Math.max(0,Math.min(slides.length-1,n));
+ slides.forEach((s,i)=>{s.classList.toggle('active',i===cur);s.classList.toggle('past',i<cur)});
+ document.getElementById('count').textContent=(cur+1)+' / '+slides.length;
+ document.getElementById('bar').style.width=((cur+1)/slides.length*100)+'%';
+ target.set(cur===0?-2.6:(cur%2?3.4:-3.4),cur===0?0:-0.4,cur===0?0:-2);
+ tScale=cur===0?1.5:.8;
+}
+// RTL: التالي = يسار
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('prev').onclick=()=>go(cur-1);
+addEventListener('keydown',e=>{
+ if(['ArrowLeft','PageDown',' '].includes(e.key))go(cur+1);
+ if(['ArrowRight','PageUp'].includes(e.key))go(cur-1);
+});
+let sx=null;
+addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+addEventListener('touchend',e=>{if(sx===null)return;const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)go(cur+(d<0?1:-1));sx=null});
+
+// 3D scene
+const target=new THREE.Vector3(-2.6,0,0);let tScale=1.5,mx=0,my=0;
+const cv=document.getElementById('bg');
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));
+const S=new THREE.Scene();S.fog=new THREE.FogExp2(0x050b1a,.045);
+const C=new THREE.PerspectiveCamera(55,1,.1,100);C.position.z=9;
+S.add(new THREE.AmbientLight(0x4466aa,.9));
+const L1=new THREE.PointLight(0x22e4ff,2.2,40);L1.position.set(5,5,6);S.add(L1);
+const L2=new THREE.PointLight(0xff4d5e,1.6,40);L2.position.set(-6,-3,4);S.add(L2);
+
+function makeVirus(col,emis){
+ const g=new THREE.Group();
+ const m=new THREE.MeshStandardMaterial({color:col,emissive:emis,emissiveIntensity:.45,roughness:.35,metalness:.3});
+ g.add(new THREE.Mesh(new THREE.IcosahedronGeometry(1,3),m));
+ const pos=new THREE.IcosahedronGeometry(1,2).attributes.position;
+ const seen=new Set(),up=new THREE.Vector3(0,1,0);
+ for(let i=0;i<pos.count;i++){
+  const v=new THREE.Vector3().fromBufferAttribute(pos,i).normalize();
+  const k=v.toArray().map(x=>x.toFixed(2)).join();if(seen.has(k))continue;seen.add(k);
+  const sp=new THREE.Mesh(new THREE.CylinderGeometry(.03,.05,.5,6),m);
+  sp.position.copy(v).multiplyScalar(1.22);sp.quaternion.setFromUnitVectors(up,v);g.add(sp);
+  const t=new THREE.Mesh(new THREE.SphereGeometry(.09,10,10),m);
+  t.position.copy(v).multiplyScalar(1.5);g.add(t);
+ }
+ return g;
+}
+const main=makeVirus(0x1c6fff,0x0a3a99);S.add(main);
+// wireframe shield ring
+const ring=new THREE.Mesh(new THREE.IcosahedronGeometry(2.3,1),new THREE.MeshBasicMaterial({color:0x22e4ff,wireframe:true,transparent:true,opacity:.25}));
+main.add(ring);
+const minis=[];
+for(let i=0;i<9;i++){
+ const v=makeVirus(i%3?0x2a8cff:0xff4d5e,i%3?0x0a3a99:0x7a1020);
+ const s=.25+Math.random()*.3;v.scale.setScalar(s);
+ v.position.set((Math.random()-.5)*20,(Math.random()-.5)*10,-3-Math.random()*8);
+ v.userData={sp:.2+Math.random()*.6,ph:Math.random()*6};S.add(v);minis.push(v);
+}
+// particles
+const N=700,pa=new Float32Array(N*3);
+for(let i=0;i<N*3;i++)pa[i]=(Math.random()-.5)*40;
+const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pa,3));
+const pts=new THREE.Points(pg,new THREE.PointsMaterial({color:0x22e4ff,size:.05,transparent:true,opacity:.7}));S.add(pts);
+// grid floor
+const grid=new THREE.GridHelper(60,60,0x22e4ff,0x0d2a55);grid.position.y=-5;grid.material.transparent=true;grid.material.opacity=.35;S.add(grid);
+
+function resize(){const w=innerWidth,h=innerHeight;R.setSize(w,h);C.aspect=w/h;C.updateProjectionMatrix();}
+addEventListener('resize',resize);resize();
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+const clk=new THREE.Clock();
+(function loop(){
+ const t=clk.getElapsedTime();
+ const narrow=innerWidth<700;
+ const tg=narrow?new THREE.Vector3(0,2.2,-3):target;
+ main.position.lerp(tg,.04);
+ const sc=narrow?.8:tScale;
+ main.scale.setScalar(main.scale.x+(sc-main.scale.x)*.05);
+ main.rotation.y=t*.25;main.rotation.x=Math.sin(t*.3)*.25;
+ ring.rotation.y=-t*.4;
+ minis.forEach(m=>{m.rotation.y+=.004*m.userData.sp;m.rotation.x+=.003;m.position.y+=Math.sin(t*m.userData.sp+m.userData.ph)*.003});
+ pts.rotation.y=t*.01;
+ C.position.x+=(mx*1.5-C.position.x)*.03;C.position.y+=(-my*1-C.position.y)*.03;C.lookAt(0,0,0);
+ R.render(S,C);requestAnimationFrame(loop);
+})();
+go(0);
+</script>
+</body>
+</html>
