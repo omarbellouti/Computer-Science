@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الحاسوب ومكوناته</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050b1a;--cy:#22e4ff;--rd:#ff4d5e;--am:#ffc247;--gr:#3ddc97;--tx:#eaf6ff;--glass:rgba(12,24,52,.62)}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:'Janna LT','Janna LT Bold','Janna',Cairo,Tahoma,sans-serif;font-weight:700}
+#bg{position:fixed;inset:0;z-index:0}
+#deck{position:fixed;inset:0;z-index:1;perspective:1400px;padding-top:env(safe-area-inset-top,0px)}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw 12vh;opacity:0;pointer-events:none;transform:translateZ(-600px) rotateY(40deg);transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .7s;transform-style:preserve-3d}
+.slide.active{opacity:1;pointer-events:auto;transform:none}
+.slide.past{transform:translateZ(-600px) rotateY(-40deg)}
+h1{font-size:clamp(2.6rem,8vw,6rem);font-weight:800;line-height:1.1;color:var(--cy);text-shadow:0 0 30px rgba(34,228,255,.55)}
+h2{font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:800;color:var(--cy);margin-bottom:3vh;text-shadow:0 0 20px rgba(34,228,255,.4)}
+p,li{font-size:clamp(1.05rem,2.3vw,1.7rem);line-height:1.9}
+.panel{background:var(--glass);backdrop-filter:blur(10px);border:1px solid rgba(34,228,255,.28);border-radius:20px;padding:3vh 3vw;box-shadow:0 20px 60px rgba(0,0,0,.45);max-width:min(900px,100%)}
+.info{margin-top:4vh;display:grid;gap:1.2vh;font-size:clamp(1rem,2.2vw,1.5rem)}
+.info b{color:var(--am)}
+.title-wrap{max-width:62%}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2vw}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));max-width:900px}.grid.two .card{padding:5vh 2vw}.grid.two .card p{font-size:clamp(1rem,2vw,1.4rem)}.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:1.4vh}.chip{direction:ltr;font-family:Consolas,monospace;font-size:clamp(.8rem,1.5vw,1.05rem);padding:4px 14px;border-radius:999px;border:1px solid var(--rd);color:#ffd3d8;background:rgba(255,77,94,.12)}.card{background:var(--glass);border:1px solid rgba(34,228,255,.3);border-radius:18px;padding:2.5vh 1.5vw;text-align:center;transition:transform .5s,box-shadow .5s;transform:rotateX(0) rotateY(0)}
+.card:hover{transform:translateZ(40px) rotateX(6deg) rotateY(-8deg);box-shadow:0 0 35px rgba(34,228,255,.45)}
+.card .ic{font-size:clamp(2.2rem,5vw,3.6rem)}
+.card h3{color:var(--am);font-size:clamp(1.1rem,2.3vw,1.6rem);margin:1vh 0}
+.card p{font-size:clamp(.9rem,1.7vw,1.15rem);line-height:1.7}
+ul{list-style:none;display:grid;gap:1.4vh;padding:0}
+li{padding:1.2vh 1.5vw;background:var(--glass);border-right:5px solid var(--rd);border-radius:12px}
+ol{list-style:none;counter-reset:n;display:grid;gap:1.4vh;padding:0}
+ol li{counter-increment:n;border-right-color:var(--gr)}
+ol li::before{content:counter(n);display:inline-block;width:2em;height:2em;line-height:2em;text-align:center;background:var(--gr);color:#04121f;border-radius:50%;margin-left:.8em;font-weight:800}
+.hex{display:grid;grid-template-columns:1fr 1fr;gap:2vw;max-width:640px}
+.hex .card{font-size:clamp(1.2rem,3vw,2rem);font-weight:800;padding:5vh 1vw}
+.q{color:var(--am);font-weight:800}
+#ui{position:fixed;z-index:5;bottom:2.5vh;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:16px;padding-bottom:env(safe-area-inset-bottom,0px)}
+#ui button{width:48px;height:48px;border-radius:50%;border:1px solid var(--cy);background:var(--glass);color:var(--cy);font-size:22px;cursor:pointer;transition:.3s}
+#ui button:hover{background:var(--cy);color:#04121f;box-shadow:0 0 25px var(--cy)}
+#ui button:focus-visible{outline:3px solid var(--am)}
+#count{min-width:70px;text-align:center;color:var(--cy)}
+#home{position:fixed;z-index:7;top:calc(14px + env(safe-area-inset-top,0px));left:14px;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid var(--cy);background:var(--glass);backdrop-filter:blur(8px);color:var(--cy);text-decoration:none;font-size:clamp(.85rem,1.6vw,1.05rem);transition:.3s}#home:hover{background:var(--cy);color:#04121f;box-shadow:0 0 25px var(--cy)}#home:focus-visible{outline:3px solid var(--am)}@media(max-width:700px){#home span{display:none}#home{padding:10px 12px;font-size:1.2rem}}
+#bar{position:fixed;z-index:6;top:0;right:0;height:4px;background:linear-gradient(90deg,var(--rd),var(--cy));width:0;transition:width .6s}
+@media(max-width:700px){.title-wrap{max-width:100%}.slide{padding:5vh 6vw 14vh;overflow:auto}}
+@media(prefers-reduced-motion:reduce){.slide{transition:opacity .2s}}
+.wait{display:flex;align-items:center;gap:14px;margin-top:3vh;color:var(--am);font-size:clamp(1.1rem,2.4vw,1.7rem)}
+.dots i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--cy);margin:0 4px;animation:bn 1.2s infinite}
+.dots i:nth-child(2){animation-delay:.2s}.dots i:nth-child(3){animation-delay:.4s}
+@keyframes bn{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-14px);opacity:1}}
+.hand{font-size:2.4rem;display:inline-block;animation:wv 1.6s infinite ease-in-out}.hand:nth-child(2){animation-delay:.5s}
+@keyframes wv{50%{transform:rotate(-18deg) translateY(-8px)}}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:1.2vw;margin-top:3vh}
+.node{background:var(--glass);border:1px solid var(--cy);border-radius:16px;padding:1.6vh 1.6vw;text-align:center;font-size:clamp(1rem,2vw,1.5rem)}
+.arr{color:var(--cy);font-size:clamp(1.4rem,3vw,2.2rem)}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.85)}}
+.slide.active .node,.slide.active .card,.slide.active .arr{animation:pop .6s backwards;animation-delay:calc(var(--i,0)*.13s)}
+.sm .card{padding:1.6vh .8vw}.sm .card .ic{font-size:clamp(1.6rem,3vw,2.2rem)}.sm .card h3{font-size:clamp(.95rem,1.8vw,1.25rem);margin:.4vh 0}.sm .card p{font-size:clamp(.8rem,1.4vw,1rem);line-height:1.5}
+.sm{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.lg{direction:ltr;font-size:.8em;color:#9fd8e8;font-weight:400}
+.tbl{border-collapse:separate;border-spacing:0 8px;width:min(720px,100%);font-size:clamp(1rem,2.2vw,1.6rem)}
+.tbl td{background:var(--glass);padding:1.2vh 1.5vw;text-align:center}.tbl tr:first-child td{background:var(--cy);color:#04121f}
+.tbl td:first-child{border-radius:0 12px 12px 0;color:var(--am)}.tbl td:last-child{border-radius:12px 0 0 12px}
+.tbl tr:first-child td:first-child{color:#04121f}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="bar"></div>
+<a id="home" href="https://omarbellouti.github.io/Computer-Science/1st-literary/field-1/index.html" aria-label="العودة إلى وحدات المجال الأول" title="العودة إلى وحدات المجال الأول">🏠 <span>وحدات المجال الأول</span></a>
+<div id="deck">
+
+<section class="slide">
+ <div class="title-wrap">
+  <p style="color:var(--am);font-weight:600">💻 التعرف على الحاسوب</p>
+  <h1>الحاسوب ومكوناته</h1>
+  <div class="panel info">
+   <div><b>المجال التعلمي:</b> بيئة التعامل مع الحاسوب</div>
+   <div><b>الوحدة التعليمية:</b> الحاسوب ومكوناته</div>
+   <div><b>الأستاذ:</b> بلوطي عمر</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide">
+ <h2>الإشكالية</h2>
+<div class="panel"><p>تعلمنا في الدرس السابق ما هي <b style="color:var(--am)">البيانات</b> وما هي <b style="color:var(--am)">المعلومات</b> والفرق بينهما.</p>
+  <p>في نهاية الفصل، لديك علامات تلميذ في كل المواد (بيانات)، وتريد معرفة معدله وترتيبه (معلومات) بسرعة ودون خطأ.</p>
+  <p class="q" style="margin-top:2vh">⚠️ ما هو الجهاز الذي يحوّل البيانات إلى معلومات؟ وكيف يعمل؟</p></div>
+</section>
+
+<section class="slide">
+ <h2>تعريف الحاسوب</h2>
+<div class="panel"><p>هو جهاز يسمح باستقبال المعلومات وتخزينها ومعالجتها وإخراج النتائج.</p></div>
+ <div class="flow"><div class="node" style="--i:0">📥 معطيات</div><span class="arr" style="--i:1">←</span><div class="node" style="--i:2">⌨️ إدخال</div><span class="arr" style="--i:3">←</span><div class="node" style="--i:4">⚙️ تخزين / معالجة</div><span class="arr" style="--i:5">←</span><div class="node" style="--i:6">🖥️ إخراج</div><span class="arr" style="--i:7">←</span><div class="node" style="--i:8">✅ نتائج</div></div>
+</section>
+
+<section class="slide">
+ <h2>سؤال</h2>
+<div class="panel"><p class="q">🤔 في رأيك، مما يتكوّن الحاسوب؟ ما هي الأجزاء التي يتألف منها؟</p><div class="wait"><span class="hand">🙋</span><span class="hand">🙋‍♂️</span><span>نستمع لإجاباتكم</span><span class="dots"><i></i><i></i><i></i></span></div></div>
+</section>
+
+<section class="slide">
+ <h2>مكونات الحاسوب</h2>
+<div class="grid two"><div class="card" style="--i:0"><div class="ic">🔧</div><h3>المكونات المادية (Hardware)</h3><p>كل ما يمكن رؤيته ولمسه من أجهزة وقطع.</p></div><div class="card" style="--i:1"><div class="ic">💿</div><h3>المكونات البرمجية (Software)</h3><p>البرامج ونظام التشغيل التي تشغّل الجهاز وتوجّهه.</p></div></div>
+</section>
+
+<section class="slide">
+ <h2>المكونات المادية</h2>
+<div class="grid"><div class="card" style="--i:0"><div class="ic">⌨️</div><h3>وحدات الإدخال</h3><p>لإدخال البيانات إلى الحاسوب.</p></div><div class="card" style="--i:1"><div class="ic">🖥️</div><h3>وحدات الإخراج</h3><p>لإخراج النتائج من الحاسوب.</p></div><div class="card" style="--i:2"><div class="ic">🧠</div><h3>الوحدة المركزية (المعالجة)</h3><p>تخزين البيانات ومعالجتها.</p></div></div>
+</section>
+
+<section class="slide">
+ <h2>وحدات الإدخال</h2>
+ <p style="margin:-2vh 0 2.5vh;color:var(--am)">تُستخدم لإدخال البيانات إلى جهاز الحاسوب</p>
+<div class="grid sm"><div class="card" style="--i:0"><div class="ic">⌨️</div><h3>لوحة المفاتيح</h3><p>لإدخال النصوص والأرقام والرموز.</p><div class="lg">Clavier · Keyboard</div></div><div class="card" style="--i:1"><div class="ic">🖱️</div><h3>الفأرة</h3><p>للتأشير على الواجهة.</p><div class="lg">Souris · Mouse</div></div><div class="card" style="--i:2"><div class="ic">📠</div><h3>الماسح الضوئي</h3><p>لإدخال الصور والنصوص، مكتبي أو يدوي.</p><div class="lg">Scanneur · Scanner</div></div><div class="card" style="--i:3"><div class="ic">📷</div><h3>كاميرا رقمية</h3><p>التقاط الصور والفيديوهات وحفظها بذاكرتها.</p><div class="lg">Caméra numérique · Digital Camera</div></div><div class="card" style="--i:4"><div class="ic">🎥</div><h3>كاميرا ويب</h3><p>للتحدث بين فردين على الإنترنت.</p><div class="lg">Webcam · Webcam</div></div><div class="card" style="--i:5"><div class="ic">👆</div><h3>شاشة لمسية</h3><p>في الصراف الآلي بالبنوك لإدخال بيانات الأشخاص.</p><div class="lg">Écran tactile · Touch Screen</div></div><div class="card" style="--i:6"><div class="ic">🖊️</div><h3>القلم الضوئي</h3><p>بديل عن الإصبع في شاشة اللمس.</p><div class="lg">Crayon optique · Light Pen</div></div><div class="card" style="--i:7"><div class="ic">⬛</div><h3>اللوحة اللمسية</h3><p>بديل عن الفأرة.</p><div class="lg">Panneau tactile · Touchpad</div></div></div>
+</section>
+
+<section class="slide">
+ <h2>وحدات الإخراج</h2>
+ <p style="margin:-2vh 0 2.5vh;color:var(--am)">تُستخدم لإخراج النتائج من جهاز الحاسوب</p>
+<div class="grid"><div class="card" style="--i:0"><div class="ic">🖥️</div><h3>الشاشة</h3><p>وحدة إخراج الصور والنصوص والفيديوهات.</p><div class="lg">Écran · Screen / Monitor</div></div><div class="card" style="--i:1"><div class="ic">🔊</div><h3>مكبر الصوت</h3><p>بواسطتها تُسمَع الملفات الصوتية.</p><div class="lg">Haut-parleur · Speaker</div></div><div class="card" style="--i:2"><div class="ic">🖨️</div><h3>الطابعة</h3><p>وحدة إخراج الصور والنصوص.</p><div class="lg">Imprimante · Printer</div></div></div>
+</section>
+
+<section class="slide">
+ <h2>الوحدة المركزية</h2>
+ <p style="margin:-2vh 0 2.5vh;color:var(--am)">تتكوّن من:</p>
+<div class="grid sm"><div class="card" style="--i:0"><div class="ic">🔌</div><h3>علبة التغذية</h3><p>تمد مكونات الوحدة المركزية بالتيار الكهربائي وتحوّله.</p><div class="lg">Boîte d'alimentation · Power Supply Unit</div></div><div class="card" style="--i:1"><div class="ic">🟩</div><h3>البطاقة الأم</h3><p>وحدة تتصل بها جميع مكونات الكمبيوتر.</p><div class="lg">Carte mère · Motherboard</div></div><div class="card" style="--i:2"><div class="ic">🧠</div><h3>المعالج</h3><p>عقل الكمبيوتر، تُقاس سرعته بـ GHz وMHz.</p><div class="lg">Processeur · Processor / CPU</div></div><div class="card" style="--i:3"><div class="ic">🧩</div><h3>البطاقات الداخلية</h3><p>تزيد من كفاءة الجهاز: البطاقة البيانية، بطاقة الصوت، بطاقة الشبكة.</p></div></div>
+</section>
+
+<section class="slide">
+ <h2>سؤال</h2>
+<div class="panel"><p class="q">🤔 ما هي العلاقة بين <b>الذاكرة الحية (RAM)</b> و<b>القرص الصلب</b> و<b>المعالج</b>؟</p>
+ <div class="flow"><div class="node">💽 القرص الصلب</div><span class="arr">⇄</span><div class="node">🧮 الذاكرة الحية</div><span class="arr">⇄</span><div class="node">🧠 المعالج</div></div><div class="wait"><span class="hand">🙋</span><span class="hand">🙋‍♂️</span><span>نستمع لإجاباتكم</span><span class="dots"><i></i><i></i><i></i></span></div></div>
+</section>
+
+<section class="slide">
+ <h2>الذاكرات ووسائط التخزين</h2>
+<div class="grid sm"><div class="card" style="--i:0"><div class="ic">💽</div><h3>القرص الصلب</h3><p>وحدة التخزين الأساسية في الحاسوب.</p><div class="lg">Disque Dur · Hard Disk</div></div><div class="card" style="--i:1"><div class="ic">📀</div><h3>القرص المضغوط</h3><p>وسيط تخزين.</p><div class="lg">Cd-Rom · Cd-Rom</div></div><div class="card" style="--i:2"><div class="ic">🔌</div><h3>ذاكرة الفلاش</h3><p>وسيط تخزين متنقل.</p><div class="lg">Flash Disque · Flash Disk</div></div><div class="card" style="--i:3"><div class="ic">💳</div><h3>بطاقة الذاكرة</h3><p>وسيط تخزين للكاميرات والهواتف.</p><div class="lg">Carte mémoire · Memory Card</div></div></div>
+</section>
+
+<section class="slide">
+ <h2>الذاكرة المركزية</h2>
+ <p style="margin:-2vh 0 2.5vh;color:var(--am)"><div class="lg">Mémoire centrale · Central Memory</div></p>
+<div class="grid two"><div class="card" style="--i:0"><div class="ic">⚡</div><h3>الذاكرة الحية (RAM)</h3><p>للقراءة والكتابة، تُخزَّن فيها المعلومات أثناء المعالجة، ويُمحى محتواها بمجرد انقطاع التيار الكهربائي.</p></div><div class="card" style="--i:1"><div class="ic">🔒</div><h3>الذاكرة الميتة (ROM)</h3><p>للقراءة فقط، تحتوي معلومات ضرورية لتشغيل الكمبيوتر والتعرّف على الأجهزة، لا يتغير محتواها ولا يُمحى عند انقطاع التيار.</p></div></div>
+</section>
+
+<section class="slide">
+ <h2>وحدة قياس الذاكرة</h2>
+<div class="panel" style="margin-bottom:2vh"><p>تتكوّن الذاكرات من خلايا، كل خلية تمثّل <b style="color:var(--am)">1 bit</b> وهو أصغر وحدة قياس، بقيمتين: 0 أو 1. وكل <b style="color:var(--am)">8 bits = 1 أوكتي (1 بايت)</b>، وهي مساحة كافية لتخزين حرف أو رقم أو رمز واحد.</p></div>
+ <table class="tbl"><tr><td>الوحدة</td><td>المعادلة</td></tr><tr><td>1 Byte</td><td>1 o = 8 bit</td></tr><tr><td>1 KB</td><td>1024 B = 2¹⁰ B</td></tr><tr><td>1 MB</td><td>1024 KB = 2²⁰ B</td></tr><tr><td>1 GB (Go)</td><td>1024 MB = 2³⁰ B</td></tr><tr><td>1 TB</td><td>1024 GB = 2⁴⁰ B</td></tr></table>
+</section>
+
+</div>
+
+<div id="ui">
+ <button id="next" aria-label="التالي">❯</button>
+ <span id="count"></span>
+ <button id="prev" aria-label="السابق">❮</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let cur=0;
+function go(n){
+ cur=Math.max(0,Math.min(slides.length-1,n));
+ slides.forEach((s,i)=>{s.classList.toggle('active',i===cur);s.classList.toggle('past',i<cur)});
+ document.getElementById('count').textContent=(cur+1)+' / '+slides.length;
+ document.getElementById('bar').style.width=((cur+1)/slides.length*100)+'%';
+ target.set(cur===0?-2.6:(cur%2?3.4:-3.4),cur===0?0:-0.4,cur===0?0:-2);
+ tScale=cur===0?1.5:.8;
+}
+// RTL: التالي = يسار
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('prev').onclick=()=>go(cur-1);
+addEventListener('keydown',e=>{
+ if(['ArrowLeft','PageDown',' '].includes(e.key))go(cur+1);
+ if(['ArrowRight','PageUp'].includes(e.key))go(cur-1);
+});
+let sx=null;
+addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+addEventListener('touchend',e=>{if(sx===null)return;const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)go(cur+(d<0?1:-1));sx=null});
+
+// 3D scene
+const target=new THREE.Vector3(-2.6,0,0);let tScale=1.5,mx=0,my=0;
+const cv=document.getElementById('bg');
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));
+const S=new THREE.Scene();S.fog=new THREE.FogExp2(0x050b1a,.045);
+const C=new THREE.PerspectiveCamera(55,1,.1,100);C.position.z=9;
+S.add(new THREE.AmbientLight(0x4466aa,.9));
+const L1=new THREE.PointLight(0x22e4ff,2.2,40);L1.position.set(5,5,6);S.add(L1);
+const L2=new THREE.PointLight(0xff4d5e,1.6,40);L2.position.set(-6,-3,4);S.add(L2);
+
+function makeVirus(col,emis){
+ const g=new THREE.Group();
+ const m=new THREE.MeshStandardMaterial({color:col,emissive:emis,emissiveIntensity:.5,roughness:.35,metalness:.5});
+ g.add(new THREE.Mesh(new THREE.BoxGeometry(1.6,1.6,.3),m));
+ g.add(new THREE.Mesh(new THREE.BoxGeometry(.9,.9,.34),new THREE.MeshStandardMaterial({color:0x22e4ff,emissive:0x22e4ff,emissiveIntensity:.8})));
+ for(let i=0;i<8;i++){const o=-.7+i*.2;
+  [[o,.95,.08,.3],[o,-.95,.08,.3],[.95,o,.3,.08],[-.95,o,.3,.08]].forEach(p=>{const pin=new THREE.Mesh(new THREE.BoxGeometry(p[2],p[3],.05),m);pin.position.set(p[0],p[1],0);g.add(pin)});}
+ return g;}
+const main=makeVirus(0x1c6fff,0x0a3a99);S.add(main);
+// wireframe shield ring
+const ring=new THREE.Mesh(new THREE.IcosahedronGeometry(2.3,1),new THREE.MeshBasicMaterial({color:0x22e4ff,wireframe:true,transparent:true,opacity:.25}));
+main.add(ring);
+const minis=[];
+for(let i=0;i<9;i++){
+ const v=makeVirus(i%3?0x2a8cff:0xff4d5e,i%3?0x0a3a99:0x7a1020);
+ const s=.25+Math.random()*.3;v.scale.setScalar(s);
+ v.position.set((Math.random()-.5)*20,(Math.random()-.5)*10,-3-Math.random()*8);
+ v.userData={sp:.2+Math.random()*.6,ph:Math.random()*6};S.add(v);minis.push(v);
+}
+// particles
+const N=700,pa=new Float32Array(N*3);
+for(let i=0;i<N*3;i++)pa[i]=(Math.random()-.5)*40;
+const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pa,3));
+const pts=new THREE.Points(pg,new THREE.PointsMaterial({color:0x22e4ff,size:.05,transparent:true,opacity:.7}));S.add(pts);
+// grid floor
+const grid=new THREE.GridHelper(60,60,0x22e4ff,0x0d2a55);grid.position.y=-5;grid.material.transparent=true;grid.material.opacity=.35;S.add(grid);
+
+function resize(){const w=innerWidth,h=innerHeight;R.setSize(w,h);C.aspect=w/h;C.updateProjectionMatrix();}
+addEventListener('resize',resize);resize();
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+const clk=new THREE.Clock();
+(function loop(){
+ const t=clk.getElapsedTime();
+ const narrow=innerWidth<700;
+ const tg=narrow?new THREE.Vector3(0,2.2,-3):target;
+ main.position.lerp(tg,.04);
+ const sc=narrow?.8:tScale;
+ main.scale.setScalar(main.scale.x+(sc-main.scale.x)*.05);
+ main.rotation.y=t*.25;main.rotation.x=Math.sin(t*.3)*.25;
+ ring.rotation.y=-t*.4;
+ minis.forEach(m=>{m.rotation.y+=.004*m.userData.sp;m.rotation.x+=.003;m.position.y+=Math.sin(t*m.userData.sp+m.userData.ph)*.003});
+ pts.rotation.y=t*.01;
+ C.position.x+=(mx*1.5-C.position.x)*.03;C.position.y+=(-my*1-C.position.y)*.03;C.lookAt(0,0,0);
+ R.render(S,C);requestAnimationFrame(loop);
+})();
+go(0);
+</script>
+</body>
+</html>
