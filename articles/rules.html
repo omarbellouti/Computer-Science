@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>القانون الداخلي لمخبر الإعلام الآلي | الأستاذ بلوطي عمر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9edf4;--card:#fff;--soft:#f5f7fb;--blue:#2563eb;--text:#1c2534;--muted:#6b7686;--line:#e3e8f0;--c1:#4f46e5;--c2:#818cf8;--ok:#059669;--bad:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:600}
+html{scroll-behavior:smooth}
+body{background-color:var(--bg);background-image:radial-gradient(circle at 15% 10%,rgba(79,70,229,.08),transparent 40%),radial-gradient(circle at 90% 75%,rgba(56,189,248,.10),transparent 40%),linear-gradient(rgba(28,37,52,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(28,37,52,.035) 1px,transparent 1px);background-size:100% 100%,100% 100%,30px 30px,30px 30px;color:var(--text);overflow-x:hidden;min-height:100vh;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+
+.bg3d{position:fixed;inset:0;z-index:0;pointer-events:none;perspective:900px;overflow:hidden}
+.bc{position:absolute;width:var(--s);height:var(--s);animation:fl var(--d) ease-in-out infinite}
+.bc i{display:block;width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:spin var(--r) linear infinite}
+.bc b{position:absolute;inset:0;border:1.5px solid rgba(79,70,229,.2);background:rgba(129,140,248,.05)}
+.bc b:nth-child(1){transform:translateZ(calc(var(--s)/2))}.bc b:nth-child(2){transform:translateZ(calc(var(--s)/-2)) rotateY(180deg)}
+.bc b:nth-child(3){transform:rotateY(90deg) translateZ(calc(var(--s)/2))}.bc b:nth-child(4){transform:rotateY(-90deg) translateZ(calc(var(--s)/2))}
+.bc b:nth-child(5){transform:rotateX(90deg) translateZ(calc(var(--s)/2))}.bc b:nth-child(6){transform:rotateX(-90deg) translateZ(calc(var(--s)/2))}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-28px)}}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(360deg)}}
+
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:20px 16px 0}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:16px;transition:.2s}
+.back:hover{color:var(--blue);transform:translateX(3px)}.back svg{width:16px;height:16px}
+
+.cover{background:linear-gradient(135deg,var(--c1),var(--c2));border-radius:28px;color:#fff;padding:30px 24px 28px;position:relative;overflow:hidden;box-shadow:0 20px 44px rgba(79,70,229,.3);text-align:center;opacity:0;transform:translateY(20px) scale(.97);animation:rise .8s cubic-bezier(.2,.9,.3,1) forwards;margin-bottom:26px;transition:transform .2s}
+.cover::before,.cover::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12)}
+.cover::before{width:220px;height:220px;top:-90px;inset-inline-end:-80px}
+.cover::after{width:160px;height:160px;bottom:-70px;inset-inline-start:-50px}
+@keyframes rise{to{opacity:1;transform:none}}
+.gov{position:relative;z-index:2;line-height:2;font-size:13px;opacity:.95}
+.gov .r{font-size:14px;font-weight:800}.gov .s{font-size:15px;font-weight:800;margin-top:4px}
+.scene{position:relative;z-index:2;height:170px;margin:14px auto 6px;perspective:700px;display:flex;align-items:center;justify-content:center}
+.stage{width:90px;height:90px;position:relative;transform-style:preserve-3d;animation:cs 16s linear infinite}
+.face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:38px;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.55);box-shadow:inset 0 0 24px rgba(255,255,255,.18);border-radius:10px}
+.face:nth-child(1){transform:translateZ(45px)}.face:nth-child(2){transform:translateZ(-45px) rotateY(180deg)}
+.face:nth-child(3){transform:rotateY(90deg) translateZ(45px)}.face:nth-child(4){transform:rotateY(-90deg) translateZ(45px)}
+.face:nth-child(5){transform:rotateX(90deg) translateZ(45px)}.face:nth-child(6){transform:rotateX(-90deg) translateZ(45px)}
+@keyframes cs{from{transform:rotateX(-20deg) rotateY(0)}to{transform:rotateX(-20deg) rotateY(360deg)}}
+.ring{position:absolute;width:170px;height:170px;border-radius:50%;border:1.5px dashed rgba(255,255,255,.4);transform:rotateX(75deg);animation:rg 9s linear infinite}
+@keyframes rg{to{transform:rotateX(75deg) rotateZ(360deg)}}
+.shadow{position:absolute;bottom:2px;width:100px;height:14px;border-radius:50%;background:rgba(0,0,0,.25);filter:blur(7px);animation:sh 4s ease-in-out infinite}
+@keyframes sh{50%{transform:scale(.7);opacity:.5}}
+.cover h1{position:relative;z-index:2;font-size:clamp(21px,5vw,30px);font-weight:900;line-height:1.6;margin-top:4px}
+.tag{position:relative;z-index:2;display:inline-block;background:rgba(255,255,255,.2);padding:4px 16px;border-radius:50px;font-size:12px;font-weight:700;margin-top:6px}
+.meta{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:18px}
+.chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:16px;padding:10px 20px;font-size:13px;transition:transform .3s}
+.chip:hover{transform:translateY(-4px)}
+.chip small{display:block;opacity:.85;font-size:11px}.chip strong{font-size:15px;font-weight:800}
+
+.tools{display:flex;gap:10px;margin-bottom:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;font-size:12.5px;font-weight:800;padding:10px 18px;border-radius:12px;box-shadow:0 6px 14px rgba(79,70,229,.25);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(79,70,229,.35)}.btn:active{transform:scale(.96)}
+
+.section-title{display:flex;align-items:center;gap:10px;margin:0 2px 16px;font-size:15px;font-weight:800}
+.section-title .ti{width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 6px 14px rgba(79,70,229,.28)}
+.section-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(79,70,229,.22),transparent)}
+
+.rules{display:flex;flex-direction:column;gap:14px;margin-bottom:26px;perspective:1000px}
+.rule{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 18px;box-shadow:0 10px 24px rgba(28,37,52,.07);position:relative;overflow:hidden;opacity:0;transform:translateY(26px) scale(.96);transition:opacity .6s cubic-bezier(.2,.9,.3,1),transform .6s cubic-bezier(.2,.9,.3,1),box-shadow .3s,border-color .3s;will-change:transform}
+.rule.in{opacity:1;transform:none}
+.rule.tilting{transition:opacity .6s,transform .1s ease-out,box-shadow .3s}
+.rule:hover{box-shadow:0 18px 36px rgba(28,37,52,.14);border-color:rgba(79,70,229,.25)}
+.rule::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:4px;background:linear-gradient(180deg,var(--c1),var(--c2));opacity:.35;transition:opacity .3s}
+.rule:hover::before{opacity:1}
+.num{flex-shrink:0;position:relative;width:50px;height:50px;border-radius:15px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;box-shadow:0 8px 16px rgba(79,70,229,.3);animation:ib 3.6s ease-in-out infinite}
+.rule.no .num{background:linear-gradient(135deg,#dc2626,#f87171);box-shadow:0 8px 16px rgba(220,38,38,.3)}
+@keyframes ib{50%{transform:translateY(-3px) rotate(-4deg)}}
+.rb{flex:1;min-width:0}
+.rt{font-size:14px;line-height:1.95;font-weight:700}
+.ri{flex-shrink:0;font-size:26px;opacity:.9}
+
+.quote{position:relative;text-align:center;background:linear-gradient(135deg,rgba(79,70,229,.08),rgba(56,189,248,.1));border:1px dashed rgba(79,70,229,.35);border-radius:20px;padding:20px 22px;font-size:14px;font-weight:800;line-height:2;color:var(--c1);margin-bottom:18px;opacity:0;transform:translateY(20px);transition:.7s cubic-bezier(.2,.9,.3,1)}
+.quote.in{opacity:1;transform:none}
+.quote::before{content:"❝";position:absolute;top:2px;inset-inline-start:14px;font-size:30px;opacity:.25}
+.warn{display:flex;gap:14px;align-items:center;background:rgba(220,38,38,.07);border:1px solid rgba(220,38,38,.25);border-radius:20px;padding:16px 18px;color:#991b1b;font-size:13.5px;font-weight:800;line-height:1.95;margin-bottom:26px;opacity:0;transform:translateY(20px);transition:.7s cubic-bezier(.2,.9,.3,1)}
+.warn.in{opacity:1;transform:none}
+.warn .wi{flex-shrink:0;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#dc2626,#f87171);display:flex;align-items:center;justify-content:center;font-size:22px;animation:pw 2s ease-in-out infinite}
+@keyframes pw{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.4)}50%{box-shadow:0 0 0 10px rgba(220,38,38,0)}}
+.sign{display:flex;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 24px 22px;font-size:13px;font-weight:800;box-shadow:0 10px 24px rgba(28,37,52,.07);margin-bottom:20px;opacity:0;transition:.7s}
+.sign.in{opacity:1}
+.sign div{flex:1;text-align:center}.sign small{display:block;color:var(--muted);margin-top:46px;font-weight:600}
+.foot{text-align:center;font-size:13px;color:var(--muted);margin-top:8px}.foot span{font-family:monospace;color:var(--blue)}
+
+@media print{
+  @page{size:A4 portrait;margin:10mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;padding:0}
+  .bg3d,.tools,.back,.foot{display:none}
+  .wrap{max-width:none;padding:0}
+  .cover,.rule,.quote,.warn,.sign{opacity:1!important;transform:none!important;animation:none!important;box-shadow:none;break-inside:avoid}
+  .cover{margin-bottom:14px;padding:18px}.scene{height:120px;margin:4px auto 0}.stage{width:60px;height:60px}.ring{width:120px;height:120px}.face{font-size:26px}
+  .face:nth-child(1){transform:translateZ(30px)}.face:nth-child(2){transform:translateZ(-30px) rotateY(180deg)}.face:nth-child(3){transform:rotateY(90deg) translateZ(30px)}.face:nth-child(4){transform:rotateY(-90deg) translateZ(30px)}.face:nth-child(5){transform:rotateX(90deg) translateZ(30px)}.face:nth-child(6){transform:rotateX(-90deg) translateZ(30px)}
+  .stage,.ring,.shadow,.num,.wi{animation:none}
+  .rules{gap:7px;margin-bottom:12px}.rule{padding:8px 14px;border-radius:14px}.num{width:38px;height:38px;font-size:16px}.rt{font-size:11.5px;line-height:1.7}.ri{font-size:20px}
+  .quote,.warn{padding:10px 16px;font-size:11.5px;margin-bottom:10px;line-height:1.8}.sign{padding:10px 20px 12px}.sign small{margin-top:26px}
+  .section-title{margin-bottom:8px}
+}
+@media(prefers-reduced-motion:reduce){.bc,.bc i,.stage,.ring,.shadow,.num,.wi{animation:none!important}.cover,.rule,.quote,.warn,.sign{opacity:1!important;transform:none!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bg3d" aria-hidden="true">
+  <div class="bc" style="--s:46px;--d:7s;--r:18s;top:14%;left:6%"><i><b></b><b></b><b></b><b></b><b></b><b></b></i></div>
+  <div class="bc" style="--s:30px;--d:9s;--r:12s;top:40%;right:7%"><i><b></b><b></b><b></b><b></b><b></b><b></b></i></div>
+  <div class="bc" style="--s:58px;--d:8s;--r:24s;top:70%;left:10%"><i><b></b><b></b><b></b><b></b><b></b><b></b></i></div>
+  <div class="bc" style="--s:36px;--d:6s;--r:15s;top:84%;right:15%"><i><b></b><b></b><b></b><b></b><b></b><b></b></i></div>
+</div>
+
+<div class="wrap">
+  <a href="index.html" class="back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+    الرجوع إلى الوثائق الإدارية
+  </a>
+
+  <header class="cover" id="cover">
+    <div class="gov">
+      <div class="r">الجمهورية الجزائرية الديمقراطية الشعبية</div>
+      <div>وزارة التربية الوطنية</div>
+      <div>مديرية التربية لولاية سطيف</div>
+      <div class="s">ثانوية العربي بليليطة — عين ولمان</div>
+    </div>
+    <div class="scene">
+      <div class="ring"></div>
+      <div class="stage">
+        <div class="face">⚖️</div><div class="face">💻</div><div class="face">🛡️</div>
+        <div class="face">📜</div><div class="face">🖥️</div><div class="face">✅</div>
+      </div>
+      <div class="shadow"></div>
+    </div>
+    <h1>القانون الداخلي لمخبر الإعلام الآلي</h1>
+    <span class="tag">قواعد وآداب استعمال المخبر</span>
+    <div class="meta">
+      <div class="chip"><small>أستاذ المادة</small><strong>بلوطي عمر</strong></div>
+      <div class="chip"><small>السنة الدراسية</small><strong>2026 / 2027</strong></div>
+    </div>
+  </header>
+
+  <div class="tools"><button class="btn" onclick="window.print()">🖨️ طباعة القانون</button></div>
+
+  <div class="section-title"><span class="ti">📜</span>بنود القانون الداخلي</div>
+  <div class="rules" id="rules"></div>
+
+  <div class="quote">إن نظافة المخبر تعكس مدى تحلّينا بقيمنا الإسلامية والحضارية، وتُشعر ضيوفنا بالرضى والإعجاب.</div>
+
+  <div class="warn">
+    <span class="wi">⚠️</span>
+    <div><span style="font-weight:900">ملاحظة:</span> الإخلال بهذه التعليمات يُعرِّض صاحبه إلى عقوبات صارمة، تصل إلى حدّ المثول أمام المجلس التأديبي.</div>
+  </div>
+
+  <div class="sign"><div>أستاذ المادة<small>بلوطي عمر</small></div><div>اطّلع عليه التلميذ<small>الاسم والإمضاء</small></div></div>
+
+  <div class="foot"><span>&lt;/&gt;</span> الموسم الدراسي 2026/2027 · الأستاذ بلوطي عمر</div>
+</div>
+
+<script>
+(function(){
+  var R=[
+    ['🤫','التزام الهدوء والتحلّي بالحذر طيلة الوجود بالمخبر لما يحتويه من أجهزة حساسة.'],
+    ['📍','استعمل الحاسوب المسند إليك فقط حسب قائمة الجلوس دون تغيير المكان طِوال العام الدراسي الجاري، وذلك يُحمِّلك المسؤولية الكاملة للجهاز أثناء العمل عليه.'],
+    ['🔍','عاين حالة الجهاز قبل بداية الحصة وعند مغادرة مكانك، وفي حالة وجود عطل أو أي شيء غير طبيعي أبلغ الأستاذ فورًا.'],
+    ['👨‍🏫','استعمال الحاسوب يكون وفق توصيات الأستاذ.'],
+    ['🚫','يمنع منعًا باتًّا إدخال المأكولات والمشروبات إلى المخبر.',1],
+    ['🧹','إعادة المقعد أمام الطاولة بعد الانتهاء من الاستخدام للحفاظ على المظهر العام للمخبر.'],
+    ['👂','عدم الانشغال بأي شيء أثناء شرح الأستاذ.'],
+    ['⚙️','يمنع تثبيت أو حذف أي برنامج، أو تغيير إعدادات النظام وخلفية سطح المكتب، دون إذن الأستاذ.',1],
+    ['💾','لا يُسمح باستعمال الأقراص المحمولة (Flash) أو أي وسائط تخزين خارجية إلا بإذن الأستاذ وبعد فحصها من الفيروسات.',1],
+    ['🌐','يمنع تصفّح المواقع أو تشغيل الألعاب والمحتويات التي لا علاقة لها بموضوع الحصة.',1]
+  ];
+  document.getElementById('rules').innerHTML=R.map(function(r,i){
+    return '<div class="rule'+(r[2]?' no':'')+'"><span class="num">'+(i+1)+'</span><div class="rb"><div class="rt">'+r[1]+'</div></div><span class="ri">'+r[0]+'</span></div>';
+  }).join('');
+
+  var items=document.querySelectorAll('.rule,.quote,.warn,.sign');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){var el=e.target;setTimeout(function(){el.classList.add('in')},el.classList.contains('rule')?60:0);io.unobserve(el)}
+    })},{threshold:.12});
+    items.forEach(function(s){io.observe(s)});
+  }else items.forEach(function(s){s.classList.add('in')});
+
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('.rule').forEach(function(el){
+      el.addEventListener('pointermove',function(e){
+        if(!el.classList.contains('in'))return;
+        var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+        el.classList.add('tilting');
+        el.style.transform='perspective(800px) rotateX('+(-y*6)+'deg) rotateY('+(x*6)+'deg) translateY(-3px)';
+      });
+      el.addEventListener('pointerleave',function(){el.style.transform='';setTimeout(function(){el.classList.remove('tilting')},120)});
+    });
+    var c=document.getElementById('cover');
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(1000px) rotateX('+(-y*3)+'deg) rotateY('+(x*3)+'deg)'});
+    c.addEventListener('pointerleave',function(){c.style.transform=''});
+  }
+})();
+</script>
+</body>
+</html>
