@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXAMEN WORD</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@400;500;700&display=swap');
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #319795;
+            --bg-body: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Simplified Arabic', Tahoma, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Banner Header */
+        .exam-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #ffffff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .exam-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .exam-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Card Section */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title span {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Text Presentation Box */
+        .document-preview {
+            background-color: #fafbfc;
+            border: 1px dashed #cbd5e1;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .doc-title {
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            font-size: 16.5pt;
+            text-align: center;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
+
+        .doc-body p {
+            font-family: 'Tajawal', 'Simplified Arabic', sans-serif;
+            font-size: 14.5pt;
+            line-height: 1.5;
+            color: #334155;
+            text-align: justify;
+            margin-bottom: 12px;
+        }
+
+        /* Instructions List */
+        .instructions-list {
+            list-style: none;
+            counter-reset: item;
+        }
+
+        .instructions-list li {
+            counter-increment: item;
+            margin-bottom: 16px;
+            padding-right: 45px;
+            position: relative;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .instructions-list li::before {
+            content: counter(item);
+            position: absolute;
+            right: 0;
+            top: 2px;
+            background-color: #edf2f7;
+            color: var(--primary-color);
+            font-weight: bold;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .code-inline {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            border: 1px solid #e2e8f0;
+            display: inline-block;
+        }
+
+        .symbol-badge {
+            font-size: 18px;
+            color: #d97706;
+            vertical-align: middle;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header Section -->
+    <header class="exam-header">
+        <h1>إختبار تجريبي لبرنامج WORD</h1>
+        <p>دورة تكوينية في الإعلام الآلي</p>
+    </header>
+
+    <!-- Text to Type Section -->
+    <section class="card">
+        <div class="card-title">
+            <span>1</span>
+            النص المطلوب معالجته
+        </div>
+        <div class="document-preview">
+            <div class="doc-title">دور المعلوماتية في حياة الإنسان</div>
+            <div class="doc-body">
+                <p>يلعب الإعلام الآلي دوراً جوهرياً في تحسين حياة الإنسان وتسهيل أنشطته اليومية. فقد أتاحت التقنيات الرقمية وسائل تواصل سريعة اختصرت المسافات بين أرجاء العالم. كما ساهمت البرمجيات الحديثة في إدارة الأعمال بمرونة فائقة ودقة متناهية.</p>
+                <p>تعتمد القطاعات الحيوية كالتعليم والصحة بشكل مباشر على التطبيقات الحوسبية المتقدمة. وتتيح المنصات التعليمية فرصة الوصول إلى المعرفة وتداولها لكل طالب بكل سهولة. وفي المجال الطبي، ترفع الأنظمة الذكية من جودة التشخيص وتساعد في إنقاذ الأرواح.</p>
+                <p>يستمر التطور التكنولوجي المتسارع في فتح آفاق جديدة أمام الطاقات والإبداعات البشرية. وتساعد خوارزميات الذكاء الاصطناعي في تقديم حلول مبتكرة للعديد من الأزمات والحد من تعقيدها. وسيظل الاستثمار في المهارات الرقمية شرطاً أساسياً لضمان مواكبة المستقبل بنجاح.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Questions & Instructions Section -->
+    <section class="card">
+        <div class="card-title">
+            <span>2</span>
+            الأسئلة والتعليمات
+        </div>
+        <ol class="instructions-list">
+            <li>قم بكتابة النص أعلاه.</li>
+            <li>اجعل العنوان بنوع الخط <span class="code-inline">Traditional Arabic</span> وبحجم <span class="code-inline">16.5</span> ثم قم بتوسيعه (توسيط).</li>
+            <li>اجعل نص الموضوع بنوع الخط <span class="code-inline">Simplified Arabic</span> وبحجم <span class="code-inline">14.5</span>.</li>
+            <li>حدد تباعد الأسطر بمقدار <span class="code-inline">1.5</span>.</li>
+            <li>ضع مسافة بادئة (جدولة / Tabulation) في بداية الفقرة الثانية بمقدار <span class="code-inline">2 سم</span>.</li>
+            <li>أدرج الرمز التالي <span class="symbol-badge">☚</span> في نهاية الفقرة الثانية.</li>
+            <li>قم بإدراج رأس للصفحة (En-tête) يتضمن النص: <span class="code-inline">إختبار Word</span>.</li>
+            <li>
+                قم بإدراج تذييل للصفحة (Pied de page) يحتوي على:
+                <br>
+                - في الجهة اليسرى: <span class="code-inline">إعلام آلي</span>
+                <br>
+                - في الجهة اليمنى: <span class="code-inline">إختبار</span>
+            </li>
+            <li>قم بإدراج رقم للصفحة بحيث يبدأ الرقم من <span class="code-inline">15</span>.</li>
+            <li>احفظ المستند على سطح المكتب (Bureau) باسمك ولقبك.</li>
+        </ol>
+    </section>
+
+    <div class="footer-note">
+        تم إنشاء هذا الملف التفاعلي للورشات والتطبيقات العملية الخاصة ببرنامج Microsoft Word.
+    </div>
+
+</div>
+
+</body>
+</html>
