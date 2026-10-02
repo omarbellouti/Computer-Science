@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص الحصة الثالثة - دورة Microsoft Word</title>
+    <!-- خط تجوال العربي -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- مكتبة الأيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2b579a; /* لون وورد الرئيسي */
+            --primary-light: #eff6ff;
+            --accent: #107c41;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        /* الهيدر */
+        header {
+            background: linear-gradient(135deg, #185abd 0%, #2b579a 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #107c41;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* الحاوية الرئيسية */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* أقسام المحتوى */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 35px 0 20px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        .section-title i {
+            background: var(--primary-light);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        /* شبكة الكروت */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* تصميم المفاتيح Keyboard Keys */
+        .kbd-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            direction: ltr;
+            justify-content: flex-end;
+        }
+
+        kbd {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-shadow: 0 3px 0 #94a3b8;
+            color: #0f172a;
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.95rem;
+            font-weight: bold;
+            padding: 6px 12px;
+            min-width: 35px;
+            text-align: center;
+        }
+
+        /* كروت الاختصارات */
+        .shortcut-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border-right: 4px solid var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .shortcut-desc {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .french-term {
+            color: #2b579a;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        /* شريط محاكاة أدوات Word Ribbon Button */
+        .word-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-weight: bold;
+            color: #334155;
+            min-width: 36px;
+            height: 36px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .tool-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tool-item:last-child {
+            border-bottom: none;
+        }
+
+        .tool-icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .tool-info h4 {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 3px;
+        }
+
+        .tool-info p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* صندوق الشرح البرمجي الخاص بـ =rand(3,4) */
+        .code-box {
+            background: #1e293b;
+            color: #38bdf8;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            direction: ltr;
+            text-align: left;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-tag {
+            background: #334155;
+            color: #f8fafc;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        /* تنبيهات وملاحظات */
+        .note-box {
+            background: #fffbeb;
+            border-right: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #b45309;
+        }
+
+        .tab-badge {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر الرئيسي -->
+    <header>
+        <h1><i class="fa-regular fa-file-word"></i> ملخص الحصة الثالثة: Microsoft Word</h1>
+        <p>دليل شروحات الأيقونات، الاختصارات، وإعدادات الصفحات باللغة الفرنسية</p>
+        <span class="badge"><i class="fa-solid fa-graduation-cap"></i> مخصص للطلبة والطالبات</span>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. اختصارات لوحة المفاتيح -->
+        <h2 class="section-title">
+            <i class="fa-solid fa-keyboard"></i>
+            1. اختصارات لوحة المفاتيح (Raccourcis Clavier)
+        </h2>
+        
+        <div class="grid">
+            <div class="shortcut-card">
+                <div>
+                    <span class="shortcut-desc">نسخ النص</span> <br>
+                    <span class="french-term">Copier</span>
+                </div>
+                <div class="kbd-group">
+                    <kbd>Ctrl</kbd> + <kbd>C</kbd>
+                </div>
+            </div>
+
+            <div class="shortcut-card">
+                <div>
+                    <span class="shortcut-desc">قص النص</span> <br>
+                    <span class="french-term">Couper</span>
+                </div>
+                <div class="kbd-group">
+                    <kbd>Ctrl</kbd> + <kbd>X</kbd>
+                </div>
+            </div>
+
+            <div class="shortcut-card">
+                <div>
+                    <span class="shortcut-desc">لصق النص</span> <br>
+                    <span class="french-term">Coller</span>
+                </div>
+                <div class="kbd-group">
+                    <kbd>Ctrl</kbd> + <kbd>V</kbd>
+                </div>
+            </div>
+
+            <div class="shortcut-card">
+                <div>
+                    <span class="shortcut-desc">البحث والاستبدال</span> <br>
+                    <span class="french-term">Rechercher et Remplacer</span>
+                </div>
+                <div class="kbd-group">
+                    <kbd>Ctrl</kbd> + <kbd>H</kbd>
+                </div>
+            </div>
+
+            <div class="shortcut-card">
+                <div>
+                    <span class="shortcut-desc">تحديد الكل</span> <br>
+                    <span class="french-term">Sélectionner tout</span>
+                </div>
+                <div class="kbd-group">
+                    <kbd>Ctrl</kbd> + <kbd>A</kbd>
+                </div>
+            </div>
+        </div>
+
+        <!-- اختصار توليد النص العشوائي -->
+        <div class="card" style="margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3><i class="fa-solid fa-bolt" style="color: #eab308;"></i> اختصار توليد نص عشوائي تلقائي (Génération de texte)</h3>
+                <span class="tab-badge">=Rand(3,4)</span>
+            </div>
+            <p style="margin-top: 8px; color: var(--text-muted);">
+                يُستخدم لتوليد فقرات وهمية للتدريب على التنسيق دون الحاجة لكتابة نص طويل يدوياً:
+            </p>
+            <div class="code-box">
+                <span>=rand(3,4)</span>
+                <span class="code-tag">اكتبه ثم اضغط Enter</span>
+            </div>
+            <div class="note-box">
+                <i class="fa-solid fa-circle-info"></i> <strong>شرح الرقمين:</strong> الرقم (3) يعني عدد الفقرات (Paragraphes)، والرقم (4) يعني عدد الجمل في كل فقرة (Phrases).
+            </div>
+        </div>
+
+
+        <!-- 2. أدوات الشريط الرئيسي (Onglet Accueil) -->
+        <h2 class="section-title">
+            <i class="fa-solid fa-font"></i>
+            2. أيقونات واجهة الوورد الأساسية (Onglet Accueil)
+        </h2>
+
+        <div class="card">
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <div class="word-btn" style="font-family: Arial;">Calibri <i class="fa-solid fa-caret-down" style="font-size: 10px; margin-right: 5px;"></i></div>
+                </div>
+                <div class="tool-info">
+                    <h4>أيقونة تغيير نوع الخط (<span class="french-term">Police</span>)</h4>
+                    <p>تُستخدم لاختيار نوع الخط المراد الكتابة به (مثل: Calibri, Arial, Times New Roman).</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <div class="word-btn">16 <i class="fa-solid fa-caret-down" style="font-size: 10px; margin-right: 5px;"></i></div>
+                </div>
+                <div class="tool-info">
+                    <h4>أيقونة تغيير حجم الخط (<span class="french-term">Taille de la police</span>)</h4>
+                    <p>لتكبير أو تصغير حجم النصوص والعناوين.</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <div class="word-btn" style="flex-direction: column; gap: 0;">
+                        <span style="font-weight: bold; font-size: 16px;">A</span>
+                        <div style="width: 14px; height: 3px; background: red; margin-top: -2px;"></div>
+                    </div>
+                </div>
+                <div class="tool-info">
+                    <h4>أيقونة تغيير لون الخط (<span class="french-term">Couleur de police</span>)</h4>
+                    <p>لتغيير لون النصوص المحددة بلون مخصص.</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <div class="word-btn"><i class="fa-solid fa-arrows-up-down"></i></div>
+                </div>
+                <div class="tool-info">
+                    <h4>أيقونة تباعد الأسطر (<span class="french-term">Interligne</span>)</h4>
+                    <p>للتحكم في المسافة العمودية بين الأسطر داخل الفقرة الواحدة (1.0 - 1.15 - 1.5).</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <div class="word-btn"><i class="fa-solid fa-align-right"></i></div>
+                </div>
+                <div class="tool-info">
+                    <h4>محاكاة اتجاه النص والمحاذاة (<span class="french-term">Alignement et Orientation du texte</span>)</h4>
+                    <p>تحديد اتجاه النص من اليمين إلى اليسار (De droite à gauche) أو العكس، ومحاذاة النص.</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <div class="word-btn"><i class="fa-solid fa-fill-drip"></i></div>
+                </div>
+                <div class="tool-info">
+                    <h4>أيقونة تغيير لون خلايا الجدول والتظليل (<span class="french-term">Trame de fond</span>)</h4>
+                    <p>لتغيير لون خلفية خلايا الجدول أو خلفية الفقرات المحدد بلون معين.</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <!-- حرف G يعبر عن Gras في الوورد الفرنسي -->
+                    <div class="word-btn" style="font-weight: 900; font-size: 18px;">G</div>
+                </div>
+                <div class="tool-info">
+                    <h4>أيقونة الخط السميك (<span class="french-term">Gras</span>)</h4>
+                    <p>تجعل الخط غامقاً وواضحاً (تظهر كحرف <strong>G</strong> في النسخة الفرنسية).</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <!-- حرف S يعبر عن Souligné في الوورد الفرنسي -->
+                    <div class="word-btn" style="text-decoration: underline; font-weight: bold; font-size: 18px;">S</div>
+                </div>
+                <div class="tool-info">
+                    <h4>أيقونة تسطير العنوان (<span class="french-term">Souligné</span>)</h4>
+                    <p>تضع خطاً سفلياً تحت العناوين للنصوص المهمة (تظهر كحرف <u><strong>S</strong></u> في النسخة الفرنسية).</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 3. أيقونات التبويب إدراج (Onglet Insertion) -->
+        <h2 class="section-title">
+            <i class="fa-solid fa-square-plus"></i>
+            3. أيقونات الإضافة (Onglet Insertion)
+        </h2>
+
+        <div class="grid">
+            <div class="card">
+                <div class="tool-icon-wrapper" style="margin-bottom: 12px;">
+                    <i class="fa-solid fa-table"></i>
+                </div>
+                <h3>إضافة جدول <br><span class="french-term">Tableau</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">
+                    لإنشاء جدول وتحديد عدد الأسطر والأعمدة (Lignes et Colonnes).
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="tool-icon-wrapper" style="margin-bottom: 12px;">
+                    <i class="fa-regular fa-image"></i>
+                </div>
+                <h3>إضافة صورة <br><span class="french-term">Image</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">
+                    لإدراج الصور والرسومات من جهاز الكمبيوتر إلى المستند.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="tool-icon-wrapper" style="margin-bottom: 12px;">
+                    <i class="fa-solid fa-heading"></i>
+                </div>
+                <h3>رأس الصفحة <br><span class="french-term">En-tête</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">
+                    منطقة أعلى الصفحة تتكرر تلقائياً في كامل الصفحات.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="tool-icon-wrapper" style="margin-bottom: 12px;">
+                    <i class="fa-solid fa-shoe-prints"></i>
+                </div>
+                <h3>تذييل الصفحة <br><span class="french-term">Pied de page</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">
+                    منطقة أسفل الصفحة تُستخدم لوضع أرقام الصفحات والمعلومات الختامية.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="tool-icon-wrapper" style="margin-bottom: 12px;">
+                    <i class="fa-solid fa-shapes"></i>
+                </div>
+                <h3>إضافة الأشكال <br><span class="french-term">Formes</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">
+                    لإدراج الأسهم والمربعات والدوائر والأشكال الهندسية المختلفة.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 4. تبويب تصميم (Onglet Création) -->
+        <h2 class="section-title">
+            <i class="fa-solid fa-paint-roller"></i>
+            4. تبويب تصميم الصفحة (Onglet Création)
+        </h2>
+
+        <div class="card">
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+                <div class="tool-info">
+                    <h4>طريقة تغيير لون الصفحة (<span class="french-term">Couleur de page</span>)</h4>
+                    <p>تتيح تغيير لون خلفية المستند من الأبيض إلى أي لون آخر.</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <i class="fa-regular fa-square"></i>
+                </div>
+                <div class="tool-info">
+                    <h4>إضافة إطار عادي للصفحة (<span class="french-term">Bordures de page</span>)</h4>
+                    <p>إضافة حدود خطية بسيطة حول الصفحة (خط متصل، منقط...).</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <div class="tool-info">
+                    <h4>إضافة إطار شخصي بأشكال مختلفة (<span class="french-term">Bordures avec Motif</span>)</h4>
+                    <p>اختيار إطارات مزخرفة تحتوي على أشكال ورسومات من قائمة <strong>Motif</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 5. المسطرة وإعدادات الصفحة -->
+        <h2 class="section-title">
+            <i class="fa-solid fa-ruler-combined"></i>
+            5. المسطرة وإعدادات الصفحة (Règle et Mise en page)
+        </h2>
+
+        <div class="grid">
+            <div class="card">
+                <h3><i class="fa-solid fa-ruler-horizontal"></i> تغيير حجم التهميش بالمسطرة <br><span class="french-term">Marges</span></h3>
+                <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.95rem;">
+                    سحب المؤشرات على المسطرة (Règle) لزيادة أو تقليل مساحة الهوامش والتهميش.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-paragraph"></i> فراغ بداية الفقرة <br><span class="french-term">Retrait de la première ligne</span></h3>
+                <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.95rem;">
+                    باستعمال المسطرة، نضع مسافة بادئة (فراغ) في السطر الأول من كل فقرة.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-regular fa-file"></i> اتجاه الصفحة <br><span class="french-term">Orientation</span></h3>
+                <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.95rem;">
+                    التغيير بين الوضع العمودي (<strong>Portrait</strong>) والوضع الأفقي (<strong>Paysage</strong>).
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 6. إدارة وحفظ الملفات -->
+        <h2 class="section-title">
+            <i class="fa-solid fa-floppy-disk"></i>
+            6. إدارة وحفظ الملفات (Gestion des fichiers)
+        </h2>
+
+        <div class="card">
+            <div class="tool-item">
+                <div class="tool-icon-wrapper" style="background: #dcfce7; color: #16a34a;">
+                    <i class="fa-solid fa-desktop"></i>
+                </div>
+                <div class="tool-info">
+                    <h4>طريقة حفظ ملف Word في سطح المكتب (<span class="french-term">Enregistrer sur le Bureau</span>)</h4>
+                    <p>الذهاب إلى قائمة <strong>Fichier</strong> &larr; اختيار <strong>Enregistrer sous</strong> &larr; التوجه إلى <strong>Bureau</strong> &larr; تحديد اسم الملف ثم الضغط على <strong>Enregistrer</strong>.</p>
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div class="tool-icon-wrapper" style="background: #e0f2fe; color: #0284c7;">
+                    <i class="fa-solid fa-file-circle-plus"></i>
+                </div>
+                <div class="tool-info">
+                    <h4>طريقة فتح ملف جديد (<span class="french-term">Nouveau Document</span>)</h4>
+                    <p>من قائمة <strong>Fichier</strong> &larr; اختيار <strong>Nouveau</strong> &larr; ثم اختيار مستند فارغ (<strong>Document vierge</strong>).</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>تم إعداد هذه الصفحة كمرجع تعليمي للطلبة والطالبات &copy; 2026 - جميع الحقوق محفوظة</p>
+    </footer>
+
+</body>
+</html>

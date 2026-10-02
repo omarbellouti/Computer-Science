@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson2 - التدرج البيداغوجي لبرنامج Microsoft Word</title>
+    <!-- استدعاء خط Cairo من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fdfbf7;           /* بيج فاتح دافئ خلفية للموقع */
+            --card-bg: #ffffff;            /* أبيض كلاسيكي للبطاقات */
+            --card-border: #f0e6df;        /* حدود بيج ناعمة */
+            
+            --maroon-primary: #800020;     /* مارون / عنابي رئيسي */
+            --maroon-dark: #5c0017;        /* مارون داكن */
+            --maroon-light: #f9f0f2;       /* بيج وردي خفيف جدا خلفية للشارات */
+            
+            --beige-accent: #d4a373;       /* بيج ذهبي للتأكيدات */
+            --beige-dark: #bc8a5f;
+            
+            --text-main: #2b2d42;          /* كحلي داكن جداً لقراءة مريحة للعين */
+            --text-muted: #6c757d;        /* رمادي رمزي للنصوص الثانوية */
+            --badge-added: #d97706;       /* برتقالي دافئ للإضافات */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--maroon-primary);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .level-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(128, 0, 32, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .level-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(128, 0, 32, 0.1);
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 12px;
+        }
+
+        .level-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #ffffff;
+            background: var(--maroon-primary);
+        }
+
+        .lvl-2 .level-badge { background: #961c36; }
+        .lvl-3 .level-badge { background: #ad2845; }
+        .lvl-4 .level-badge { background: var(--maroon-dark); }
+
+        .level-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--maroon-dark);
+        }
+
+        .topic-list {
+            list-style: none;
+            padding-right: 10px;
+        }
+
+        .topic-item {
+            position: relative;
+            padding: 10px 22px 10px 10px;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .topic-item::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--maroon-primary);
+            font-size: 1.8rem;
+            line-height: 1;
+            top: 4px;
+        }
+
+        .sub-list {
+            list-style: none;
+            margin-top: 8px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 2px solid var(--beige-accent);
+        }
+
+        .sub-item {
+            font-size: 0.98rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .sub-item::before {
+            content: "←";
+            margin-left: 8px;
+            color: var(--beige-dark);
+            font-weight: bold;
+        }
+
+        .tag-added {
+            background: var(--beige-accent);
+            color: #ffffff;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-right: 8px;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>التدرج البيداغوجي لبرنامج Microsoft Word</h1>
+        <p>خطة تدريس موجهة لطلبة الدورة التكوينية في الحصة الثانية</p>
+    </header>
+
+    <!-- المستوى الأول -->
+    <div class="level-card lvl-1">
+        <div class="level-header">
+            <div class="level-badge">1</div>
+            <div class="level-title">المستوى الأول: أساسيات المستند وبيئة العمل</div>
+        </div>
+        <ul class="topic-list">
+            <li class="topic-item">شرح واجهة البرنامج (Interface Overview)</li>
+            <li class="topic-item">إظهار واستخدام المسطرة (Rulers) لضبط الهوامش</li>
+            <li class="topic-item">
+                إدارة الملفات وتأمينها (File Management & Recovery)
+                <ul class="sub-list">
+                    <li class="sub-item">كيفية حفظ الملف لأول مرة (Save / Save As)</li>
+                    <li class="sub-item">طريقة تعديل توقيت الحفظ الآلي (AutoRecover Interval)</li>
+                    <li class="sub-item">كيفية استعادة الملف في حالة انقطاع الكهرباء أو توقف الحاسوب</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- المستوى الثاني -->
+    <div class="level-card lvl-2">
+        <div class="level-header">
+            <div class="level-badge">2</div>
+            <div class="level-title">المستوى الثاني: تنسيق النصوص والأدوات المساعدة</div>
+        </div>
+        <ul class="topic-list">
+            <li class="topic-item"><span class="tag-added">إضافة مقترحة</span> تنسيق النصوص الأساسي والفقرات (الخطوط، الألوان، المحاذاة)</li>
+            <li class="topic-item">البحث عن كلمة أو نص واستبداله في المستند (Find & Replace)</li>
+            <li class="topic-item">الرأس والتذييل للصفحة وترقيم الصفحات (Header & Footer)</li>
+        </ul>
+    </div>
+
+    <!-- المستوى الثالث -->
+    <div class="level-card lvl-3">
+        <div class="level-header">
+            <div class="level-badge">3</div>
+            <div class="level-title">المستوى الثالث: إدراج العناصر والكائنات البصرية</div>
+        </div>
+        <ul class="topic-list">
+            <li class="topic-item">كيفية التعامل مع الصور (إدراج، تعديل الحجم، وخيارات التناص/التفاف النص)</li>
+            <li class="topic-item">كيفية التعامل مع الجداول (إنشاء، تعديل الصفوف والأعمدة، والتنسيق)</li>
+        </ul>
+    </div>
+
+    <!-- المستوى الرابع -->
+    <div class="level-card lvl-4">
+        <div class="level-header">
+            <div class="level-badge">4</div>
+            <div class="level-title">المستوى الرابع: التنسيق الاحترافي والأتمتة</div>
+        </div>
+        <ul class="topic-list">
+            <li class="topic-item">الأنماط (Styles) لتنسيق العناوين وتوحيد المظهر</li>
+            <li class="topic-item"><span class="tag-added">إضافة مقترحة</span> إنشاء الفهرس التلقائي (Table of Contents)</li>
+            <li class="topic-item">دمج المراسلات (Mail Merge) لإنشاء الرسائل والشهادات الجماعية</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>تم إعداد المخطط التعليمي لدرس Microsoft Word • lesson2.html</p>
+    </footer>
+</div>
+
+</body>
+</html>
