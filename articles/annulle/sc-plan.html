@@ -56,6 +56,17 @@ body{background-color:var(--bg);background-image:radial-gradient(circle at 15% 1
 .stat span{font-size:10.5px;color:var(--muted)}
 
 
+
+/* مبدّل الشعبة */
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;background:#fff;border:1px solid var(--line);border-radius:16px;padding:4px;margin-bottom:14px;box-shadow:0 8px 18px rgba(28,37,52,.06)}
+.seg::before{content:"";position:absolute;inset-block:4px;inset-inline-start:4px;width:calc(50% - 4px);border-radius:12px;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 6px 14px rgba(79,70,229,.3);transition:transform .45s cubic-bezier(.2,.9,.3,1)}
+.seg[data-s="lit"]::before{transform:translateX(100%)}
+[dir=rtl] .seg[data-s="lit"]::before{transform:translateX(-100%)}
+.seg button{position:relative;z-index:1;border:none;background:none;cursor:pointer;padding:11px 8px;font-size:13px;font-weight:800;color:var(--muted);border-radius:12px;transition:color .3s}
+.seg button.on{color:#fff}
+.swap{animation:swap .5s cubic-bezier(.2,.9,.3,1)}
+@keyframes swap{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
 /* زر التحميل */
 .dl{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));border-radius:18px;padding:12px 16px;margin-bottom:16px;box-shadow:0 10px 22px rgba(79,70,229,.3);position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
 .dl::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);transform:translateX(120%);animation:shine 3.5s ease-in-out infinite}
@@ -118,7 +129,7 @@ body{background-color:var(--bg);background-image:radial-gradient(circle at 15% 1
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--muted);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:12px;transition:.2s}
 .nav-item:active{transform:scale(.93)}.nav-item svg{width:21px;height:21px}.nav-item.active{color:var(--blue)}
 
-@media print{
+@media print{.seg{display:none}
   @page{size:A4 portrait;margin:10mm}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body{background:#fff;padding:0}.bg3d,.orb,.bottom-nav,.back,.filters,.foot,.dl{display:none}
@@ -151,7 +162,7 @@ body{background-color:var(--bg);background-image:radial-gradient(circle at 15% 1
     <div class="ht">
       <div class="tag">الموسم الدراسي 2026 / 2027</div>
       <h1>التوزيع السنوي لمادة المعلوماتية</h1>
-      <p>السنة الأولى ثانوي — جذع مشترك علوم</p>
+      <p id="sub">السنة الأولى ثانوي — جذع مشترك علوم</p>
     </div>
   </header>
 
@@ -162,7 +173,12 @@ body{background-color:var(--bg);background-image:radial-gradient(circle at 15% 1
     <div class="stat"><b>25 + 25</b><span>نظري + تطبيقي</span></div>
   </div>
 
-  <a href="annual-plan.pdf" class="dl" download>
+  <div class="seg" id="seg" data-s="sci">
+    <button class="on" data-s="sci">🔬 جذع مشترك علوم</button>
+    <button data-s="lit">📖 جذع مشترك آداب</button>
+  </div>
+
+  <a href="plan.pdf" class="dl" id="dl" download>
     <span class="di"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"></path></svg></span>
     <span class="dt"><b>تحميل التوزيع السنوي</b><small>نسخة جاهزة للطباعة</small></span>
     <span class="pdf">PDF</span>
@@ -187,63 +203,88 @@ body{background-color:var(--bg);background-image:radial-gradient(circle at 15% 1
   var D={a:'بيئة التعامل مع الحاسوب',b:'مدخل إلى البرمجة',c:'تقنيات الويب',d:'المكتبية'};
   var COL={a:'var(--d1)',b:'var(--d2)',c:'var(--d3)',d:'var(--d4)',i:'#7c3aed'};
   /* صف عمل: [أسبوع السنة, أسبوع العمل, مجال, الدرس, نظري, تطبيقي] — عطلة/اختبار: [أسبوع, نوع, عنوان] */
-  var P=[
+  var COMMON_A=[
    ['سبتمبر',[[1,1,'i','نظرة عن البرنامج وتوجيهات عامة','نظرة عن البرنامج + توجيهات عامة','تقويم تشخيصي'],[2,2,'a','تقنية المعلومات','مفاهيم حول تقنية المعلومات','تطور تقنية المعلومات']]],
    ['أكتوبر',[[3,3,'a','تجميع الحاسوب','وحدات الحاسوب','مكونات + التركيب الفعلي'],[4,4,'a','تجميع الحاسوب','وحدة قياس الذاكرة','محاكاة تركيب الحاسوب'],[5,5,'a','نظام التشغيل','نظام التشغيل','إعدادات البيوس'],[6,6,'a','نظام التشغيل','إعدادات التثبيت','محاكاة تثبيت نظام التشغيل'],[7,'hol','عطلة الخريف']]],
-   ['نوفمبر',[[8,7,'a','حماية الحاسوب','حماية الحاسوب','لوحة التحكم'],[9,8,'a','الشبكة المحلية','مفاهيم عامة حول الشبكات','تركيب وإعداد الشبكة'],[10,9,'a','الشبكة المحلية','تصنيفات الشبكة','مشاركة موارد باستعمال الشبكة']]],
+   ['نوفمبر',[[8,7,'a','حماية الحاسوب','حماية الحاسوب','لوحة التحكم'],[9,8,'a','الشبكة المحلية','مفاهيم عامة حول الشبكات','تركيب وإعداد الشبكة'],[10,9,'a','الشبكة المحلية','تصنيفات الشبكة','مشاركة موارد باستعمال الشبكة']]]
+  ];
+  var DATA={
+   sci:{sub:'السنة الأولى ثانوي — جذع مشترك علوم',pdf:'annual-plan-science.pdf',plan:COMMON_A.concat([
    ['ديسمبر',[[11,'exam','اختبارات الفصل الأول'],[12,10,'b','المخطط الانسيابي','مفاهيم حول المخطط الانسيابي','رسم مخطط باستعمال LARP'],[13,11,'b','المخطط الانسيابي','الشرط','رسم مخطط به شرط'],['14–15','hol','عطلة الشتاء']]],
    ['جانفي',[[16,12,'b','المخطط الانسيابي','الحلقة','رسم مخطط به حلقة'],[17,13,'b','مدخل إلى الخوارزميات','هيكل الخوارزمية وقواعدها','استعمال برنامج Algobox'],[18,14,'b','مدخل إلى الخوارزميات','قواعد المعرفات + الإسناد','تطبيقات بها تعليمات الإسناد'],[19,15,'b','التعليمات الأساسية','التعليمة الشرطية','تطبيقات بها تعليمات شرطية']]],
    ['فيفري',[[20,16,'b','التعليمات الأساسية','التعليمة التكرارية','تطبيقات بها تعليمات تكرارية'],[21,17,'b','التعليمات الأساسية','حل مسائل مختلفة','حل مسائل مختلفة'],[22,18,'b','المتصفح','المتصفح','استعمال المتصفح'],[23,'exam','اختبارات الفصل الثاني']]],
    ['مارس',[[24,19,'c','إنشاء صفحة ويب','هيكل صفحة الويب','كتابة هيكل صفحة الويب'],[25,20,'c','إنشاء صفحة ويب','النصوص والعناوين','إنشاء صفحة بها عناوين ونصوص'],['26–27','hol','عطلة الربيع']]],
    ['أفريل',[[28,21,'c','إنشاء صفحة ويب','القوائم والصور','إضافة صورة وروابط تشعبية'],[29,22,'c','إنشاء صفحة ويب','الارتباط التشعبي والجداول','رسم جدول وتنسيقه'],[30,23,'d','أدوات التواصل','مواقع التواصل الاجتماعي','البريد الإلكتروني'],[31,24,'d','معالج النصوص','الأنماط','تنسيق نصوص باستعمال الأنماط']]],
    ['ماي',[[32,25,'d','جداول البيانات','المقاطع','تنسيق صفحات مختلفة'],[33,'exam','اختبارات الفصل الثالث'],[34,'exam','تصحيح الاختبار الثالث']]]
-  ];
-  var h='';
-  P.forEach(function(m){
-    h+='<section class="month"><div class="mh"><span class="mi">'+m[0]+'</span></div><div class="rows">';
-    m[1].forEach(function(r){
-      if(r[1]==='hol'||r[1]==='exam'){
-        h+='<div class="off reveal row-off '+r[1]+'" data-t="off"><span class="oi">'+(r[1]==='hol'?'🏖️':'📝')+'</span>'+r[2]+'<small>الأسبوع '+r[0]+'</small></div>';
-      }else{
-        h+='<div class="row reveal tilt" data-d="'+r[2]+'" style="--k:'+COL[r[2]]+'"><div class="wk"><b>'+r[1]+'</b><small>الأسبوع '+r[0]+'</small></div><div class="bd"><span class="dm">'+(D[r[2]]||'مقدمة')+'</span><div class="ls">'+r[3]+'</div><div class="ln"><em>📖 نظري</em><span>'+r[4]+'</span></div><div class="ln"><em>💻 تطبيقي</em><span>'+r[5]+'</span></div></div></div>';
-      }
-    });
-    h+='</div></section>';
-  });
-  document.getElementById('plan').innerHTML=h;
+   ])},
+   lit:{sub:'السنة الأولى ثانوي — جذع مشترك آداب',pdf:'annual-plan-arts.pdf',plan:COMMON_A.concat([
+   ['ديسمبر',[[11,'exam','اختبارات الفصل الأول'],[12,10,'d','معالج النصوص','الأنماط','تنسيق نصوص باستعمال الأنماط'],[13,11,'d','معالج النصوص','القوالب','استعمال القوالب'],['14–15','hol','عطلة الشتاء']]],
+   ['جانفي',[[16,12,'d','معالج النصوص','المقاطع','تنسيق صفحات مختلفة'],[17,13,'d','معالج النصوص','دمج المراسلات','إنجاز شهادات شرفية'],[18,14,'d','المجدول','الصيغ','واجهة البرنامج'],[19,15,'d','المجدول','الدوال','استعمال الصيغ']]],
+   ['فيفري',[[20,16,'d','المجدول','نشاطات حول الصيغ والدوال','استعمال الدوال'],[21,17,'d','المجدول','فرز البيانات','ترتيب وفرز جداول'],[22,18,'d','العروض التقديمية','الحركات','إنشاء عرض تقديمي'],[23,'exam','اختبارات الفصل الثاني']]],
+   ['مارس',[[24,19,'d','العروض التقديمية','الارتباط التشعبي','إضافة حركات وأصوات'],[25,20,'d','العروض التقديمية','الارتباط التشعبي','إضافة ارتباطات تشعبية'],['26–27','hol','عطلة الربيع']]],
+   ['أفريل',[[28,21,'c','المتصفح','المتصفح','عمليات على المتصفح'],[29,22,'c','لغة HTML','هيكل صفحة الويب','كتابة هيكل صفحة الويب'],[30,23,'c','لغة HTML','النصوص والعناوين','إنشاء صفحة بها عناوين ونص'],[31,24,'c','لغة HTML','القوائم والصور','إضافة قوائم وصورة']]],
+   ['ماي',[[32,25,'c','لغة HTML','الارتباط التشعبي والجداول','إضافة روابط ورسم جدول'],[33,'exam','اختبارات الفصل الثالث'],[34,'exam','تصحيح الاختبار الثالث']]]
+   ])}
+  };
 
-  /* الفلاتر */
-  var F=[['all','الكل'],['a',D.a],['b',D.b],['c',D.c],['d',D.d]],f='';
-  F.forEach(function(x,i){f+='<button class="fb'+(i?'':' on')+'" data-f="'+x[0]+'"'+(x[0]!=='all'?' style="--k:'+COL[x[0]]+'"><i></i>':'>')+x[1]+'</button>'});
-  f+='<button class="btn" onclick="window.print()">🖨️ طباعة</button>';
-  var fl=document.getElementById('filters');fl.innerHTML=f;
+  var plan=document.getElementById('plan'),fl=document.getElementById('filters'),seg=document.getElementById('seg'),dl=document.getElementById('dl'),sub=document.getElementById('sub');
+  var fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var io=null;
+  if('IntersectionObserver' in window){
+    io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){var el=e.target,i=Array.prototype.indexOf.call(el.parentNode.children,el);setTimeout(function(){el.classList.add('in')},i*60);io.unobserve(el)}
+    })},{threshold:.08});
+  }
+  function tilt(el){
+    el.addEventListener('pointermove',function(e){
+      if(!el.classList.contains('in'))return;
+      var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      el.classList.add('tilting');el.style.transform='perspective(800px) rotateX('+(-y*4)+'deg) rotateY('+(x*4)+'deg) translateY(-3px)';
+    });
+    el.addEventListener('pointerleave',function(){el.style.transform='';setTimeout(function(){el.classList.remove('tilting')},120)});
+  }
+
+  function render(key){
+    var d=DATA[key],h='',used={};
+    d.plan.forEach(function(m){
+      h+='<section class="month"><div class="mh"><span class="mi">'+m[0]+'</span></div><div class="rows">';
+      m[1].forEach(function(r){
+        if(r[1]==='hol'||r[1]==='exam'){
+          h+='<div class="off reveal '+r[1]+'"><span class="oi">'+(r[1]==='hol'?'🏖️':'📝')+'</span>'+r[2]+'<small>الأسبوع '+r[0]+'</small></div>';
+        }else{
+          if(r[2]!=='i')used[r[2]]=1;
+          h+='<div class="row reveal tilt" data-d="'+r[2]+'" style="--k:'+COL[r[2]]+'"><div class="wk"><b>'+r[1]+'</b><small>الأسبوع '+r[0]+'</small></div><div class="bd"><span class="dm">'+(D[r[2]]||'مقدمة')+'</span><div class="ls">'+r[3]+'</div><div class="ln"><em>📖 نظري</em><span>'+r[4]+'</span></div><div class="ln"><em>💻 تطبيقي</em><span>'+r[5]+'</span></div></div></div>';
+        }
+      });
+      h+='</div></section>';
+    });
+    plan.innerHTML=h;plan.classList.remove('swap');void plan.offsetWidth;plan.classList.add('swap');
+    var f='<button class="fb on" data-f="all">الكل</button>';
+    ['a','b','c','d'].forEach(function(k){if(used[k])f+='<button class="fb" data-f="'+k+'" style="--k:'+COL[k]+'"><i></i>'+D[k]+'</button>'});
+    f+='<button class="btn" onclick="window.print()">🖨️ طباعة</button>';
+    fl.innerHTML=f;
+    sub.textContent=d.sub;dl.setAttribute('href',d.pdf);
+    plan.querySelectorAll('.reveal').forEach(function(el){if(io)io.observe(el);else el.classList.add('in')});
+    if(fine)plan.querySelectorAll('.tilt').forEach(tilt);
+  }
+
   fl.addEventListener('click',function(e){
     var b=e.target.closest('.fb');if(!b)return;
     fl.querySelectorAll('.fb').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
     var k=b.dataset.f;
-    document.querySelectorAll('.row').forEach(function(r){r.classList.toggle('hide',k!=='all'&&r.dataset.d!==k)});
-    document.querySelectorAll('.off').forEach(function(r){r.classList.toggle('hide',k!=='all')});
-    document.querySelectorAll('.month').forEach(function(m){m.classList.toggle('hide',!m.querySelector('.row:not(.hide),.off:not(.hide)'))});
+    plan.querySelectorAll('.row').forEach(function(r){r.classList.toggle('hide',k!=='all'&&r.dataset.d!==k)});
+    plan.querySelectorAll('.off').forEach(function(r){r.classList.toggle('hide',k!=='all')});
+    plan.querySelectorAll('.month').forEach(function(m){m.classList.toggle('hide',!m.querySelector('.row:not(.hide),.off:not(.hide)'))});
   });
+  seg.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b||b.classList.contains('on'))return;
+    seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+    seg.dataset.s=b.dataset.s;render(b.dataset.s);
+    window.scrollTo({top:Math.max(0,seg.getBoundingClientRect().top+scrollY-12),behavior:'smooth'});
+  });
+  render('sci');
 
-  /* ظهور تدريجي */
-  var items=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){
-      if(e.isIntersecting){var el=e.target,i=Array.prototype.indexOf.call(el.parentNode.children,el);setTimeout(function(){el.classList.add('in')},i*60);io.unobserve(el)}
-    })},{threshold:.08});
-    items.forEach(function(s){io.observe(s)});
-  }else items.forEach(function(s){s.classList.add('in')});
-
-  if(matchMedia('(hover:hover) and (pointer:fine)').matches){
-    document.querySelectorAll('.tilt').forEach(function(el){
-      el.addEventListener('pointermove',function(e){
-        if(!el.classList.contains('in'))return;
-        var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-        el.classList.add('tilting');el.style.transform='perspective(800px) rotateX('+(-y*4)+'deg) rotateY('+(x*4)+'deg) translateY(-3px)';
-      });
-      el.addEventListener('pointerleave',function(){el.style.transform='';setTimeout(function(){el.classList.remove('tilting')},120)});
-    });
+  if(fine){
     var hr=document.getElementById('hero');
     hr.addEventListener('pointermove',function(e){var r=hr.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;hr.style.transform='perspective(1000px) rotateX('+(-y*3)+'deg) rotateY('+(x*3)+'deg)'});
     hr.addEventListener('pointerleave',function(){hr.style.transform=''});
