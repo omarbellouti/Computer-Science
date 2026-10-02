@@ -26,13 +26,7 @@
             --status-live: #059669;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Noto Kufi Arabic', sans-serif;
-            font-weight: 600;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Kufi Arabic', sans-serif; font-weight: 600; }
 
         html { scroll-behavior: smooth; }
 
@@ -52,16 +46,10 @@
         }
 
         .glow-orb {
-            position: fixed;
-            width: 380px;
-            height: 380px;
-            border-radius: 50%;
+            position: fixed; width: 380px; height: 380px; border-radius: 50%;
             background: radial-gradient(circle, rgba(79,70,229,0.10) 0%, rgba(255,255,255,0) 70%);
-            top: 25%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            pointer-events: none;
+            top: 25%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 0; pointer-events: none;
             animation: pulse 6s infinite alternate ease-in-out;
         }
 
@@ -71,45 +59,22 @@
         }
 
         /* ---------- بيئة ثلاثية الأبعاد طافية في خلفية الصفحة كاملة ---------- */
-        .bg-scene {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            perspective: 1200px;
-        }
+        .bg-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; perspective: 1200px; }
 
-        .bg-cube-wrap {
-            position: absolute;
-            animation: bg-cube-float 9s ease-in-out infinite;
-            opacity: 0.5;
-        }
-
+        .bg-cube-wrap { position: absolute; animation: bg-cube-float 9s ease-in-out infinite; opacity: 0.5; }
         .bg-cube-wrap.b1 { width: 34px; height: 34px; top: 12%;  inset-inline-start: 8%;  animation-duration: 8s; }
         .bg-cube-wrap.b2 { width: 22px; height: 22px; top: 68%;  inset-inline-start: 12%; animation-duration: 10.5s; animation-delay: 1s; }
         .bg-cube-wrap.b3 { width: 26px; height: 26px; top: 22%;  inset-inline-start: 85%; animation-duration: 9.5s;  animation-delay: 0.4s; }
         .bg-cube-wrap.b4 { width: 18px; height: 18px; top: 78%;  inset-inline-start: 80%; animation-duration: 11s;   animation-delay: 1.6s; }
         .bg-cube-wrap.b5 { width: 30px; height: 30px; top: 46%;  inset-inline-start: 92%; animation-duration: 8.6s; animation-delay: 0.8s; }
 
-        .bg-cube {
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            animation: bg-cube-spin 16s linear infinite;
-        }
-
+        .bg-cube { width: 100%; height: 100%; transform-style: preserve-3d; animation: bg-cube-spin 16s linear infinite; }
         .bg-cube-wrap.b2 .bg-cube { animation-duration: 20s; }
         .bg-cube-wrap.b3 .bg-cube { animation-duration: 13s; }
         .bg-cube-wrap.b4 .bg-cube { animation-duration: 22s; }
         .bg-cube-wrap.b5 .bg-cube { animation-duration: 17s; }
 
-        .bg-cube .bface {
-            position: absolute;
-            inset: 0;
-            border: 1px solid rgba(79, 70, 229, 0.28);
-            background: rgba(79, 70, 229, 0.05);
-        }
-
+        .bg-cube .bface { position: absolute; inset: 0; border: 1px solid rgba(79, 70, 229, 0.28); background: rgba(79, 70, 229, 0.05); }
         .bg-cube .bface.front  { transform: translateZ(13px); }
         .bg-cube .bface.back   { transform: translateZ(-13px) rotateY(180deg); }
         .bg-cube .bface.right  { transform: rotateY(90deg) translateZ(13px); }
@@ -117,102 +82,50 @@
         .bg-cube .bface.top    { transform: rotateX(90deg) translateZ(13px); }
         .bg-cube .bface.bottom { transform: rotateX(-90deg) translateZ(13px); }
 
-        @keyframes bg-cube-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-16px); }
-        }
+        @keyframes bg-cube-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+        @keyframes bg-cube-spin { from { transform: rotateX(0deg) rotateY(0deg); } to { transform: rotateX(360deg) rotateY(360deg); } }
 
-        @keyframes bg-cube-spin {
-            from { transform: rotateX(0deg) rotateY(0deg); }
-            to { transform: rotateX(360deg) rotateY(360deg); }
-        }
-
-        .page-wrap {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 640px;
-            margin: 0 auto;
-        }
+        .page-wrap { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; }
 
         /* ---------- Breadcrumb / back link ---------- */
         .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 16px;
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 700; margin-bottom: 16px;
             transition: color 0.2s ease, transform 0.2s ease;
         }
-
         .back-link:hover { color: var(--primary-blue); transform: translateX(-3px); }
         [dir="rtl"] .back-link:hover { transform: translateX(3px); }
         .back-link svg { width: 16px; height: 16px; }
 
         /* ---------- Hero ---------- */
         .hero-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+            display: flex; align-items: center; gap: 16px;
             background: linear-gradient(135deg, var(--courses-1), var(--courses-2));
-            padding: 24px;
-            border-radius: 24px;
-            color: #ffffff;
+            padding: 24px; border-radius: 24px; color: #ffffff;
             box-shadow: 0 16px 34px rgba(79, 70, 229, 0.28);
-            margin-bottom: 26px;
-            position: relative;
-            overflow: hidden;
-            perspective: 800px;
-            opacity: 0;
-            transform: translateY(18px) scale(0.97);
+            margin-bottom: 26px; position: relative; overflow: hidden; perspective: 800px;
+            opacity: 0; transform: translateY(18px) scale(0.97);
             animation: hero-in 0.7s cubic-bezier(.2,.9,.3,1) forwards;
         }
 
-        @keyframes hero-in {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        @keyframes hero-in { to { opacity: 1; transform: translateY(0) scale(1); } }
 
         .hero-card::after {
-            content: "";
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.14);
-            top: -55px;
-            inset-inline-end: -55px;
+            content: ""; position: absolute; width: 150px; height: 150px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14); top: -55px; inset-inline-end: -55px;
         }
 
-        .hero-cube-wrap {
-            position: absolute;
-            z-index: 0;
-            animation: hero-cube-float 6s ease-in-out infinite;
-        }
-
+        .hero-cube-wrap { position: absolute; z-index: 0; animation: hero-cube-float 6s ease-in-out infinite; }
         .hero-cube-wrap.hc1 { width: 22px; height: 22px; top: 14%; inset-inline-start: 55%; animation-duration: 5.5s; }
         .hero-cube-wrap.hc2 { width: 16px; height: 16px; bottom: 18%; inset-inline-start: 68%; animation-duration: 7.2s; animation-delay: 0.7s; }
         .hero-cube-wrap.hc3 { width: 14px; height: 14px; top: 55%; inset-inline-start: 42%; animation-duration: 6.4s; animation-delay: 1.3s; }
 
-        .hero-cube {
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            animation: hero-cube-spin 10s linear infinite;
-        }
-
+        .hero-cube { width: 100%; height: 100%; transform-style: preserve-3d; animation: hero-cube-spin 10s linear infinite; }
         .hero-cube-wrap.hc2 .hero-cube { animation-duration: 14s; }
         .hero-cube-wrap.hc3 .hero-cube { animation-duration: 8s; }
 
-        .hero-cube .hface {
-            position: absolute;
-            inset: 0;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
+        .hero-cube .hface { position: absolute; inset: 0; border: 1px solid rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.08); }
         .hero-cube .hface.front  { transform: translateZ(9px); }
         .hero-cube .hface.back   { transform: translateZ(-9px) rotateY(180deg); }
         .hero-cube .hface.right  { transform: rotateY(90deg) translateZ(9px); }
@@ -220,28 +133,14 @@
         .hero-cube .hface.top    { transform: rotateX(90deg) translateZ(9px); }
         .hero-cube .hface.bottom { transform: rotateX(-90deg) translateZ(9px); }
 
-        @keyframes hero-cube-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes hero-cube-spin {
-            from { transform: rotateX(0deg) rotateY(0deg); }
-            to { transform: rotateX(360deg) rotateY(360deg); }
-        }
+        @keyframes hero-cube-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes hero-cube-spin { from { transform: rotateX(0deg) rotateY(0deg); } to { transform: rotateX(360deg) rotateY(360deg); } }
 
         .hero-card .hero-icon {
-            flex-shrink: 0;
-            width: 58px;
-            height: 58px;
-            border-radius: 18px;
+            flex-shrink: 0; width: 58px; height: 58px; border-radius: 18px;
             background: rgba(255, 255, 255, 0.18);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            position: relative;
-            z-index: 1;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; position: relative; z-index: 1;
             animation: hero-icon-float 3.4s ease-in-out infinite;
         }
 
@@ -253,24 +152,13 @@
         .hero-card .hero-text { position: relative; z-index: 1; }
 
         .hero-card .hero-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            opacity: 0.95;
-            margin-bottom: 5px;
-            letter-spacing: 0.3px;
-            background: rgba(255, 255, 255, 0.16);
-            padding: 3px 10px 3px 8px;
-            border-radius: 50px;
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 12px; font-weight: 700; opacity: 0.95; margin-bottom: 5px; letter-spacing: 0.3px;
+            background: rgba(255, 255, 255, 0.16); padding: 3px 10px 3px 8px; border-radius: 50px;
         }
 
         .hero-card .hero-tag .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #4ade80;
+            width: 6px; height: 6px; border-radius: 50%; background: #4ade80;
             box-shadow: 0 0 0 rgba(74, 222, 128, 0.6);
             animation: live-pulse 1.6s ease-in-out infinite;
         }
@@ -281,71 +169,36 @@
             100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
         }
 
-        .hero-card h1 {
-            font-size: 18px;
-            font-weight: 800;
-            line-height: 1.5;
-        }
+        .hero-card h1 { font-size: 18px; font-weight: 800; line-height: 1.5; }
 
         /* ---------- Section title ---------- */
         .section-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 0 2px 16px;
-            color: var(--text-main);
-            font-size: 15px;
-            font-weight: 800;
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fade-up 0.6s ease forwards;
-            animation-delay: 0.15s;
+            display: flex; align-items: center; gap: 10px; margin: 0 2px 16px;
+            color: var(--text-main); font-size: 15px; font-weight: 800;
+            opacity: 0; transform: translateY(10px);
+            animation: fade-up 0.6s ease forwards; animation-delay: 0.15s;
         }
 
-        @keyframes fade-up {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fade-up { to { opacity: 1; transform: translateY(0); } }
 
         .section-title .title-icon {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            border-radius: 10px;
+            flex-shrink: 0; width: 30px; height: 30px; border-radius: 10px;
             background: linear-gradient(135deg, var(--courses-1), var(--courses-2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
+            display: flex; align-items: center; justify-content: center; font-size: 14px;
             box-shadow: 0 6px 14px rgba(79, 70, 229, 0.28);
         }
 
-        .section-title::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(79,70,229,0.22), transparent);
-        }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(79,70,229,0.22), transparent); }
 
         /* ---------- Lessons list ---------- */
-        .lessons-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 20px;
-            perspective: 1000px;
-        }
+        .lessons-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; perspective: 1000px; }
 
         .lesson-card {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-soft);
-            border-radius: 20px;
-            padding: 16px;
+            display: flex; align-items: center; gap: 14px;
+            background: var(--card-bg); border: 1px solid var(--border-soft);
+            border-radius: 20px; padding: 16px;
             box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07);
-            opacity: 0;
-            transform: translateY(20px) scale(0.96);
+            opacity: 0; transform: translateY(20px) scale(0.96);
             animation: card-in 0.6s cubic-bezier(.2,.9,.3,1) forwards;
             transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
         }
@@ -356,10 +209,9 @@
         .lessons-list .lesson-card:nth-child(4) { animation-delay: 0.55s; }
         .lessons-list .lesson-card:nth-child(5) { animation-delay: 0.65s; }
         .lessons-list .lesson-card:nth-child(6) { animation-delay: 0.75s; }
+        .lessons-list .lesson-card:nth-child(7) { animation-delay: 0.85s; }
 
-        @keyframes card-in {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        @keyframes card-in { to { opacity: 1; transform: translateY(0) scale(1); } }
 
         .lesson-card:hover {
             transform: translateY(-4px) rotateX(2deg);
@@ -368,17 +220,9 @@
         }
 
         .lesson-number {
-            flex-shrink: 0;
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Fira Code', monospace;
-            font-weight: 600;
-            font-size: 16px;
-            color: #ffffff;
+            flex-shrink: 0; width: 46px; height: 46px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Fira Code', monospace; font-weight: 600; font-size: 16px; color: #ffffff;
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--sky) 100%);
             box-shadow: 0 8px 18px rgba(37, 99, 235, 0.30);
             animation: icon-float 3.6s ease-in-out infinite;
@@ -395,75 +239,52 @@
         .lessons-list .lesson-card:nth-child(4) .lesson-number { animation-delay: 1.3s; }
         .lessons-list .lesson-card:nth-child(5) .lesson-number { animation-delay: 1.7s; }
         .lessons-list .lesson-card:nth-child(6) .lesson-number { animation-delay: 2.1s; }
+        .lessons-list .lesson-card:nth-child(7) .lesson-number { animation-delay: 2.5s; }
 
         .lesson-info { flex: 1; min-width: 0; text-align: right; }
+        .lesson-title { font-size: 14.5px; font-weight: 800; line-height: 1.5; margin-bottom: 4px; color: var(--text-main); }
+        .lesson-sub { font-size: 12.5px; font-weight: 600; color: var(--text-muted); }
 
-        .lesson-title {
-            font-size: 14.5px;
-            font-weight: 800;
-            line-height: 1.5;
-            margin-bottom: 4px;
-            color: var(--text-main);
-        }
-
-        .lesson-sub {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .lesson-actions {
-            display: flex;
-            gap: 8px;
-            flex-shrink: 0;
-        }
+        .lesson-actions { display: flex; gap: 8px; flex-shrink: 0; }
 
         .icon-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            text-decoration: none;
-            border: 1px solid var(--border-soft);
-            background: var(--lesson-bg);
-            color: var(--text-main);
+            display: flex; align-items: center; justify-content: center;
+            width: 38px; height: 38px; border-radius: 12px; text-decoration: none;
+            border: 1px solid var(--border-soft); background: var(--lesson-bg); color: var(--text-main);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .icon-btn svg {
-            width: 17px;
-            height: 17px;
-            transition: transform 0.3s ease;
-        }
-
+        .icon-btn svg { width: 17px; height: 17px; transition: transform 0.3s ease; }
         .icon-btn:hover svg { transform: scale(1.15); }
         .icon-btn:hover { transform: translateY(-2px); }
 
         .icon-btn.pdf:hover {
-            background: rgba(37, 99, 235, 0.10);
-            border-color: var(--primary-blue);
-            color: var(--primary-blue);
-            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
+            background: rgba(37, 99, 235, 0.10); border-color: var(--primary-blue);
+            color: var(--primary-blue); box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
         }
 
         .icon-btn.interactive:hover {
-            background: rgba(56, 189, 248, 0.14);
-            border-color: var(--sky);
-            color: #0284c7;
-            box-shadow: 0 8px 18px rgba(56, 189, 248, 0.20);
+            background: rgba(56, 189, 248, 0.14); border-color: var(--sky);
+            color: #0284c7; box-shadow: 0 8px 18px rgba(56, 189, 248, 0.20);
         }
 
         /* ---------- حصة قادمة: تمييز بوميض واضح ---------- */
         .lesson-card.upcoming {
-            border-color: rgba(37, 99, 235, 0.35);
-            animation: card-in 0.6s cubic-bezier(.2,.9,.3,1) forwards, upcoming-glow 2.2s ease-in-out infinite;
+            border: 2px solid var(--primary-blue);
+            background: linear-gradient(135deg, #ffffff 0%, #f0f5ff 100%);
+            animation: card-in 0.6s cubic-bezier(.2,.9,.3,1) forwards, upcoming-blink 1.3s ease-in-out infinite;
         }
 
-        @keyframes upcoming-glow {
-            0%, 100% { box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07), 0 0 0 0 rgba(37, 99, 235, 0.28); }
-            50% { box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07), 0 0 0 7px rgba(37, 99, 235, 0); }
+        /* وميض واضح: الإطار يتبدل لونه وهالة تتوسع حوله */
+        @keyframes upcoming-blink {
+            0%, 100% {
+                border-color: rgba(37, 99, 235, 0.25);
+                box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07), 0 0 0 0 rgba(37, 99, 235, 0.45), 0 0 0 0 rgba(56, 189, 248, 0.35);
+            }
+            50% {
+                border-color: #2563eb;
+                box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22), 0 0 0 6px rgba(37, 99, 235, 0.18), 0 0 0 14px rgba(56, 189, 248, 0);
+            }
         }
 
         .lesson-number.upcoming-number {
@@ -472,88 +293,40 @@
         }
 
         .badge-soon {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--primary-blue);
-            background: rgba(37, 99, 235, 0.10);
-            padding: 3px 10px;
-            border-radius: 50px;
-            margin-top: 6px;
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 11px; font-weight: 700; color: var(--primary-blue);
+            background: rgba(37, 99, 235, 0.10); padding: 3px 10px; border-radius: 50px; margin-top: 6px;
         }
 
-        .badge-soon .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--primary-blue);
-            animation: blink-dot 1.2s ease-in-out infinite;
-        }
+        .badge-soon .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary-blue); animation: blink-dot 1.2s ease-in-out infinite; }
 
-        @keyframes blink-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        @keyframes blink-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         @media (prefers-reduced-motion: reduce) {
-            .lesson-card.upcoming { animation: none !important; box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07); }
+            .lesson-card.upcoming { animation: none !important; box-shadow: 0 10px 24px rgba(28, 37, 52, 0.07), 0 0 0 4px rgba(37, 99, 235, 0.18); }
             .badge-soon .dot { animation: none !important; }
         }
 
         /* ---------- Footer ---------- */
-        .footer {
-            font-size: 13px;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-align: center;
-        }
-
-        .footer-code {
-            font-family: 'Fira Code', monospace;
-            color: var(--primary-blue);
-            font-size: 12px;
-            opacity: 0.8;
-        }
+        .footer { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; }
+        .footer-code { font-family: 'Fira Code', monospace; color: var(--primary-blue); font-size: 12px; opacity: 0.8; }
 
         /* ---------- Bottom nav ---------- */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            inset-inline: 0;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(10px);
+            position: fixed; bottom: 0; inset-inline: 0; z-index: 5;
+            display: flex; justify-content: center; gap: 4px;
+            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(10px);
             border-top: 1px solid var(--border-soft);
             padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
             box-shadow: 0 -8px 24px rgba(28, 37, 52, 0.08);
         }
 
-        .bottom-nav .nav-inner {
-            width: 100%;
-            max-width: 640px;
-            display: flex;
-            justify-content: space-around;
-        }
+        .bottom-nav .nav-inner { width: 100%; max-width: 640px; display: flex; justify-content: space-around; }
 
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 11.5px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
+            display: flex; flex-direction: column; align-items: center; gap: 3px;
+            text-decoration: none; color: var(--text-muted);
+            font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px;
             transition: color 0.2s ease;
         }
 
@@ -569,14 +342,8 @@
         @media (prefers-reduced-motion: reduce) {
             .glow-orb, .bg-cube-wrap, .bg-cube { animation: none !important; }
             .lesson-card, .icon-btn { transition: none; }
-            .hero-card, .section-title, .lesson-card {
-                animation: none !important;
-                opacity: 1 !important;
-                transform: none !important;
-            }
-            .hero-cube-wrap, .hero-cube, .hero-icon, .lesson-number, .hero-tag .dot {
-                animation: none !important;
-            }
+            .hero-card, .section-title, .lesson-card { animation: none !important; opacity: 1 !important; transform: none !important; }
+            .hero-cube-wrap, .hero-cube, .hero-icon, .lesson-number, .hero-tag .dot { animation: none !important; }
         }
     </style>
 </head>
@@ -731,16 +498,34 @@
                 </div>
             </div>
 
-            <!-- الحصة السادسة (قادمة) -->
-            <div class="lesson-card upcoming">
-                <div class="lesson-number upcoming-number">06</div>
+            <!-- الحصة السادسة (منجزة) -->
+            <div class="lesson-card">
+                <div class="lesson-number">06</div>
                 <div class="lesson-info">
                     <div class="lesson-title">الحصة السادسة</div>
-                    <div class="lesson-sub">يوم الثلاثاء 22 سبتمبر 2026 — الساعة 9 صباحًا</div>
-                    <span class="badge-soon"><span class="dot"></span>الحصة القادمة</span>
+                    <div class="lesson-sub">تم التطرق لشرح برنامج الإكسل Excel</div>
                 </div>
                 <div class="lesson-actions">
                     <a href="lesson6.html" class="icon-btn interactive" aria-label="فتح ملخص الحصة السادسة" title="فتح ملخص الدرس">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- الحصة السابعة (قادمة) -->
+            <div class="lesson-card upcoming">
+                <div class="lesson-number upcoming-number">07</div>
+                <div class="lesson-info">
+                    <div class="lesson-title">الحصة السابعة</div>
+                    <div class="lesson-sub">يوم السبت 03 أكتوبر 2026 — الساعة 9 صباحًا</div>
+                    <span class="badge-soon"><span class="dot"></span>الحصة القادمة</span>
+                </div>
+                <div class="lesson-actions">
+                    <a href="lesson7.html" class="icon-btn interactive" aria-label="فتح ملخص الحصة السابعة" title="فتح ملخص الدرس">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="2" y1="12" x2="22" y2="12"></line>
