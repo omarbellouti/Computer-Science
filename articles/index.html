@@ -196,14 +196,29 @@ body{
       <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 18l-6-6 6-6"></path></svg></span>
     </a>
 
-    <a href="#" class="card reveal tilt">
-      <span class="ic" style="background:linear-gradient(135deg,#4f46e5,#818cf8)">📅</span>
-      <div class="body"><div class="ttl">البرنامج السنوي للمادة</div><div class="sub">توزيع المحتوى على أشهر السنة</div></div>
-      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 18l-6-6 6-6"></path></svg></span>
-    </a>
+    <!-- البرنامج السنوي للمادة مع القائمة المنسدلة -->
+    <div class="card dl-card reveal tilt" id="annualProgCard" style="cursor:pointer;flex-direction:column;align-items:stretch">
+      <div style="display:flex;align-items:center;gap:14px;width:100%">
+        <span class="ic" style="background:linear-gradient(135deg,#4f46e5,#818cf8)">📅</span>
+        <div class="body"><div class="ttl">البرنامج السنوي للمادة</div><div class="sub">توزيع المحتوى على أشهر السنة</div></div>
+        <span class="arrow" id="progArrow" style="transition:transform .3s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"></path></svg></span>
+      </div>
+      <div id="progDropdown" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft);width:100%">
+        <div class="dl-btns">
+          <a href="annulle/sc-plan.html" class="dl-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"></path></svg>
+            البرنامج الخاص بالعلميين
+          </a>
+          <a href="annulle/sc-plan.html" class="dl-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"></path></svg>
+            البرنامج الخاص بالادبيين
+          </a>
+        </div>
+      </div>
+    </div>
 
     <a href="rules.html" class="card reveal tilt">
-      <span class="ic" style="background:linear-gradient(135deg,#2563eb,#38bdf8)">⚖️</span>
+      <span class="ic" style="background:linear-gradient(135deg,#2563eb,#38bdf8)">⚖️️</span>
       <div class="body"><div class="ttl">القانون الداخلي للمخبر</div><div class="sub">قواعد وآداب استعمال المخبر</div></div>
       <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 18l-6-6 6-6"></path></svg></span>
     </a>
@@ -366,6 +381,23 @@ body{
     },{threshold:.12});
     els.forEach(function(el){io.observe(el)});
   }else{els.forEach(function(el){el.classList.add('in')})}
+
+  /* تفعيل القائمة المنسدلة للبرنامج السنوي للمادة */
+  var progCard = document.getElementById('annualProgCard');
+  if(progCard){
+    progCard.addEventListener('click', function(e){
+      if(e.target.closest('.dl-btn')) return;
+      var dropdown = document.getElementById('progDropdown');
+      var arrow = document.getElementById('progArrow');
+      if(dropdown.style.display === 'none'){
+        dropdown.style.display = 'block';
+        arrow.style.transform = 'rotate(180deg)';
+      }else{
+        dropdown.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
 
   /* ميلان ثلاثي الأبعاد عند تمرير المؤشر */
   var fine=window.matchMedia('(hover:hover) and (pointer:fine)').matches;
