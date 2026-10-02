@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>سجل متابعة مخبر المعلوماتية | الأستاذ بلوطي عمر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9edf4;--card:#fff;--soft:#f5f7fb;--blue:#2563eb;--text:#1c2534;--muted:#6b7686;--line:#e3e8f0;--c1:#4f46e5;--c2:#818cf8;--ok:#059669;--bad:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:600}
+html{scroll-behavior:smooth}
+body{background-color:var(--bg);background-image:radial-gradient(circle at 15% 10%,rgba(79,70,229,.08),transparent 40%),radial-gradient(circle at 90% 75%,rgba(56,189,248,.10),transparent 40%),linear-gradient(rgba(28,37,52,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(28,37,52,.035) 1px,transparent 1px);background-size:100% 100%,100% 100%,30px 30px,30px 30px;color:var(--text);overflow-x:hidden;min-height:100vh;padding-bottom:calc(40px + env(safe-area-inset-bottom));user-select:none;-webkit-user-select:none}
+
+.bg3d{position:fixed;inset:0;z-index:0;pointer-events:none;perspective:900px;overflow:hidden}
+.bc{position:absolute;width:var(--s);height:var(--s);animation:fl var(--d) ease-in-out infinite}
+.bc i{display:block;width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:spin var(--r) linear infinite}
+.bc b{position:absolute;inset:0;border:1.5px solid rgba(79,70,229,.2);background:rgba(129,140,248,.05)}
+.bc b:nth-child(1){transform:translateZ(calc(var(--s)/2))}.bc b:nth-child(2){transform:translateZ(calc(var(--s)/-2)) rotateY(180deg)}
+.bc b:nth-child(3){transform:rotateY(90deg) translateZ(calc(var(--s)/2))}.bc b:nth-child(4){transform:rotateY(-90deg) translateZ(calc(var(--s)/2))}
+.bc b:nth-child(5){transform:rotateX(90deg) translateZ(calc(var(--s)/2))}.bc b:nth-child(6){transform:rotateX(-90deg) translateZ(calc(var(--s)/2))}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-28px)}}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(360deg)}}
+
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:20px 16px 0}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:16px;transition:.2s}
+.back:hover{color:var(--blue);transform:translateX(3px)}.back svg{width:16px;height:16px}
+
+.cover{background:linear-gradient(135deg,var(--c1),var(--c2));border-radius:28px;color:#fff;padding:34px 24px 30px;position:relative;overflow:hidden;box-shadow:0 20px 44px rgba(79,70,229,.3);text-align:center;opacity:0;transform:translateY(20px) scale(.97);animation:rise .8s cubic-bezier(.2,.9,.3,1) forwards;margin-bottom:24px;transition:transform .2s}
+.cover::before,.cover::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12)}
+.cover::before{width:220px;height:220px;top:-90px;inset-inline-end:-80px}
+.cover::after{width:160px;height:160px;bottom:-70px;inset-inline-start:-50px}
+@keyframes rise{to{opacity:1;transform:none}}
+.gov{position:relative;z-index:2;line-height:2;font-size:13px;opacity:.95}
+.gov .r{font-size:14px;font-weight:800}.gov .s{font-size:15px;font-weight:800;margin-top:4px}
+.scene{position:relative;z-index:2;height:190px;margin:18px auto 8px;perspective:700px;display:flex;align-items:center;justify-content:center}
+.stage{width:100px;height:100px;position:relative;transform-style:preserve-3d;animation:cs 16s linear infinite}
+.face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:44px;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.55);box-shadow:inset 0 0 24px rgba(255,255,255,.18);border-radius:10px}
+.face:nth-child(1){transform:translateZ(50px)}.face:nth-child(2){transform:translateZ(-50px) rotateY(180deg)}
+.face:nth-child(3){transform:rotateY(90deg) translateZ(50px)}.face:nth-child(4){transform:rotateY(-90deg) translateZ(50px)}
+.face:nth-child(5){transform:rotateX(90deg) translateZ(50px)}.face:nth-child(6){transform:rotateX(-90deg) translateZ(50px)}
+@keyframes cs{from{transform:rotateX(-20deg) rotateY(0)}to{transform:rotateX(-20deg) rotateY(360deg)}}
+.ring{position:absolute;width:190px;height:190px;border-radius:50%;border:1.5px dashed rgba(255,255,255,.4);transform:rotateX(75deg);animation:rg 9s linear infinite}
+@keyframes rg{to{transform:rotateX(75deg) rotateZ(360deg)}}
+.shadow{position:absolute;bottom:2px;width:110px;height:16px;border-radius:50%;background:rgba(0,0,0,.25);filter:blur(7px);animation:sh 4s ease-in-out infinite}
+@keyframes sh{50%{transform:scale(.7);opacity:.5}}
+.cover h1{position:relative;z-index:2;font-size:clamp(22px,5vw,32px);font-weight:900;line-height:1.5;margin-top:6px}
+.tag{position:relative;z-index:2;display:inline-block;background:rgba(255,255,255,.2);padding:4px 16px;border-radius:50px;font-size:12px;font-weight:700;margin-top:6px}
+.meta{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px}
+.chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:16px;padding:10px 20px;font-size:13px;transition:transform .3s}
+.chip:hover{transform:translateY(-4px)}
+.chip small{display:block;opacity:.85;font-size:11px}.chip strong{font-size:15px;font-weight:800}
+
+/* إحصائيات */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 10px;text-align:center;box-shadow:0 8px 20px rgba(28,37,52,.06);opacity:0;transform:translateY(20px) scale(.95);transition:opacity .6s cubic-bezier(.2,.9,.3,1),transform .6s cubic-bezier(.2,.9,.3,1)}
+.stat.in{opacity:1;transform:none}
+.stat:hover{transform:translateY(-4px)}
+.stat b{display:block;font-size:26px;font-weight:900;color:var(--c1);line-height:1.3}
+.stat.g b{color:var(--ok)}.stat.r b{color:var(--bad)}
+.stat span{font-size:11.5px;color:var(--muted)}
+.tools{display:flex;gap:10px;margin-bottom:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;font-size:12.5px;font-weight:800;padding:10px 18px;border-radius:12px;box-shadow:0 6px 14px rgba(79,70,229,.25);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(79,70,229,.35)}.btn:active{transform:scale(.96)}
+
+.sec{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 24px rgba(28,37,52,.07);margin-bottom:26px;overflow:hidden;opacity:0;transform:translateY(26px) scale(.97);transition:opacity .7s cubic-bezier(.2,.9,.3,1),transform .7s cubic-bezier(.2,.9,.3,1)}
+.sec.in{opacity:1;transform:none}
+.sh{display:flex;align-items:center;gap:12px;padding:16px 20px;background:linear-gradient(90deg,rgba(79,70,229,.08),transparent);border-bottom:1px solid var(--line)}
+.sh .ic{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 6px 14px rgba(79,70,229,.28);animation:ib 3.6s ease-in-out infinite}
+@keyframes ib{50%{transform:translateY(-3px) rotate(-4deg)}}
+.sh h2{font-size:15px;font-weight:800}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;min-width:560px}
+th{background:var(--soft);color:var(--muted);font-weight:800;padding:11px 8px;border-bottom:1px solid var(--line);white-space:nowrap;text-align:center}
+td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:center;transition:background .2s}
+tbody tr:hover td{background:rgba(79,70,229,.04)}
+td.n{width:42px;color:var(--muted);font-weight:800}
+td.nm{text-align:right;font-weight:800;white-space:nowrap;min-width:140px}
+td.nm small{display:block;color:var(--muted);font-weight:600;font-size:10.5px;direction:ltr;text-align:right}
+td.nt{text-align:right;font-size:12px;line-height:1.8;min-width:180px;color:var(--text)}
+td.ok{color:var(--ok);font-weight:800}td.bad{color:var(--bad);font-weight:800}
+.dash{color:#b4bcc9}
+.grp .g1{background:rgba(79,70,229,.1);color:var(--c1)}.grp .g2{background:rgba(5,150,105,.1);color:var(--ok)}
+.mk{display:inline-flex;width:24px;height:24px;border-radius:8px;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--ok),#34d399);color:#fff;font-size:13px;font-weight:900;box-shadow:0 3px 8px rgba(5,150,105,.3)}
+.mk.no{background:#eef0f4;color:#a3acba;box-shadow:none}
+td.off{background:rgba(220,38,38,.07);color:var(--bad);font-weight:800;letter-spacing:.3px}
+td.dt{font-weight:800;color:var(--c1);white-space:nowrap;background:rgba(79,70,229,.04)}
+.stick td:first-child,.stick th:first-child{position:sticky;inset-inline-start:0;background:#fff;z-index:2;box-shadow:-2px 0 0 var(--line)}
+.stick th:first-child{background:var(--soft);z-index:3}
+.legend{display:flex;flex-wrap:wrap;gap:16px;padding:12px 20px;font-size:12px;color:var(--muted);align-items:center;border-top:1px solid var(--line)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sign{display:flex;justify-content:space-between;gap:20px;padding:18px 24px 22px;font-size:13px;font-weight:800}
+.sign div{flex:1;text-align:center}.sign small{display:block;color:var(--muted);margin-top:46px;font-weight:600}
+.foot{text-align:center;font-size:13px;color:var(--muted);margin-top:8px}.foot span{font-family:monospace;color:var(--blue)}
+
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;padding:0;user-select:auto}
+  .bg3d,.tools,.back,.foot{display:none}
+  .wrap{max-width:none;padding:0}
+  .cover,.sec,.stat{opacity:1!important;transform:none!important;animation:none!important;box-shadow:none}
+  .cover{margin-bottom:0;min-height:185mm;display:flex;flex-direction:column;justify-content:center;page-break-after:always;border-radius:18px}
+  .stage,.ring,.shadow,.sh .ic{animation:none}
+  .stats{display:none}
+  .sec{break-inside:avoid;margin-bottom:12px;border-radius:14px}
+  .sec.p-break{page-break-before:always}
+  .tw{overflow:visible}
+  table{min-width:0;font-size:10.5px}
+  th,td{padding:5px 4px}.mk{width:19px;height:19px;font-size:11px}
+  td.nm{min-width:0}td.nt{min-width:0;font-size:10px;line-height:1.6}
+  .stick td:first-child,.stick th:first-child{position:static;box-shadow:none}
+  .sh{padding:10px 16px}.sign{padding:10px 20px 14px}.sign small{margin-top:30px}
+}
+@media(prefers-reduced-motion:reduce){.bc,.bc i,.stage,.ring,.shadow,.sh .ic{animation:none!important}.sec,.cover,.stat{opacity:1!important;transform:none!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body oncontextmenu="return false">
+
+<div class="bg3d" aria-hidden="true">
+  <div class="bc" style="--s:46px;--d:7s;--r:18s;top:14%;left:6%"><i><b></b><b></b><b></b><b></b><b></b><b></b></i></div>
+  <div class="bc" style="--s:30px;--d:9s;--r:12s;top:40%;right:7%"><i><b></b><b></b><b></b><b></b><b></b><b></b></i></div>
+  <div class="bc" style="--s:58px;--d:8s;--r:24s;top:70%;left:10%"><i><b></b><b></b><b></b><b></b><b></b><b></b></i></div>
+  <div class="bc" style="--s:36px;--d:6s;--r:15s;top:84%;right:15%"><i><b></b><b></b><b></b><b></b><b></b><b></b></i></div>
+</div>
+
+<div class="wrap">
+  <a href="index.html" class="back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+    الرجوع إلى الوثائق الإدارية
+  </a>
+
+  <header class="cover" id="cover">
+    <div class="gov">
+      <div class="r">الجمهورية الجزائرية الديمقراطية الشعبية</div>
+      <div>وزارة التربية الوطنية</div>
+      <div>مديرية التربية لولاية سطيف</div>
+      <div class="s">ثانوية العربي بليليطة — عين ولمان</div>
+    </div>
+    <div class="scene">
+      <div class="ring"></div>
+      <div class="stage">
+        <div class="face">💻</div><div class="face">🖥️</div><div class="face">⌨️</div>
+        <div class="face">🖱️</div><div class="face">🖨️</div><div class="face">🔌</div>
+      </div>
+      <div class="shadow"></div>
+    </div>
+    <h1>سجل متابعة مخبر المعلوماتية</h1>
+    <span class="tag">جرد الأجهزة · الأثاث · فحص السلامة</span>
+    <div class="meta">
+      <div class="chip"><small>أستاذ المادة</small><strong>بلوطي عمر</strong></div>
+      <div class="chip"><small>السنة الدراسية</small><strong>2026 / 2027</strong></div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b data-to="13">0</b><span>جهاز حاسوب</span></div>
+    <div class="stat g"><b data-to="10">0</b><span>جهاز يعمل</span></div>
+    <div class="stat r"><b data-to="3">0</b><span>جهاز لا يعمل</span></div>
+    <div class="stat"><b data-to="22">0</b><span>كرسي عادي</span></div>
+  </div>
+
+  <div class="tools"><button class="btn" onclick="window.print()">🖨️ طباعة السجل</button></div>
+
+  <section class="sec">
+    <div class="sh"><span class="ic">🖥️</span><h2>أجهزة مخبر المعلوماتية</h2></div>
+    <div class="tw"><table><thead><tr><th>الرقم</th><th>اسم الجهاز</th><th>العدد</th><th>يعمل</th><th>لا يعمل</th><th>ملاحظات</th></tr></thead><tbody id="dev"></tbody></table></div>
+  </section>
+
+  <section class="sec">
+    <div class="sh"><span class="ic">🪑</span><h2>أثاث مخبر المعلوماتية</h2></div>
+    <div class="tw"><table><thead><tr><th>الرقم</th><th>الأثاث</th><th>العدد</th><th>صالح</th><th>غير صالح</th><th>ملاحظات</th></tr></thead><tbody id="fur"></tbody></table></div>
+  </section>
+
+  <section class="sec p-break">
+    <div class="sh"><span class="ic">✅</span><h2>التأكد من عمل وسلامة أجهزة المخبر</h2></div>
+    <div class="tw"><table class="stick" id="chk"><thead></thead><tbody></tbody></table></div>
+    <div class="legend">
+      <span><i class="mk">✓</i> سليم ويعمل</span>
+      <span><i class="mk no">—</i> غير متوفر</span>
+      <span><b style="color:var(--bad)">لا يعمل</b> الجهاز معطّل بالكامل</span>
+    </div>
+    <div class="sign"><div>أستاذ المادة<small>بلوطي عمر</small></div><div>مدير المؤسسة<small>الإمضاء والختم</small></div></div>
+  </section>
+
+  <div class="foot"><span>&lt;/&gt;</span> الموسم الدراسي 2026/2027 · الأستاذ بلوطي عمر</div>
+</div>
+
+<script>
+(function(){
+  var d='<span class="dash">—</span>';
+  function v(x){return x===''||x===null?d:x}
+  /* الأجهزة: [الاسم, الفرنسية, العدد, يعمل, لا يعمل, ملاحظات] */
+  var dev=[
+    ['وحدة مركزية','Unité centrale',13,10,3,'تم تسجيل جميع النقائص وإرسال تقرير بحالة الأجهزة للمدير بتاريخ 1 أكتوبر 2026'],
+    ['شاشة','Écran',13,13,'',''],
+    ['لوحة مفاتيح','Clavier',13,11,2,''],
+    ['فأرة','Souris',13,13,0,''],
+    ['طابعة','Imprimante',0,0,0,''],
+    ['ماسح ضوئي','Scanner',0,0,0,''],
+    ['مخزن طاقة','Onduleur',13,0,13,''],
+    ['مبدّل','Switch',1,1,0,''],
+    ['قاطع كهربائي','',1,1,0,''],
+    ['Rallonge','',2,2,0,'']
+  ];
+  var fur=[
+    ['طاولة كمبيوتر','',13,12,1,''],['طاولة الأستاذ','',1,1,'',''],['طاولة عادية','',1,1,'',''],
+    ['كرسي الأستاذ','',1,0,'',''],['كرسي عادي','',22,22,'',''],['خزانة','',1,1,'','']
+  ];
+  function rows(id,l){
+    document.getElementById(id).innerHTML=l.map(function(r,i){
+      return '<tr><td class="n">'+(i+1)+'</td><td class="nm">'+r[0]+(r[1]?'<small>'+r[1]+'</small>':'')+'</td><td>'+v(r[2])+'</td><td class="ok">'+v(r[3])+'</td><td class="'+(r[4]>0?'bad':'')+'">'+v(r[4])+'</td><td class="nt">'+(r[5]||d)+'</td></tr>';
+    }).join('');
+  }
+  rows('dev',dev);rows('fur',fur);
+
+  /* جدول الفحص */
+  var hw=['الوحدة المركزية','الشاشة','الفأرة','لوحة المفاتيح','التمديدات','مخزن الطاقة'];
+  var sw=['نظام التشغيل','برامج الأوفيس','ALGO6BOX','LARP','Win7 simulation','IT-Essential CISCO','Net Support School'];
+  var cols=hw.length+sw.length;
+  var h='<tr class="grp"><th rowspan="2">رقم الجهاز</th><th class="g1" colspan="'+hw.length+'">المكونات المادية</th><th class="g2" colspan="'+sw.length+'">المكونات البرمجية</th><th rowspan="2">تاريخ الفحص</th></tr><tr>';
+  hw.concat(sw).forEach(function(x){h+='<th>'+x+'</th>'});
+  document.querySelector('#chk thead').innerHTML=h+'</tr>';
+  var off={5:1,7:1,9:1},b='';
+  for(var i=1;i<=13;i++){
+    b+='<tr><td class="n">'+i+'</td>';
+    if(off[i]){b+='<td class="off" colspan="'+cols+'">لا يعمل</td>'}
+    else{for(var j=0;j<cols;j++){b+='<td>'+(j===5?'<i class="mk no">—</i>':'<i class="mk">✓</i>')+'</td>'}}
+    if(i===1)b+='<td class="dt" rowspan="13">01 أكتوبر 2026</td>';
+    b+='</tr>';
+  }
+  document.querySelector('#chk tbody').innerHTML=b;
+
+  /* ظهور عند التمرير + عدّاد الأرقام */
+  var items=document.querySelectorAll('.sec,.stat');
+  function count(el){
+    var to=+el.dataset.to,t0=null;
+    (function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/900,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(performance.now());
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){
+        var el=e.target,dl=el.classList.contains('stat')?Array.prototype.indexOf.call(el.parentNode.children,el)*100:0;
+        setTimeout(function(){el.classList.add('in');var n=el.querySelector('[data-to]');if(n)count(n)},dl);
+        io.unobserve(el);
+      }})},{threshold:.1});
+    items.forEach(function(s){io.observe(s)});
+  }else{items.forEach(function(s){s.classList.add('in');var n=s.querySelector('[data-to]');if(n)n.textContent=n.dataset.to})}
+
+  /* ميلان الغلاف مع الماوس */
+  var c=document.getElementById('cover');
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(1000px) rotateX('+(-y*3)+'deg) rotateY('+(x*3)+'deg)'});
+    c.addEventListener('pointerleave',function(){c.style.transform=''});
+  }
+})();
+</script>
+</body>
+</html>
